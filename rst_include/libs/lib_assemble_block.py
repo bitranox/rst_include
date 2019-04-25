@@ -72,8 +72,8 @@ def assemble_additional_content(block):
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
-    >>> assemble_additional_content(block)
-    '\\n    :no-option:\\nadditional content1\\nadditional content2\\nadditional content3\\nadditional content4\\nadditional content5\\n\\n'
+    >>> assemble_additional_content(block)  # doctest: +ELLIPSIS + NORMALIZE_WHITESPACE
+    '\\n    :no-option:\\nadditional content1...nadditional content5\\n\\n'
 
     """
     delete_leading_empty_additional_content_lines(block)
@@ -105,8 +105,8 @@ def assemble_include_block(block):
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
-    >>> assemble_include_block(block)
-    '.. code-block:: python\\n    :pass-through1:\\n    :pass-through2: value2\\n\\n    def my_include2_2():\\n        pass\\n\\n        pass\\n\\n'
+    >>> assemble_include_block(block)  # doctest: +ELLIPSIS + NORMALIZE_WHITESPACE
+    '.. code-block:: python\\n    :pass-through1:...        pass\\n\\n'
 
     >>> # test :code: ''
     >>> block = lib_test.get_test_block_include2_ok()

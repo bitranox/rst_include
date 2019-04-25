@@ -20,7 +20,8 @@ def parse_args(cmd_args=sys.argv[1:]):
     parser_include.add_argument('-t', '--target', nargs='?', metavar='target', default=sys.stdout, help='default: stdout')
     parser_include.add_argument('-se', '--source_encoding', metavar='source encoding',  nargs='?', default='utf-8-sig', help='default: utf-8-sig')
     parser_include.add_argument('-te', '--target_encoding', metavar='target encoding',  nargs='?', default='utf-8', help='default: utf-8')
-    parser_include.add_argument('-c', '--config', metavar='configfile.py', nargs='?', help='If no filename is passed, the default conf_res_inc.py is searched in the current directory')
+    parser_include.add_argument('-c', '--config', metavar='configfile.py', nargs='?',
+                                help='If no filename is passed, the default conf_res_inc.py is searched in the current directory')
 
     parser_replace = subparsers.add_parser('replace', help='string replace')
     parser_replace.add_argument('-s', '--source', nargs='?', metavar='source', default=sys.stdin, help='default: stdin')
