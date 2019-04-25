@@ -18,6 +18,6 @@
    :target: https://snyk.io/test/github/bitranox/{repository}
 .. |jupyter| image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/bitranox/{repository}/master?filepath=jupyter_test_{repository}.ipynb
-.. |code climate| image:: https://api.codeclimate.com/v1/badges/15acaf0e7747a042c505/maintainability
+.. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/{repository}/maintainability
    :alt: Maintainability

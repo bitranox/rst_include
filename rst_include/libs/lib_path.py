@@ -95,7 +95,7 @@ def get_absolute_path_relative_from_path(path, path2):
     >>> get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '../../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../a/d/test.txt'
     >>> result = get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '/f/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert result == 'C:/f/test.txt' or result == '/f/test.txt'
+    >>> assert result.lower() == 'c:/f/test.txt' or result == '/f/test.txt'      # on wine the drive letter is lowercase
 
     """
 
