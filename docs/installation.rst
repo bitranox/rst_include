@@ -43,7 +43,7 @@ via python:
 .. code-block:: python
 
     # for the latest Release
-    python -m pip install --upgrade {repository}
+    python -m pip install upgrade {repository}
 
     # for the latest Development Version
-    python -m pip install --upgrade https://github.com/bitranox/{repository}/archive/master.zip
+    python -m pip install upgrade https://github.com/bitranox/{repository}/archive/master.zip
