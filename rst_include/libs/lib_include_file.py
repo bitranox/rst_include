@@ -10,6 +10,7 @@ except ImportError:
     import lib_get_include_options
     import lib_test
 
+import io   # for python 2.7 compatibility
 import logging
 import sys
 
@@ -33,7 +34,7 @@ def read_include_file(block):
     logger = logging.getLogger('read_include_file')
 
     try:
-        with open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
+        with io.open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
             include_file_lines = include_file.readlines()
             block.include_file_lines = include_file_lines
         return include_file_lines

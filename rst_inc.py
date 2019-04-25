@@ -18,14 +18,6 @@ except NameError:
 def main(cmd_args=sys.argv[1:]):
     # type ([str]) -> None
     """
-
-    >>> source_file = './docs/README_template.rst'
-    >>> target_file = './docs/README_template_included.rst'
-    >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-
-
-
-
     >>> lib_test.run_template_tests()
     >>> lib_test.run_template_tests_not_supported()
 

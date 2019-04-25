@@ -15,6 +15,7 @@ except ImportError:
     import lib_assemble_block
 
 import logging
+import io  # for python 2.7 compatibility
 import os
 import sys
 
@@ -62,10 +63,10 @@ def compare_results_equal(expected, result, expected_file_encoding='utf-8-sig', 
 
     logger = logging.getLogger('compare_results')
 
-    with open(expected, mode='r', encoding=expected_file_encoding) as f_expected_file:
+    with io.open(expected, mode='r', encoding=expected_file_encoding) as f_expected_file:
         l_expected_lines = f_expected_file.readlines()
 
-    with open(result, mode='r', encoding=result_file_encoding) as f_result_file:
+    with io.open(result, mode='r', encoding=result_file_encoding) as f_result_file:
         l_result_lines = f_result_file.readlines()
 
     len_expected_lines = len(l_expected_lines)
