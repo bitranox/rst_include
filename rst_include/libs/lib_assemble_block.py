@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 try:
     from . import lib_classes
     from . import lib_block
@@ -72,8 +74,8 @@ def assemble_additional_content(block):
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
-    >>> assemble_additional_content(block)  # doctest: +ELLIPSIS + NORMALIZE_WHITESPACE
-    '\\n    :no-option:\\nadditional content1...nadditional content5\\n\\n'
+    >>> assemble_additional_content(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    '\\n    :no-option:\\nadditional content1...additional content5\\n\\n'
 
     """
     delete_leading_empty_additional_content_lines(block)
@@ -105,7 +107,7 @@ def assemble_include_block(block):
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
-    >>> assemble_include_block(block)  # doctest: +ELLIPSIS + NORMALIZE_WHITESPACE
+    >>> assemble_include_block(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.. code-block:: python\\n    :pass-through1:...        pass\\n\\n'
 
     >>> # test :code: ''

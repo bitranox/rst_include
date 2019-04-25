@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 try:
     from . import lib_classes
     from . import lib_get_include_options
