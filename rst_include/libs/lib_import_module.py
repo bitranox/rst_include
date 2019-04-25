@@ -3,17 +3,13 @@
 import sys
 from types import ModuleType
 
-try:
-    from .lib_test import get_test_dir
-except ImportError:
-    # this we need for local doctest
-    from lib_test import get_test_dir
+from rst_include.libs import lib_test
 
 
 def get_module_from_file(module_name, path_to_module):
     # type: (str,str) -> ModuleType
     """
-    >>> module = get_module_from_file('test',get_test_dir()+'/include1.py')
+    >>> module = get_module_from_file('test', lib_test.get_test_dir()+'/include1.py')
     >>> assert module.my_include() == None
     >>> import test
     >>> assert test.my_include() == None

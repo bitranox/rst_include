@@ -1,19 +1,10 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from . import lib_assemble_block
-    from . import lib_config_file
-    from . import lib_check_files
-    from . import lib_path
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    import lib_assemble_block
-    import lib_config_file
-    import lib_check_files
-    import lib_path
-
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_assemble_block
+from rst_include.libs import lib_config_file
+from rst_include.libs import lib_check_files
+from rst_include.libs import lib_path
 
 import os
 

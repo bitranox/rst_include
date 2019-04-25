@@ -2,15 +2,9 @@
 
 import logging
 
-try:
-    from . import lib_path
-    from . import lib_import_module
-    from . import lib_test
-except ImportError:
-    # this we need for local doctest
-    import lib_path
-    import lib_import_module
-    import lib_test
+from rst_include.libs import lib_path
+from rst_include.libs import lib_import_module
+from rst_include.libs import lib_test
 
 import os
 from types import ModuleType

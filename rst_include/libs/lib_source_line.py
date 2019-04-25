@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
+from rst_include.libs import lib_classes
 
 
 def divide_source_line_in_blocks(source_file_name, source_lines):

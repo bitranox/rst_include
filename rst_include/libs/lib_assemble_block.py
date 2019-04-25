@@ -1,24 +1,12 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from . import lib_block
-    from . import lib_check_files
-    from . import lib_get_include_options
-    from . import lib_include_file
-    from . import lib_path
-    from . import lib_source_line
-    from . import lib_test
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    import lib_block
-    import lib_check_files
-    import lib_get_include_options
-    import lib_include_file
-    import lib_path
-    import lib_source_line
-    import lib_test
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_block
+from rst_include.libs import lib_check_files
+from rst_include.libs import lib_get_include_options
+from rst_include.libs import lib_include_file
+from rst_include.libs import lib_source_line
+from rst_include.libs import lib_test
 
 
 def create_l_rst_files_from_templates(l_rst_files):

@@ -1,20 +1,11 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from .lib_classes import Block
-    from . import lib_block_options
-    from . import lib_source_line
-    from . import lib_path
-    from . import lib_test
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    from lib_classes import Block
-    import lib_block_options
-    import lib_source_line
-    import lib_path
-    import lib_test
+from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block
+from rst_include.libs import lib_block_options
+from rst_include.libs import lib_source_line
+from rst_include.libs import lib_path
+from rst_include.libs import lib_test
 
 
 import logging

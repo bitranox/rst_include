@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from . import lib_get_include_options
-    from . import lib_test
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    import lib_get_include_options
-    import lib_test
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_get_include_options
+from rst_include.libs import lib_test
 
 import io   # for python 2.7 compatibility
 import logging

@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from . import lib_source_line
-    from . import lib_test
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    import lib_source_line
-    import lib_test
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_source_line
+from rst_include.libs import lib_test
 
 import logging
 

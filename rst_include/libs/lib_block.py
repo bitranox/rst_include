@@ -1,16 +1,9 @@
 # -*- coding: utf-8 -*-
 
-try:
-    from . import lib_classes
-    from .lib_classes import Block
-    from .lib_classes import SourceLine
-    from . import lib_source_line
-except ImportError:
-    # this we need for local doctest
-    import lib_classes
-    from lib_classes import Block
-    from lib_classes import SourceLine
-    import lib_source_line
+from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block
+from rst_include.libs.lib_classes import SourceLine
+from rst_include.libs import lib_source_line
 
 
 def is_include_block(block):
