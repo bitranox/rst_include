@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-import rst_include.libs.lib_classes as lib_classes
+from rst_include.libs import lib_classes

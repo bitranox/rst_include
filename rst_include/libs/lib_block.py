@@ -2,8 +2,8 @@
 
 from rst_include.libs.lib_classes import Block
 from rst_include.libs.lib_classes import SourceLine
-import rst_include.libs.lib_classes as lib_classes
-import rst_include.libs.lib_source_line as lib_source_line
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_source_line
 
 
 def is_include_block(block):

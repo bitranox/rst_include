@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import rst_include.libs.lib_classes as lib_classes
-import rst_include.libs.lib_get_include_options as lib_get_include_options
-import rst_include.libs.lib_include_file as lib_include_file
-import rst_include.libs.lib_path as lib_path
-import rst_include.libs.lib_assemble_block as lib_assemble_block
+from rst_include.libs import lib_classes
+from rst_include.libs import lib_get_include_options
+from rst_include.libs import lib_include_file
+from rst_include.libs import lib_path
+from rst_include.libs import lib_assemble_block
 
 import logging
 import io  # for python 2.7 compatibility

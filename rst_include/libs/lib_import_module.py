@@ -2,7 +2,7 @@
 
 import sys
 from types import ModuleType
-import rst_include.libs.lib_test as lib_test
+from rst_include.libs import lib_test
 
 
 def get_module_from_file(module_name, path_to_module):

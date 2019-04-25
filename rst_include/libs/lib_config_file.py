@@ -2,9 +2,9 @@
 
 import logging
 
-import rst_include.libs.lib_path as lib_path
-import rst_include.libs.lib_import_module as lib_import_module
-import rst_include.libs.lib_test as lib_test
+from rst_include.libs import lib_path
+from rst_include.libs import lib_import_module
+from rst_include.libs import lib_test
 
 import os
 from types import ModuleType

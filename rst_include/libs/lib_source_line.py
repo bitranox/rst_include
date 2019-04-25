@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import rst_include.libs.lib_classes as lib_classes
+from rst_include.libs import lib_classes
 
 
 def divide_source_line_in_blocks(source_file_name, source_lines):
