@@ -4,7 +4,6 @@
   "rst_inc.py::rst_include.rst_inc.main": true,
   "rst_include.py": true,
   "rst_include/libs/lib_args.py::rst_include.rst_include.libs.lib_args.args_source_and_target_file_given": true,
-  "rst_include/libs/lib_assemble_block.py": true,
   "rst_include/libs/lib_assemble_block.py::rst_include.rst_include.libs.lib_assemble_block.assemble_include_block": true,
   "rst_include/libs/lib_assemble_block.py::rst_include.rst_include.libs.lib_assemble_block.create_l_rst_files_from_templates": true,
   "rst_include/libs/lib_assemble_block.py::rst_include.rst_include.libs.lib_assemble_block.get_block_header": true,
