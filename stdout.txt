@@ -1,0 +1,1 @@
+Namespace(config='', count=-1, new='bb', old='aa', source='xx', source_encoding='utf-8-sig', target='yy', target_encoding='utf-8')

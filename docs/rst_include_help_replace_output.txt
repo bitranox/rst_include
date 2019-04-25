@@ -1,0 +1,19 @@
+usage: rst_inc.py replace [-h] [-s [source]] [-t [target]]
+                          [-se [source encoding]] [-te [target encoding]]
+                          old new [count]
+
+positional arguments:
+  old                   old
+  new                   new
+  count                 count
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s [source], --source [source]
+                        default: stdin
+  -t [target], --target [target]
+                        default: stdout
+  -se [source encoding], --source_encoding [source encoding]
+                        default: utf-8-sig
+  -te [target encoding], --target_encoding [target encoding]
+                        default: utf-8

@@ -1,0 +1,168 @@
+try:
+    from . import lib_classes
+    from . import lib_source_line
+    from . import lib_test
+except ImportError:
+    # this we need for local doctest
+    import lib_classes
+    import lib_source_line
+    import lib_test
+
+import logging
+
+
+def get_option_value_from_block_or_raise_if_empty_or_invalid(option, block, value_must_be_int=False):
+    # type: (str, lib_classes.Block, bool) -> str
+    """
+    >>> block = lib_test.get_test_block_ok()
+    >>> # test ok
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('code', block)
+    'python'
+
+    >>> # empty value
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('pass-through1', block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    ValueError: Error in File ".../README.template.rst", Line 47107: option "pass-through1" has no value
+
+    >>> # option not found
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('no-option', block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ValueError: Error in File ".../README.template.rst", option "no-option" not found in Block starting with Line: 47100
+
+    >>> # option check type integer ok
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('start-line', block, value_must_be_int=True)
+    '10'
+
+    >>> # option check type not integer
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('start-after', block, value_must_be_int=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    TypeError: Error in File ".../README.template.rst", Line 47105: option "start-after" has to be integer
+
+    """
+    logger = logging.getLogger('get_option_value')
+    if is_option_in_block(option, block):
+        value = get_option_value_from_block(option, block)
+        if not value:
+            line_number = get_source_line_number_for_option(option, block)
+            s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has no value'.format(
+                source_file=block.source_file_name,
+                line_number=line_number,
+                option=option)
+            logger.error(s_error)
+            raise ValueError(s_error)
+        elif value_must_be_int and not value.isdigit():
+            line_number = get_source_line_number_for_option(option, block)
+            s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has to be integer'.format(
+                source_file=block.source_file_name,
+                line_number=line_number,
+                option=option)
+            logger.error(s_error)
+            raise TypeError(s_error)
+        else:
+            return value
+    else:
+        line_number = block.l_source_lines[0].line_number
+        s_error = 'Error in File "{source_file}", option "{option}" not found in Block starting with Line: {line_number}'.format(
+            source_file=block.source_file_name,
+            line_number=line_number,
+            option=option)
+        logger.error(s_error)
+        raise ValueError(s_error)
+
+
+def get_option_value_from_block(option, block):
+    # type: (str, lib_classes.Block) -> str
+    """
+    >>> block = lib_test.get_test_block_ok()
+    >>> get_option_value_from_block('code', block)
+    'python'
+    >>> get_option_value_from_block('encoding', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    'utf-8'
+    >>> get_option_value_from_block('no-option', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    ValueError: File: "C:/opt/vm-shared-folder/pyapps/rst_include/rst_include/tests/README.template.rst", option "no-option" not found in block starting with Line: 47100
+    """
+    for source_line in block.l_source_lines:
+        if lib_source_line.is_source_line_block_option(source_line):
+            if is_option_in_source_line(source_line, option):
+                value = source_line.content.split(':', 2)[2].strip()
+                return value
+        else:
+            raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
+                file=block.source_file_name,
+                option=option,
+                line=block.l_source_lines[0].line_number))
+
+
+def is_option_in_block(option, block):
+    # type: (str, lib_classes.Block) -> bool
+    """
+    >>> block = lib_test.get_test_block_ok()
+    >>> is_option_in_block('code', block)
+    True
+    >>> is_option_in_block('no-option', block)
+    False
+
+    """
+    for source_line in block.l_source_lines:
+        if lib_source_line.is_source_line_block_option(source_line):
+            if is_option_in_source_line(source_line, option):
+                return True
+        else:
+            return False
+
+
+def get_source_line_number_for_option(option, block):
+    # type: (str, lib_classes.Block) -> bool
+    """
+    >>> block = lib_test.get_test_block_ok()
+    >>> get_source_line_number_for_option('code', block)
+    47101
+    >>> get_source_line_number_for_option('encoding', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    47102
+    >>> get_source_line_number_for_option('no-option', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+      ...
+    ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line 47100
+    """
+
+    for source_line in block.l_source_lines:
+        if lib_source_line.is_source_line_block_option(source_line):
+            if is_option_in_source_line(source_line, option):
+                return source_line.line_number
+        else:
+            raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
+                file=block.source_file_name,
+                option=option,
+                line=block.l_source_lines[0].line_number))
+
+
+def is_option_in_source_line(source_line, option):
+    # type: (lib_classes.SourceLine, str) -> bool
+    """
+    >>> source_line = lib_classes.SourceLine(line_number=4711, content='   :code:')
+    >>> is_option_in_source_line(source_line, 'code')
+    True
+    >>> is_option_in_source_line(source_line, 'encoding')
+    False
+
+    """
+    option_marked = ':' + option + ':'
+    if source_line.content.strip().startswith(option_marked):
+        return True
+    else:
+        return False
+
+
+def get_option_key_from_source_line(source_line):
+    # type: (lib_classes.SourceLine) -> str
+    """
+    >>> source_line = lib_classes.SourceLine(line_number=4711, content='   :code:')
+    >>> get_option_key_from_source_line(source_line)
+    'code'
+    """
+    key = source_line.content.split(':')[1]
+    return key

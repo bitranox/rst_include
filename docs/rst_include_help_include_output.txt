@@ -1,0 +1,17 @@
+usage: rst_inc.py include [-h] [-s [source]] [-t [target]]
+                          [-se [source encoding]] [-te [target encoding]]
+                          [-c [configfile.py]]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s [source], --source [source]
+                        default: stdin
+  -t [target], --target [target]
+                        default: stdout
+  -se [source encoding], --source_encoding [source encoding]
+                        default: utf-8-sig
+  -te [target encoding], --target_encoding [target encoding]
+                        default: utf-8
+  -c [configfile.py], --config [configfile.py]
+                        If no filename is passed, the default conf_res_inc.py
+                        is searched in the current directory
