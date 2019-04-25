@@ -7,6 +7,13 @@ from rst_include.libs import lib_test
 
 import sys
 
+# for python 2.7 compatibility
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = IOError
+    FileExistsError = IOError
+
 
 def main(cmd_args=sys.argv[1:]):
     # type ([str]) -> None

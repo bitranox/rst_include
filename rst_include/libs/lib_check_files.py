@@ -15,6 +15,14 @@ import sys
 from typing import Any
 
 
+# for python 2.7 compatibility
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = IOError
+    FileExistsError = IOError
+
+
 def check_l_rst_files(l_rst_files):
     # type: ([lib_classes.RstFile]) -> None
     """
