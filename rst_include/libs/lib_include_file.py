@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from rst_include.libs import lib_classes
-from rst_include.libs import lib_get_include_options
-from rst_include.libs import lib_test
+import rst_include.libs.lib_classes as lib_classes
+import rst_include.libs.lib_get_include_options as lib_get_include_options
+import rst_include.libs.lib_test as lib_test
 
 import io   # for python 2.7 compatibility
 import logging

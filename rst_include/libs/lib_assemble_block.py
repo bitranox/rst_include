@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from rst_include.libs import lib_classes
-from rst_include.libs import lib_block
-from rst_include.libs import lib_check_files
-from rst_include.libs import lib_get_include_options
-from rst_include.libs import lib_include_file
-from rst_include.libs import lib_source_line
-from rst_include.libs import lib_test
+import rst_include.libs.lib_classes as lib_classes
+import rst_include.libs.lib_block as lib_block
+import rst_include.libs.lib_check_files as lib_check_files
+import rst_include.libs.lib_get_include_options as lib_get_include_options
+import rst_include.libs.lib_include_file as lib_include_file
+import rst_include.libs.lib_source_line as lib_source_line
+import rst_include.libs.lib_test as lib_test
 
 
 def create_l_rst_files_from_templates(l_rst_files):

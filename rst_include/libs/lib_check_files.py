@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from rst_include.libs import lib_classes
+import rst_include.libs.lib_classes as lib_classes
 from rst_include.libs.lib_classes import RstFile
 from rst_include.libs import lib_test
 
