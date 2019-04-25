@@ -39,7 +39,7 @@ def rst_inc_from_config(config_file_path):
         os.chdir(save_path)
 
 
-def rst_inc(source, target,  source_encoding='utf-8-sig', target_encoding='utf-8'):
+def rst_inc(source, target, source_encoding='utf-8-sig', target_encoding='utf-8'):
     # type: (str, str, str, str) -> None
     lib_check_files.check_source_and_target(source, target)
     rst_file = lib_classes.RstFile(source, target, source_encoding, target_encoding)
