@@ -20,7 +20,7 @@ rst_include
    :target: https://bettercodehub.com/results/bitranox/rst_include
 .. |snyk security| image:: https://snyk.io/test/github/bitranox/rst_include/badge.svg
    :target: https://snyk.io/test/github/bitranox/rst_include
-.. |code climate| image:: https://api.codeclimate.com/v1/badges/15acaf0e7747a042c505/maintainability
+.. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
 
@@ -112,10 +112,10 @@ via python:
 .. code-block:: python
 
     # for the latest Release
-    python -m pip install --upgrade rst_include
+    python -m pip install upgrade rst_include
 
     # for the latest Development Version
-    python -m pip install --upgrade https://github.com/bitranox/rst_include/archive/master.zip
+    python -m pip install upgrade https://github.com/bitranox/rst_include/archive/master.zip
 
 Basic Usage
 -----------
@@ -246,20 +246,18 @@ You might also specify the encoding for source and target files
     # set config here
     rst_conf = RstConf()
 
-    rst_conf.l_rst_files = [
-        # paths absolute, or relative to the location of the config file
-        RstFile(source='./rst_include/tests/test1_no_includes_template.rst',
-                target='./rst_include/tests/test1_no_includes_result.rst',
-                source_encoding='utf-8-sig',  # default = utf-8-sig because it can read utf-8 and utf-8-sig
-                target_encoding='utf-8'      # default = utf-8
-                ),
-        RstFile(source='./rst_include/tests/test2_include_samedir_template.rst',
-                target='./rst_include/tests/test2_include_samedir_result.rst'),
-        RstFile(source='./rst_include/tests/test3_include_subdir_template.rst',
-                target='./rst_include/tests/test3_include_subdir_result.rst'),
-        RstFile(source='./rst_include/tests/test4_include_nocode_template.rst',
-                target='./rst_include/tests/test4_include_nocode_result.rst'),
-        ]
+    # paths absolute, or relative to the location of the config file
+    rst_conf.l_rst_files = [RstFile(source='./rst_include/tests/test1_no_includes_template.rst',
+                                    target='./rst_include/tests/test1_no_includes_result.rst',
+                                    source_encoding='utf-8-sig',  # default = utf-8-sig because it can read utf-8 and utf-8-sig
+                                    target_encoding='utf-8'      # default = utf-8
+                                    ),
+                            RstFile(source='./rst_include/tests/test2_include_samedir_template.rst',
+                                    target='./rst_include/tests/test2_include_samedir_result.rst'),
+                            RstFile(source='./rst_include/tests/test3_include_subdir_template.rst',
+                                    target='./rst_include/tests/test3_include_subdir_result.rst'),
+                            RstFile(source='./rst_include/tests/test4_include_nocode_template.rst',
+                                    target='./rst_include/tests/test4_include_nocode_result.rst')]
 
 
 Additional You can easily replace text strings :

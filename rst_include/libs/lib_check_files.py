@@ -2,10 +2,12 @@
 
 try:
     from . import lib_classes
+    from .lib_classes import RstFile
     from . import lib_test
 except ImportError:
     # this we need for local doctest
     import lib_classes
+    from lib_classes import RstFile
     import lib_test
 
 import io   # for python 2.7 compatibility
@@ -24,7 +26,7 @@ except NameError:
 
 
 def check_l_rst_files(l_rst_files):
-    # type: ([lib_classes.RstFile]) -> None
+    # type: ([RstFile]) -> None
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -60,7 +62,7 @@ def check_l_rst_files(l_rst_files):
 
 
 def log_and_raise_if_no_files_given(l_rst_files):
-    # type: ([lib_classes.RstFile]) -> None
+    # type: ([RstFile]) -> None
     """
     >>> # test no rst_file given
     >>> log_and_raise_if_no_files_given([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -116,6 +118,7 @@ def log_and_raise_if_source_file_not_ok(source):
 
 
 def log_and_raise_if_source_file_equals_target_file(source, target):
+    # type: (str, str) -> None
     """
     >>> # check input sys.stdin, output sys.stdout
     >>> log_and_raise_if_source_file_equals_target_file(sys.stdin, sys.stdout)

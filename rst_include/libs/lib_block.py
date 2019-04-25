@@ -2,15 +2,19 @@
 
 try:
     from . import lib_classes
+    from .lib_classes import Block
+    from .lib_classes import SourceLine
     from . import lib_source_line
 except ImportError:
     # this we need for local doctest
     import lib_classes
+    from lib_classes import Block
+    from lib_classes import SourceLine
     import lib_source_line
 
 
 def is_include_block(block):
-    # type: (lib_classes.Block) -> bool
+    # type: (Block) -> bool
     """
     >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='something')
@@ -38,7 +42,7 @@ def is_include_block(block):
 
 
 def get_block_source_lines_joined(l_source_lines):
-    # type: ([lib_classes.SourceLine]) -> str
+    # type: ([SourceLine]) -> str
     """
     >>> l_source_lines = list()
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='aa\\n')

@@ -2,6 +2,7 @@
 
 try:
     from . import lib_classes
+    from .lib_classes import Block
     from . import lib_block_options
     from . import lib_source_line
     from . import lib_path
@@ -9,6 +10,7 @@ try:
 except ImportError:
     # this we need for local doctest
     import lib_classes
+    from lib_classes import Block
     import lib_block_options
     import lib_source_line
     import lib_path
@@ -20,7 +22,7 @@ import os
 
 
 def get_include_options(block):
-    # type: (lib_classes.Block) -> None
+    # type: (Block) -> None
     """
     >>> block = lib_test.get_test_block_ok()
     >>> get_include_options(block)
@@ -40,7 +42,7 @@ def get_include_options(block):
 
 
 def get_include_block_pass_through_options(block):
-    # type: (lib_classes.Block) -> [lib_classes.SourceLine]
+    # type: (Block) -> [lib_classes.SourceLine]
     """
     >>> block = lib_test.get_test_block_ok()
     >>> pass_through_options = get_include_block_pass_through_options(block)
@@ -65,7 +67,7 @@ def get_include_block_pass_through_options(block):
 
 
 def get_include_block_additional_content(block):
-    # type: (lib_classes.Block) -> [lib_classes.SourceLine]
+    # type: (Block) -> [lib_classes.SourceLine]
     """
     >>> block = lib_test.get_test_block_ok()
     >>> l_additional_content = get_include_block_additional_content(block)
@@ -92,7 +94,7 @@ def get_include_block_additional_content(block):
 
 
 def get_include_filename(block):
-    # type: (lib_classes.Block) -> (str, str)
+    # type: (Block) -> (str, str)
     """
     >>> block = lib_test.get_test_block_ok()
 
@@ -124,7 +126,6 @@ def get_include_filename(block):
         logger.error(s_error)
         raise FileNotFoundError(s_error)
 
-    # include_filename_absolut = lib_path.get_include_filename_absolut(source_file_name=block.source_file_name, include_filename=include_filename)
     include_filename_absolut = lib_path.get_absolute_path_relative_from_path(block.source_file_name, include_filename)
     if not os.path.isfile(include_filename_absolut):
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" does not exist'.format(
@@ -139,7 +140,7 @@ def get_include_filename(block):
 
 
 def get_include_file_code(block):
-    # type: (lib_classes.Block) -> str
+    # type: (Block) -> str
     """
     >>> # test code set to python
     >>> block = lib_test.get_test_block_ok()
@@ -169,7 +170,7 @@ def get_include_file_code(block):
 
 
 def get_include_file_encoding(block):
-    # type: (lib_classes.Block) -> str
+    # type: (Block) -> str
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test encoding set to utf-8
@@ -199,7 +200,7 @@ def get_include_file_encoding(block):
 
 
 def get_include_file_start_line(block):
-    # type: (lib_classes.Block) -> int
+    # type: (Block) -> int
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test start-line set to 10
@@ -237,7 +238,7 @@ def get_include_file_start_line(block):
 
 
 def get_include_file_end_line(block):
-    # type: (lib_classes.Block) -> int
+    # type: (Block) -> int
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test end-line set to 25
@@ -274,7 +275,7 @@ def get_include_file_end_line(block):
 
 
 def get_include_file_start_after(block):
-    # type: (lib_classes.Block) -> str
+    # type: (Block) -> str
     """
     >>> block = lib_test.get_test_block_ok()
 
@@ -305,7 +306,7 @@ def get_include_file_start_after(block):
 
 
 def get_include_file_end_before(block):
-    # type: (lib_classes.Block) -> str
+    # type: (Block) -> str
     """
     >>> # test end-before set to 'end-marker'
     >>> block = lib_test.get_test_block_ok()
@@ -334,7 +335,7 @@ def get_include_file_end_before(block):
 
 
 def get_blanks_to_add_to_content(block):
-    # type: (lib_classes.Block) -> int
+    # type: (Block) -> int
     """
 
 
