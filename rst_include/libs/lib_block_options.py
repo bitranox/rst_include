@@ -85,7 +85,7 @@ def get_option_value_from_block(option, block):
     >>> get_option_value_from_block('no-option', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: File: "C:/opt/vm-shared-folder/pyapps/rst_include/rst_include/tests/README.template.rst", option "no-option" not found in block starting with Line: 47100
+    ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
     for source_line in block.l_source_lines:
         if lib_source_line.is_source_line_block_option(source_line):
