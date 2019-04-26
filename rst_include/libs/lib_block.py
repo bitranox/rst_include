@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs.lib_classes import Block
 from rst_include.libs.lib_classes import SourceLine
 from rst_include.libs import lib_classes

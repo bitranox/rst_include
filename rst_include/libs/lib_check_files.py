@@ -1,22 +1,11 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import RstFile
 from rst_include.libs import lib_test
 
-import io   # for python 2.7 compatibility
 import logging
 import os
 import sys
 from typing import Any
-
-
-# for python 2.7 compatibility
-try:
-    FileNotFoundError
-except NameError:
-    FileNotFoundError = IOError
-    FileExistsError = IOError
 
 
 def check_l_rst_files(l_rst_files):
@@ -169,13 +158,13 @@ def read_input(source, encoding='utf-8-sig'):
 
     >>> # read from sys.stdin
     >>> test_file_name = test_dir + '/test_read.rst'
-    >>> test_file = io.open(test_file_name, 'r', encoding='utf-8-sig')
+    >>> test_file = open(test_file_name, 'r', encoding='utf-8-sig')
     >>> assert read_input(test_file) == 'test file'
     >>> test_file.close()
 
     """
     if isinstance(source, str):
-        with io.open(source, encoding=encoding, mode='r') as sourcefile:
+        with open(source, encoding=encoding, mode='r') as sourcefile:
             content = sourcefile.read()
     else:
         content = source.read()
@@ -203,7 +192,7 @@ def read_source_lines(source, encoding='utf-8-sig'):
 
     >>> # read from sys.stdin
     >>> test_file_name = test_dir + '/test_read.rst'
-    >>> test_file = io.open(test_file_name, 'r', encoding='utf-8-sig')
+    >>> test_file = open(test_file_name, 'r', encoding='utf-8-sig')
     >>> l_source_lines = read_source_lines(test_file)
     >>> test_file.close()
     >>> assert l_source_lines[0].line_number == 0
@@ -213,7 +202,7 @@ def read_source_lines(source, encoding='utf-8-sig'):
     """
 
     if isinstance(source, str):
-        with io.open(source, encoding=encoding, mode='r') as sourcefile:
+        with open(source, encoding=encoding, mode='r') as sourcefile:
             content_lines = sourcefile.readlines()
     else:
         content_lines = source.readlines()
@@ -245,7 +234,7 @@ def write_output(target, content, encoding='utf-8'):
 
     >>> # write to stdout
     >>> target_file_name = test_dir + '/write_test.txt'
-    >>> target_file_object = io.open(target_file_name, mode='w', encoding='utf-8')
+    >>> target_file_object = open(target_file_name, mode='w', encoding='utf-8')
     >>> write_output(target_file_object,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
     >>> target_file_object.close()
     >>> l_source_lines = read_source_lines(target_file_name)
@@ -256,8 +245,9 @@ def write_output(target, content, encoding='utf-8'):
 
 
     """
+
     if isinstance(target, str):
-        with io.open(target, encoding=encoding, mode='w') as file:
+        with open(target, encoding=encoding, mode='w') as file:
             file.write(content)
     else:
         target.write(content)

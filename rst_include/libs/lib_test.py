@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
@@ -7,9 +5,7 @@ from rst_include.libs import lib_path
 from rst_include.libs import lib_assemble_block
 
 import logging
-import io  # for python 2.7 compatibility
 import os
-import sys
 
 
 def run_template_tests():
@@ -55,10 +51,10 @@ def compare_results_equal(expected, result, expected_file_encoding='utf-8-sig', 
 
     logger = logging.getLogger('compare_results')
 
-    with io.open(expected, mode='r', encoding=expected_file_encoding) as f_expected_file:
+    with open(expected, mode='r', encoding=expected_file_encoding) as f_expected_file:
         l_expected_lines = f_expected_file.readlines()
 
-    with io.open(result, mode='r', encoding=result_file_encoding) as f_result_file:
+    with open(result, mode='r', encoding=result_file_encoding) as f_result_file:
         l_result_lines = f_result_file.readlines()
 
     len_expected_lines = len(l_expected_lines)

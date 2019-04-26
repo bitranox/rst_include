@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_assemble_block
 from rst_include.libs import lib_config_file
 from rst_include.libs import lib_check_files
 from rst_include.libs import lib_path
+
 
 import os
 

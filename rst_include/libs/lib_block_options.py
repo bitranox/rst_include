@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_test
+
 
 import logging
 

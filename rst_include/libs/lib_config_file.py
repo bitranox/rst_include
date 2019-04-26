@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import logging
-
 from rst_include.libs import lib_path
 from rst_include.libs import lib_import_module
 from rst_include.libs import lib_test
+
 
 import os
 from types import ModuleType
@@ -68,14 +66,7 @@ def load_config_file(conf_file_name):
         logger.error(s_error)
         raise FileNotFoundError(s_error)
 
-    # we need to change to the directory of the conf File, because of possibly relative imports inside of it
-    # save_current_dir = lib_path.get_current_dir()
-    dirname_module = lib_path.get_absolute_dirname(conf_file_name_absolute)
-    # os.chdir(dirname_module)
-
     module = lib_import_module.get_module_from_file(module_name='conf_rst_include', path_to_module=conf_file_name_absolute)
-
-    # os.chdir(save_current_dir)
 
     if not hasattr(module, 'rst_conf'):
         raise_config_import_error(conf_file_name, 'rst_conf')

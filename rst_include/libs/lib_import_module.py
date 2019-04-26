@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import sys
 from types import ModuleType
 from rst_include.libs import lib_test

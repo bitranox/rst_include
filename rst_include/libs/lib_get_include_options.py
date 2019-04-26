@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block
 from rst_include.libs import lib_block_options
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_path
 from rst_include.libs import lib_test
-
 
 import logging
 import os
