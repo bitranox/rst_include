@@ -62,7 +62,7 @@ def load_config_file(conf_file_name):
         conf_file_name = 'conf_res_inc.py'
         logger.info('loading default config file "conf_res_inc.py" from current directory')
 
-    conf_file_name_absolute = lib_path.replace_backslashes(os.path.abspath(conf_file_name))
+    conf_file_name_absolute = lib_path.strip_and_replace_backslashes(os.path.abspath(conf_file_name))
     if not os.path.isfile(conf_file_name_absolute):
         s_error = 'can not load config file {conf}'.format(conf=conf_file_name_absolute)
         logger.error(s_error)

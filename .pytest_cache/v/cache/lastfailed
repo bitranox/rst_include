@@ -36,5 +36,6 @@
   "rst_include/libs/lib_include_file.py::rst_include.rst_include.libs.lib_include_file.read_include_file": true,
   "rst_include/libs/lib_include_file.py::rst_include.rst_include.libs.lib_include_file.slice_include_file_lines": true,
   "rst_include/libs/lib_include_file.py::rst_include.rst_include.libs.lib_include_file.slice_include_file_markers": true,
+  "rst_include/libs/lib_path.py::rst_include.libs.lib_path.get_current_dir": true,
   "setup.py": true
 }

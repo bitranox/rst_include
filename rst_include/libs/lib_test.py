@@ -265,7 +265,7 @@ def get_rst_include_dir():
     # type: () -> str
     rst_include_dir = lib_path.get_current_dir().split('rst_include', 1)[0]
     rst_include_dir = os.path.join(rst_include_dir, 'rst_include')
-    rst_include_dir = lib_path.replace_backslashes(rst_include_dir)
+    rst_include_dir = lib_path.strip_and_replace_backslashes(rst_include_dir)
     return rst_include_dir
 
 
