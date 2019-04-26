@@ -25,7 +25,7 @@ def is_relative_path(doc_file_name):
     ... else:
     ...    assert result == True
 
-    >>> is_relative_path('D:/test/test.txt')
+    >>> result = is_relative_path('D:/test/test.txt')
     >>> if is_windows:
     ...    assert result == False
     ... else:
