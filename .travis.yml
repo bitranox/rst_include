@@ -22,17 +22,6 @@ services:   # start services
 
 matrix:
     include:
-    - os: windows
-      language: sh
-      name: "Windows Python 2.7"
-
-      # oddly a secure password under env: global: causes that choco fails
-      # so we need to put the option : filter_secrets: false
-      # this can be a security issue, check that You dont leak secrets here !
-      filter_secrets: false
-      before_install:
-          - choco install python2
-          - export PATH="/c/Python27:/c/Python27/Scripts:$PATH"
 
     - os: windows
       language: sh
