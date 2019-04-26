@@ -85,6 +85,7 @@ def delete_trailing_empty_include_file_lines(block):
         else:
             break
 
+
 def slice_include_file_markers(block):
     # type: (lib_classes.Block) -> None
     """

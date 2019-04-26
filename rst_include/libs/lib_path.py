@@ -149,26 +149,33 @@ def get_absolute_path_relative_from_path(path, path2):
     if the first path is relative, on windows the drive will be the current drive.
     this is necessary because WINE gives drive "Z" back !
 
-    >>> get_absolute_path_relative_from_path('somefile.txt', './test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '.../test.txt'
-    >>> get_absolute_path_relative_from_path('./a/b/c/', './test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '.../a/b/c/test.txt'
-    >>> get_absolute_path_relative_from_path('./a/b/c/', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> # path1 absolut, path2 relativ
+    >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    'c:/a/b/c/d/test.txt'
+    >>> # path1 relativ, path2 relativ
+    >>> get_absolute_path_relative_from_path('./a/b/c/some-file.txt', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../a/b/c/d/test.txt'
-    >>> get_absolute_path_relative_from_path('./a/b/c/some_file.txt', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '.../a/b/c/d/test.txt'
-    >>> get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '.../a/b/d/test.txt'
+    >>> # path1 absolut, path2 absolut
+    >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', 'c:/d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    'c:/d/test.txt'
+    >>> # path1 relativ, path2 absolut
+    >>> get_absolute_path_relative_from_path('./a/b/c/some-file.txt', 'c:/d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    'c:/d/test.txt'
+    >>> # path one level back
+    >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', '../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    'c:/a/b/d/test.txt'
+    >>> # path two levels back
     >>> get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '../../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../a/d/test.txt'
     >>> result = get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '/f/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert result.lower() == 'c:/f/test.txt' or result == '/f/test.txt'      # on wine the drive letter is lowercase
+    >>> result = substract_windows_drive_letter(result)
+    >>> assert result.lower() == '/f/test.txt'
 
     """
 
-    if not is_relative_path(path2):
-        result_path = get_absolute_path(path2)
-    else:
+    if is_relative_path(path2):
         base_path = os.path.abspath(os.path.dirname(path))
         result_path = get_absolute_path(base_path + '/' + path2)
+    else:
+        result_path = get_absolute_path(path2)
     return result_path

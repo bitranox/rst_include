@@ -10,4 +10,4 @@ positional arguments:
 optional arguments:
   -h, --help         show this help message and exit
 
-If no parameter is given, conf_res_inc.py is searched in the current directory
+check the documentation on github

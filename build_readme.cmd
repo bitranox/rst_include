@@ -17,8 +17,12 @@ echo %repository% | rst_inc.py replace "_" "-" > temp.txt
 set /p repository_dashed= < temp.txt
 del temp.txt
 
-REM better use /path/to/file  for absolute paths and .(path/to/file for relative paths
-REM because You never know on which drive letter it is going to run !
+
+REM paths absolute, or relative to the location of the config file
+REM the notation for relative files is like on windows or linux - not like in python.
+REM so You might use ../../some/directory/some_document.rst to go two levels back.
+REM avoid absolute paths since You never know where the program will run.
+
 echo 'create the sample help outputs'
 rst_inc.py -h > ./docs/rst_include_help_output.txt
 rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
