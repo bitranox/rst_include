@@ -42,7 +42,7 @@ This has many advantages like :
 This README was also created with rst_include, You might look at ./docs/README_template.rst , build_readme.sh, build_readme.cmd and build_readme.py as examples. (they all do the same, just different versions)
 
 
-`100% code coverage <https://codecov.io/gh/bitranox/{repository}>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/{repository}>`_
+`100% code coverage <https://codecov.io/gh/bitranox/{repository}>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/{repository}>`_, automatic daily builds  and monitoring
 
 ----
 
