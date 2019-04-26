@@ -46,7 +46,6 @@ def get_current_dir():
     # type: () -> str
     """
     >>> path = get_current_dir()
-    >>> path
     """
     current_dir = os.path.abspath(os.curdir)
     current_dir = strip_and_replace_backslashes(current_dir)
