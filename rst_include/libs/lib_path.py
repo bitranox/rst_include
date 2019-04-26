@@ -18,10 +18,19 @@ def is_relative_path(doc_file_name):
     False
     >>> is_relative_path('//main/install')
     False
-    >>> is_relative_path('c:/test/test.txt')
-    False
+
+    >>> result = is_relative_path('c:/test/test.txt')
+    >>> if is_windows:
+    ...    assert result == False
+    ... else:
+    ...    assert result == True
+
     >>> is_relative_path('D:/test/test.txt')
-    False
+    >>> if is_windows:
+    ...    assert result == False
+    ... else:
+    ...    assert result == True
+
     >>> is_relative_path('.test/test.txt')
     True
     >>> is_relative_path('test/test.txt')

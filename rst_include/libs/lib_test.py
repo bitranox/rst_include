@@ -118,12 +118,15 @@ def get_test_block_ok():
     l_source_lines.append(lib_classes.SourceLine(line_number=47107, content='    :pass-through1:'))
     l_source_lines.append(lib_classes.SourceLine(line_number=47108, content='    :pass-through2: value2'))
     l_source_lines.append(lib_classes.SourceLine(line_number=47209, content='    '))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47210, content='    :no-option:'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47211, content='additional content1'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47212, content='additional content2'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47213, content='additional content3'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47214, content='additional content4'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47215, content='additional content5'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47210, content=''))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47211, content='    :no-option:'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47212, content=''))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47213, content='additional content1'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47214, content='additional content2'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47215, content='additional content3'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47216, content='additional content4'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47217, content='additional content5'))
+    l_source_lines.append(lib_classes.SourceLine(line_number=47218, content=''))
     block.l_source_lines = l_source_lines
     return block
 
@@ -267,21 +270,6 @@ def get_rst_include_dir():
     rst_include_dir = os.path.join(rst_include_dir, 'rst_include')
     rst_include_dir = lib_path.strip_and_replace_backslashes(rst_include_dir)
     return rst_include_dir
-
-
-def is_pytest_running():
-    # type: () -> bool
-    if is_pytest_in_pycharm_running():
-        return True
-    return False
-
-
-def is_pytest_in_pycharm_running():
-    # type: () -> bool
-    for argument in sys.argv:
-        if 'pytest_runner.py' in argument:
-            return True
-        return False
 
 
 def import_test():

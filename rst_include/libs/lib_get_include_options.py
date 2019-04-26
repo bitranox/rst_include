@@ -63,13 +63,16 @@ def get_include_block_additional_content(block):
     >>> block = lib_test.get_test_block_ok()
     >>> l_additional_content = get_include_block_additional_content(block)
     >>> assert l_additional_content[0].content == '    '
-    >>> assert l_additional_content[1].content == '    :no-option:'
-    >>> assert l_additional_content[2].content == 'additional content1'
-    >>> assert l_additional_content[3].content == 'additional content2'
-    >>> assert l_additional_content[4].content == 'additional content3'
-    >>> assert l_additional_content[5].content == 'additional content4'
-    >>> assert l_additional_content[6].content == 'additional content5'
-    >>> l_additional_content[7]   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> assert l_additional_content[1].content == ''
+    >>> assert l_additional_content[2].content == '    :no-option:'
+    >>> assert l_additional_content[3].content == ''
+    >>> assert l_additional_content[4].content == 'additional content1'
+    >>> assert l_additional_content[5].content == 'additional content2'
+    >>> assert l_additional_content[6].content == 'additional content3'
+    >>> assert l_additional_content[7].content == 'additional content4'
+    >>> assert l_additional_content[8].content == 'additional content5'
+    >>> assert l_additional_content[9].content == ''
+    >>> l_additional_content[10]   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     IndexError: list index out of range

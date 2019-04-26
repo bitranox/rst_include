@@ -63,7 +63,7 @@ def assemble_additional_content(block):
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> assemble_additional_content(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '\\n    :no-option:\\nadditional content1...additional content5\\n\\n'
+    '\\n    :no-option:\\n\\nadditional content1...additional content5\\n\\n'
 
     """
     delete_leading_empty_additional_content_lines(block)
@@ -78,6 +78,13 @@ def assemble_additional_content(block):
 
 
 def delete_leading_empty_additional_content_lines(block):
+    """
+    >>> block = lib_test.get_test_block_include2_ok()
+    >>> lib_get_include_options.get_include_options(block)
+    >>> delete_leading_empty_additional_content_lines(block)
+    >>> [source_line.content for source_line in block.additional_content]  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    ['    :no-option:', ..., '']
+    """
     while len(block.additional_content):
         if not block.additional_content[0].content.strip():
             block.additional_content = block.additional_content[1:]
@@ -86,11 +93,19 @@ def delete_leading_empty_additional_content_lines(block):
 
 
 def delete_trailing_empty_additional_content_lines(block):
+    """
+    >>> block = lib_test.get_test_block_include2_ok()
+    >>> lib_get_include_options.get_include_options(block)
+    >>> delete_trailing_empty_additional_content_lines(block)
+    >>> [source_line.content for source_line in block.additional_content]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    ['    ', ..., 'additional content5']
+    """
     while len(block.additional_content):
         if not block.additional_content[-1].content.strip():
             block.additional_content = block.additional_content[0:-1]
         else:
             break
+
 
 def assemble_include_block(block):
     # type: (lib_classes.Block) -> str
