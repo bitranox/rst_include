@@ -71,14 +71,19 @@ def slice_include_file_lines(block):
 
 
 def delete_leading_empty_include_file_lines(block):
-    while len(block.include_file_lines) and not block.include_file_lines[0].strip():
-        block.include_file_lines = block.include_file_lines[1:]
+    while len(block.include_file_lines):
+        if not block.include_file_lines[0].strip():
+            block.include_file_lines = block.include_file_lines[1:]
+        else:
+            break
 
 
 def delete_trailing_empty_include_file_lines(block):
-    while len(block.include_file_lines) and not block.include_file_lines[-1].strip():
-        block.include_file_lines = block.include_file_lines[0:-1]
-
+    while len(block.include_file_lines):
+        if not block.include_file_lines[-1].strip():
+            block.include_file_lines = block.include_file_lines[0:-1]
+        else:
+            break
 
 def slice_include_file_markers(block):
     # type: (lib_classes.Block) -> None

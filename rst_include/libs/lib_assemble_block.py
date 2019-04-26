@@ -78,14 +78,19 @@ def assemble_additional_content(block):
 
 
 def delete_leading_empty_additional_content_lines(block):
-    while len(block.additional_content) and not block.additional_content[0].content.strip():
-        block.additional_content = block.additional_content[1:]
+    while len(block.additional_content):
+        if not block.additional_content[0].content.strip():
+            block.additional_content = block.additional_content[1:]
+        else:
+            break
 
 
 def delete_trailing_empty_additional_content_lines(block):
-    while len(block.additional_content) and not block.additional_content[-1].content.strip():
-        block.additional_content = block.additional_content[0:-1]
-
+    while len(block.additional_content):
+        if not block.additional_content[-1].content.strip():
+            block.additional_content = block.additional_content[0:-1]
+        else:
+            break
 
 def assemble_include_block(block):
     # type: (lib_classes.Block) -> str

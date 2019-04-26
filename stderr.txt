@@ -1,1 +1,0 @@
-2019-04-23 11:53:58: ERROR: check_conf_source_exist: RST File "xx" does not exist

@@ -31,9 +31,9 @@ This README was also created with rst_include, You might look at ./docs/README_t
 - `Requirements`_
 - `Acknowledgements`_
 - `Contribute`_
-- `Report Issues <https://github.com/bitranox/{repository}/blob/master/ISSUE_TEMPLATE.md>`_
-- `Pull Request <https://github.com/bitranox/{repository}/blob/master/PULL_REQUEST_TEMPLATE.md>`_
-- `Code of Conduct <https://github.com/bitranox/{repository}/blob/master/CODE_OF_CONDUCT.md>`_
+- `Report Issues <https://github.com/{repository_slug}/blob/master/ISSUE_TEMPLATE.md>`_
+- `Pull Request <https://github.com/{repository_slug}/blob/master/PULL_REQUEST_TEMPLATE.md>`_
+- `Code of Conduct <https://github.com/{repository_slug}/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 
 .. include:: ./link_to_issues.rst
