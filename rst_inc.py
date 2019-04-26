@@ -3,7 +3,7 @@ import os
 from rst_include import *
 from rst_include.libs import lib_log
 from rst_include.libs import lib_args
-from rst_include.libs import lib_test_functions
+from rst_include.libs import lib_test
 
 import sys
 
@@ -24,8 +24,8 @@ def main(cmd_args=sys.argv[1:]):
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 
 
-    >>> lib_test_functions.run_template_tests()
-    >>> lib_test_functions.run_template_tests_not_supported()
+    >>> lib_test.run_template_tests()
+    >>> lib_test.run_template_tests_not_supported()
 
     >>> # test no parameter given
     >>> main([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -38,33 +38,33 @@ def main(cmd_args=sys.argv[1:]):
     SystemExit: 0
 
     >>> # test replace
-    >>> source_file = lib_test_functions.get_test_dir() + '/test1_no_includes_template.rst'
-    >>> target_file = lib_test_functions.get_test_dir() + '/test1_no_includes_result.rst'
-    >>> expected_file_replace = lib_test_functions.get_test_dir() + '/test1_no_includes_expected_replace.rst'
-    >>> expected_file = lib_test_functions.get_test_dir() + '/test1_no_includes_expected.rst'
-    >>> lib_test_functions.remove_file_silent(target_file)
+    >>> source_file = lib_test.get_test_dir() + '/test1_no_includes_template.rst'
+    >>> target_file = lib_test.get_test_dir() + '/test1_no_includes_result.rst'
+    >>> expected_file_replace = lib_test.get_test_dir() + '/test1_no_includes_expected_replace.rst'
+    >>> expected_file = lib_test.get_test_dir() + '/test1_no_includes_expected.rst'
+    >>> lib_test.remove_file_silent(target_file)
     >>> main(['replace', '-s', source_file, '-t', target_file, '=', '*', '-1'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_functions.compare_results_equal(expected_file_replace, target_file)
+    >>> assert lib_test.compare_results_equal(expected_file_replace, target_file)
 
     >>> # test include source and target given
-    >>> lib_test_functions.remove_file_silent(target_file)
+    >>> lib_test.remove_file_silent(target_file)
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_functions.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test.compare_results_equal(expected_file, target_file)
 
     >>> # test default config file from current directory
     >>> save_dir = os.path.abspath(os.curdir)
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
     >>> os.chdir(test_dir)
-    >>> lib_test_functions.remove_file_silent(target_file)
+    >>> lib_test.remove_file_silent(target_file)
     >>> main(['include', '-c'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_functions.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test.compare_results_equal(expected_file, target_file)
     >>> os.chdir(save_dir)
 
     >>> # test load config file
-    >>> lib_test_functions.remove_file_silent(target_file)
-    >>> config_file = lib_test_functions.get_test_dir() + '/conf_rst_include_test.py'
+    >>> lib_test.remove_file_silent(target_file)
+    >>> config_file = lib_test.get_test_dir() + '/conf_rst_include_test.py'
     >>> main(['include', '-c', config_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_functions.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test.compare_results_equal(expected_file, target_file)
 
     """
 

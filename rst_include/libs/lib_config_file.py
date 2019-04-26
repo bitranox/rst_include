@@ -4,7 +4,7 @@ import logging
 
 from rst_include.libs import lib_path
 from rst_include.libs import lib_import_module
-from rst_include.libs import lib_test_functions
+from rst_include.libs import lib_test
 
 import os
 from types import ModuleType
@@ -14,11 +14,11 @@ def config_exists(config_file_name):
     # type: (str) -> bool
     """
     >>> # test file exists
-    >>> config_file_name = lib_test_functions.get_test_dir() + '/conf_rst_include_test.py'
+    >>> config_file_name = lib_test.get_test_dir() + '/conf_rst_include_test.py'
     >>> assert config_exists(config_file_name) == True
 
     >>> # test file not exists
-    >>> config_file_name = lib_test_functions.get_test_dir() + '/does_not_exist.py'
+    >>> config_file_name = lib_test.get_test_dir() + '/does_not_exist.py'
     >>> assert config_exists(config_file_name) == False
 
     """
@@ -32,19 +32,19 @@ def load_config_file(conf_file_name):
     # type: (str) -> ModuleType
     """
     >>> # test load named config File
-    >>> conf_file_name = lib_test_functions.get_test_dir() + '/conf_rst_include_test.py'
+    >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test.py'
     >>> module = load_config_file(conf_file_name)
     >>> assert len(module.rst_conf.l_rst_files) > 1
 
     >>> # test config file not correct
-    >>> conf_file_name = lib_test_functions.get_test_dir() + '/conf_rst_include_test_attr_rst_conf_missing.py'
+    >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test_attr_rst_conf_missing.py'
     >>> module = load_config_file(conf_file_name)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     ValueError: the config file ".../conf_rst_include_test_attr_rst_conf_missing.py" has not the correct attribute "rst_conf"
 
 
-    >>> conf_file_name = lib_test_functions.get_test_dir() + '/conf_rst_include_test_attr_l_rst_files_missing.py'
+    >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test_attr_l_rst_files_missing.py'
     >>> module = load_config_file(conf_file_name)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...

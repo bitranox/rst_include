@@ -2,7 +2,7 @@
 
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import RstFile
-from rst_include.libs import lib_test_functions
+from rst_include.libs import lib_test
 
 import io   # for python 2.7 compatibility
 import logging
@@ -22,7 +22,7 @@ except NameError:
 def check_l_rst_files(l_rst_files):
     # type: ([RstFile]) -> None
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> # test no rst files given
     >>> l_rst_files = []
@@ -88,7 +88,7 @@ def check_source_and_target(source, target):
 def log_and_raise_if_source_file_not_ok(source):
     # type: (str) -> None
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> # test source file ok
     >>> log_and_raise_if_source_file_not_ok( test_dir + '/include1.py')
@@ -150,7 +150,7 @@ def log_warning_if_target_file_exist(target):
 def file_exists(file):
     # type: (str) -> bool
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> assert file_exists('does not exist') == False
     >>> assert file_exists(test_dir + '/include1.py') == True
@@ -162,7 +162,7 @@ def read_input(source, encoding='utf-8-sig'):
     # type: (Any, str) -> str
 
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> # read from input file
     >>> assert read_input(test_dir + '/test_read.rst') == 'test file'
@@ -186,7 +186,7 @@ def read_source_lines(source, encoding='utf-8-sig'):
     # type: (Any, str) -> [lib_classes.SourceLine]
 
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> # read from input file
     >>> l_source_lines = read_source_lines(test_dir + '/test_read.rst')
@@ -232,7 +232,7 @@ def read_source_lines(source, encoding='utf-8-sig'):
 def write_output(target, content, encoding='utf-8'):
     # type: (Any, str, str) -> None
     """
-    >>> test_dir = lib_test_functions.get_test_dir()
+    >>> test_dir = lib_test.get_test_dir()
 
     >>> # write to file
     >>> target_file = test_dir + '/write_test.txt'

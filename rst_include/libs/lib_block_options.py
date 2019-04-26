@@ -2,7 +2,7 @@
 
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_source_line
-from rst_include.libs import lib_test_functions
+from rst_include.libs import lib_test
 
 import logging
 
@@ -10,7 +10,7 @@ import logging
 def get_option_value_from_block_or_raise_if_empty_or_invalid(option, block, value_must_be_int=False):
     # type: (str, lib_classes.Block, bool) -> str
     """
-    >>> block = lib_test_functions.get_test_block_ok()
+    >>> block = lib_test.get_test_block_ok()
     >>> # test ok
     >>> get_option_value_from_block_or_raise_if_empty_or_invalid('code', block)
     'python'
@@ -71,7 +71,7 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option, block, valu
 def get_option_value_from_block(option, block):
     # type: (str, lib_classes.Block) -> str
     """
-    >>> block = lib_test_functions.get_test_block_ok()
+    >>> block = lib_test.get_test_block_ok()
     >>> get_option_value_from_block('code', block)
     'python'
     >>> get_option_value_from_block('encoding', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -96,7 +96,7 @@ def get_option_value_from_block(option, block):
 def is_option_in_block(option, block):
     # type: (str, lib_classes.Block) -> bool
     """
-    >>> block = lib_test_functions.get_test_block_ok()
+    >>> block = lib_test.get_test_block_ok()
     >>> is_option_in_block('code', block)
     True
     >>> is_option_in_block('no-option', block)
@@ -114,7 +114,7 @@ def is_option_in_block(option, block):
 def get_source_line_number_for_option(option, block):
     # type: (str, lib_classes.Block) -> bool
     """
-    >>> block = lib_test_functions.get_test_block_ok()
+    >>> block = lib_test.get_test_block_ok()
     >>> get_source_line_number_for_option('code', block)
     47101
     >>> get_source_line_number_for_option('encoding', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
