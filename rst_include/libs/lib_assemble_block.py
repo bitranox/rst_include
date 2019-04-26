@@ -6,20 +6,20 @@ from rst_include.libs import lib_check_files
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
 from rst_include.libs import lib_source_line
-from rst_include.libs import lib_test
+from rst_include.libs import lib_test_functions
 
 
 def create_l_rst_files_from_templates(l_rst_files):
     # type: ([lib_classes.RstFile]) -> None
     """
     >>> # test files without include
-    >>> test_dir = lib_test.get_test_dir()
+    >>> test_dir = lib_test_functions.get_test_dir()
     >>> source = test_dir + '/test1_no_includes_template.rst'
     >>> target = test_dir + '/test1_no_includes_result.rst'
     >>> expected = test_dir + '/test1_no_includes_expected.rst'
     >>> l_rst_files = [lib_classes.RstFile(source, target)]
     >>> create_l_rst_files_from_templates(l_rst_files)
-    >>> assert lib_test.compare_results_equal(expected, target)
+    >>> assert lib_test_functions.compare_results_equal(expected, target)
 
     """
     for rst_file in l_rst_files:
@@ -60,7 +60,7 @@ def create_content_from_include(block):
 def assemble_additional_content(block):
     # type: (lib_classes.Block) -> str
     """
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> assemble_additional_content(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '\\n    :no-option:\\n\\nadditional content1...additional content5\\n\\n'
@@ -79,7 +79,7 @@ def assemble_additional_content(block):
 
 def delete_leading_empty_additional_content_lines(block):
     """
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> delete_leading_empty_additional_content_lines(block)
     >>> [source_line.content for source_line in block.additional_content]  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -94,7 +94,7 @@ def delete_leading_empty_additional_content_lines(block):
 
 def delete_trailing_empty_additional_content_lines(block):
     """
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> delete_trailing_empty_additional_content_lines(block)
     >>> [source_line.content for source_line in block.additional_content]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -111,7 +111,7 @@ def assemble_include_block(block):
     # type: (lib_classes.Block) -> str
     """
     >>> # test :code: python
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
@@ -119,7 +119,7 @@ def assemble_include_block(block):
     '.. code-block:: python\\n    :pass-through1:...        pass\\n\\n'
 
     >>> # test :code: ''
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> block.include_file_code = ''
@@ -137,7 +137,7 @@ def assemble_include_block(block):
 def get_block_header(block):
     # type: (lib_classes.Block) -> str
     """
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
@@ -163,7 +163,7 @@ def get_block_header(block):
 def set_number_of_blanks_to_add(block):
     # type: (lib_classes.Block) -> int
     """
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
@@ -188,7 +188,7 @@ def get_include_lines_content(block):
     # type: (lib_classes.Block) -> str
     """
     >>> # test :code: python
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
@@ -197,7 +197,7 @@ def get_include_lines_content(block):
     '    def my_include2_2():\\n        pass\\n\\n        pass\\n'
 
     >>> # test :code: ''
-    >>> block = lib_test.get_test_block_include2_ok()
+    >>> block = lib_test_functions.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)

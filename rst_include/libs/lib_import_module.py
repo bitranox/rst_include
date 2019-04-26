@@ -2,13 +2,13 @@
 
 import sys
 from types import ModuleType
-from rst_include.libs import lib_test
+from rst_include.libs import lib_test_functions
 
 
 def get_module_from_file(module_name, path_to_module):
     # type: (str,str) -> ModuleType
     """
-    >>> module = get_module_from_file('test', lib_test.get_test_dir()+'/include1.py')
+    >>> module = get_module_from_file('test', lib_test_functions.get_test_dir()+'/include1.py')
     >>> assert module.my_include() == None
     >>> import test
     >>> assert test.my_include() == None

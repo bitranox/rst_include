@@ -2,7 +2,7 @@
 
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_get_include_options
-from rst_include.libs import lib_test
+from rst_include.libs import lib_test_functions
 
 import io   # for python 2.7 compatibility
 import logging
@@ -12,7 +12,7 @@ import sys
 def read_include_file(block):
     # type: (lib_classes.Block) -> [str]
     """
-    >>> block = lib_test.get_test_block_ok()
+    >>> block = lib_test_functions.get_test_block_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> content = read_include_file(block)
     >>> assert content[0] == 'def my_include():\\n'
@@ -46,7 +46,7 @@ def read_include_file(block):
 def process_include_file_lines(block):
     # type: (lib_classes.Block) -> None
     """
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> process_include_file_lines(block)
     >>> assert block.include_file_sliced_content == 'def my_include2_2():\\n    pass\\n\\n    pass'
     """
@@ -57,7 +57,7 @@ def process_include_file_lines(block):
 def slice_include_file_lines(block):
     # type: (lib_classes.Block) -> None
     """
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> assert block.include_file_lines == ['def my_include2_1():\\n', '    pass\\n', '\\n', '    pass\\n', '\\n',
     ...                                     '\\n', '# start-marker\\n', '\\n', 'def my_include2_2():\\n', '    pass\\n',
@@ -90,13 +90,13 @@ def slice_include_file_markers(block):
     # type: (lib_classes.Block) -> None
     """
     >>> # test ok
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> slice_include_file_markers(block)
     >>> assert block.include_file_sliced_content == 'def my_include2_2():\\n    pass\\n\\n    pass'
 
     >>> # test start_after not found, start_line_ and end_line set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -105,7 +105,7 @@ def slice_include_file_markers(block):
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found between start_line: 6 and end_line: 25
 
     >>> # test start_after not found, start_line NOT set, end_line set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_start_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
@@ -115,7 +115,7 @@ def slice_include_file_markers(block):
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found before end-line: 25
 
     >>> # test start_after not found, start_line set, end_line NOT set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
@@ -125,7 +125,7 @@ def slice_include_file_markers(block):
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found after start-line: 6
 
     >>> # test start_after not found, start_line NOT set, end_line NOT set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_start_line=None
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
@@ -136,7 +136,7 @@ def slice_include_file_markers(block):
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found
 
     >>> # test end_before not found, start_line_ and end_line set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -146,7 +146,7 @@ def slice_include_file_markers(block):
 
 
     >>> # test end_before not found, start_line NOT set, end_line set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_start_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
@@ -157,7 +157,7 @@ def slice_include_file_markers(block):
 
 
     >>> # test end_before not found, start_line set, end_line NOT set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
@@ -168,7 +168,7 @@ def slice_include_file_markers(block):
 
 
     >>> # test end_before not found, start_line NOT set, end_line NOT set
-    >>> block = lib_test.read_include_file_2()
+    >>> block = lib_test_functions.read_include_file_2()
     >>> block.include_file_start_line=None
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
