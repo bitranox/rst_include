@@ -48,14 +48,6 @@ matrix:
 
     - os: linux
       language: python
-      python: '2.7'
-
-    - os: linux
-      language: python
-      python: '3.4'
-
-    - os: linux
-      language: python
       python: '3.5'
 
     - os: linux
@@ -75,32 +67,7 @@ matrix:
 
     - os: linux
       language: python
-      python: 'pypy2.7-6.0'
-
-    - os: linux
-      language: python
       python: 'pypy3.5-6.0'
-
-    - os: linux
-      language: python
-      name: "WINE stable 32 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="stable"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE stable 64 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="stable"
-          - wine_python_version="python2"
 
     - os: linux
       language: python
@@ -125,27 +92,6 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE stable 32 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="stable"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE stable 64 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="stable"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
       name: "WINE stable 32 Bit Python 3.7.3, Windows 10"
       env:
           - WINEARCH="win32"
@@ -164,27 +110,6 @@ matrix:
           - wine_windows_version="win10"
           - wine_version="stable"
           - wine_python_version="python3"
-
-    - os: linux
-      language: python
-      name: "WINE devel 32 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="devel"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE devel 64 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="devel"
-          - wine_python_version="python2"
 
     - os: linux
       language: python
@@ -209,27 +134,6 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE devel 32 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="devel"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE devel 64 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="devel"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
       name: "WINE devel 32 Bit Python 3.7.3, Windows 10"
       env:
           - WINEARCH="win32"
@@ -248,27 +152,6 @@ matrix:
           - wine_windows_version="win10"
           - wine_version="devel"
           - wine_python_version="python3"
-
-    - os: linux
-      language: python
-      name: "WINE staging 32 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="staging"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE staging 64 Bit Python 2.7.16, Windows XP"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="winxp"
-          - wine_version="staging"
-          - wine_python_version="python2"
 
     - os: linux
       language: python
@@ -293,27 +176,6 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE staging 32 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="staging"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
-      name: "WINE staging 64 Bit Python 2.7.16, Windows 10"
-      env:
-          - WINEPREFIX="${HOME}/wine/wine64"
-          - CMDPREFIX="wine"
-          - wine_windows_version="win10"
-          - wine_version="staging"
-          - wine_python_version="python2"
-
-    - os: linux
-      language: python
       name: "WINE staging 32 Bit Python 3.7.3, Windows 10"
       env:
           - WINEARCH="win32"
@@ -332,10 +194,6 @@ matrix:
           - wine_windows_version="win10"
           - wine_version="staging"
           - wine_python_version="python3"
-
-    - os: osx
-      language: sh
-      name: "osX Python 2.7"
 
     - os: osx
       language: sh
@@ -366,11 +224,11 @@ install:
 
 script:
     - if [[ "${setup_py_found}" != "True" ]]; then ./lib_bash/lib_color.sh clr_bold clr_red  "no setup.py found, nothing to test" ; fi
-    - if [[ "${setup_py_found}" == "True" ]]; then ${CMDPREFIX} ${python_command} -m pytest --pep8 --cov ; fi
-
     # - ./lib_bash/lib_color.sh clr_red "test for install option 'setup.py test' is disabled. Enable it if Your setup.py supports the option 'test'"
     - if [[ "${setup_py_found}" == "True" ]]; then ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; fi
-
+    - if [[ "${setup_py_found}" == "True" ]]; then ${CMDPREFIX} ${python_command} -m pytest --pep8 --cov ; fi
+    - ./lib_bash/lib_color.sh clr_bold clr_green "Building README.rst"
+    - ${CMDPREFIX} ${python_command} build_readme.py ${TRAVIS_REPO_SLUG}
 
 after_success:
     - ${CMDPREFIX} coverage report
@@ -392,8 +250,9 @@ after_success:
 deploy:
   provider: pypi
   user: bitranox
+  # password set for rst_include
   password:
-    secure: uxzN4I6caTU3qP0UrKqsZEj5SHch2ZAY78sq0s/PJQnnFEydAL4Cpc3ljlZBu5aTxeveYxnfI3gSAjz5IgyT5aCmTCO1xzS55KMIky1rW+MO34MFCDcm/DG33sjm5m6cZmWt5YaIJqBPGNntc/FgicRsTS89wbboVKxvFqez6L4IqdjRJ/gNh2kvHXxten4/b5VtUr9rMm+781ozPub1olD2ca7Zw+72IEYd7NJ9c5wvgk6U9Tmzc4FCrWA8oxhLUHFX0Hz01BrJQg+/LwbMMNFUGRBPtecEOw1RtBN31CLENvzruqMoFCZBZXs+8fyVg00xKZ1QbuwnrLhKluK7iOO1exz+vmMIU5aRXZepZmkV4n0E8IfQBQdr3qwku/1AjXduF9gE/m2usqhsg/QaB/GpRydqxRulx23xwbUvNHBulfvh9RtrlmhKTawTSqMFDLy7sLkm7w9NuzTDPzEWfwzS8VqZJlXiLp/L7XVMOqSfAOL6gg1kcIgCyI5Zv6QBzplcitkDj1sXmiaQcCt8P/1uCFH+xudyBKpb5lMayFZMxjiVkxUgrmpfRgMxonYxD7SrOPoyZuRnm+WhXKv4jPtPMJtiZqZKo9qrRx2HHT6TVfgw6mJ2vcGzeiEgl7L8z89AVOtBKskcShppd2gki4SK8kuryFAwBNMNNrEys2k=
+    secure: ru4v/F2y7BHISlQjKpQ+cNZN0qYij3VcUEQzzEoAP+/WUQvN9kSBMqhZ2UsPJCQW6nrkSOyMxB5q0KHIKabmNDPBpiEplIRP/XjkhhuIgO8N8Iqf9/YSgg1eBtnRpV42MgLx3WWPxBsUTLRtAQ2cgAnd47Gn84lx3FWFNASuO3J6YbBSIzEzLQ8coQSl7cN6OyuJ1spUWurnw2tA8mdJGEVuf2nF8sDv2dKj6ijf5jHjKEA4bolnVnYOy5BYUGDiwJAXFCfwLwXrwra/2QZENuC5dYrrzKXYMUERB/U+F5P43eL0iuiOx72JLr930sBxkd6LAuR20A0oSISwHkaddokF6yWxd/QikB3aSPvBKChlKp7Uki09YFypL7Gif/r9QF40SLNOl1Wadiz2p2hPxh6W/ozSa8Q/pR77iWlQH+MgO+gG5AzAdMPicV98EfA9yT1NiFIxnTk/pZo8s5Nn0Ydi/UlZKW6M0T1yBS3PWgaYuQiWDjx/QtCLJ+wddEAYNss9JJ6ygKSFsp9HX/ljl8r2t/3SqnOsKDvm3/MHIt+ZGXxWuW5CrdRk6HhVR+D1IlaEhWrPV0TufenIrZLVT7JaLuNHvxFnpDntHZ2r2SXITOtf7HwZWzdZ38b9u/Ku5MTS0n2v/M+iFEKdfmA+mwehzjeKmJx1OkR9AfYPnrM=
   distributions: "sdist bdist_wheel"
   on:
     tags: true    # we release only on PyPi on tagged Releases (Release on Github)
