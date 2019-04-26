@@ -150,19 +150,19 @@ def get_absolute_path_relative_from_path(path, path2):
 
     >>> # path1 absolut, path2 relativ
     >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    'c:/a/b/c/d/test.txt'
+    '.../a/b/c/d/test.txt'
     >>> # path1 relativ, path2 relativ
     >>> get_absolute_path_relative_from_path('./a/b/c/some-file.txt', './d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../a/b/c/d/test.txt'
     >>> # path1 absolut, path2 absolut
     >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', 'c:/d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    'c:/d/test.txt'
+    '.../d/test.txt'
     >>> # path1 relativ, path2 absolut
     >>> get_absolute_path_relative_from_path('./a/b/c/some-file.txt', 'c:/d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    'c:/d/test.txt'
+    '.../d/test.txt'
     >>> # path one level back
     >>> get_absolute_path_relative_from_path('c:/a/b/c/some-file.txt', '../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    'c:/a/b/d/test.txt'
+    '.../a/b/d/test.txt'
     >>> # path two levels back
     >>> get_absolute_path_relative_from_path('./a/b/c/some_file.txt', '../../d/test.txt')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../a/d/test.txt'
