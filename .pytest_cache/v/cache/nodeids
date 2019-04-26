@@ -1,5 +1,4 @@
 [
-  "rst_inc.py::rst_inc.main",
   "rst_include/libs/lib_args.py::rst_include.libs.lib_args.cmd_args_config_flag_given",
   "rst_include/libs/lib_args.py::rst_include.libs.lib_args.is_include_command",
   "rst_include/libs/lib_args.py::rst_include.libs.lib_args.is_replace_command",
