@@ -253,5 +253,7 @@ deploy:
 
 notifications:
   email:
-    on_success: never # default: change
+    recipients:
+        - rnowotny@rotek.at
+    on_success: always # default: never
     on_failure: always # default: always
