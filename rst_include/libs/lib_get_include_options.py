@@ -72,7 +72,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     IndexError: list index out of range
     """
     max_line = len(block.l_source_lines)
-    l_additional_content: [SourceLine] = list()
+    l_additional_content = list()
     for index in range(max_line):
         if not lib_source_line.is_source_line_block_option(block.l_source_lines[index]):
             l_additional_content = block.l_source_lines[index:]

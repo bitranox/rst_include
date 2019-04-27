@@ -20,7 +20,7 @@ def rst_inc_from_config(config_file_path: str) -> None:
     save_path = lib_path.get_current_dir()
     try:
         lib_path.chdir_to_path_of_file(config_file_path)
-        config_file: ModuleType = lib_config_file.load_config_file(config_file_path)
+        config_file = lib_config_file.load_config_file(config_file_path)
         l_rst_files = config_file.rst_conf.l_rst_files
         lib_check_files.check_l_rst_files(l_rst_files)
         lib_assemble_block.create_l_rst_files_from_templates(l_rst_files)
