@@ -17,7 +17,7 @@ def read_include_file(block: Block) -> [str]:
     >>> content[2]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    IndexError: list index out of range
+    IndexError: list line_number out of range
     >>> assert block.include_file_lines == ['def my_include():\\n', '    pass\\n']
 
     >>> block.include_filename_absolut='non_existing_file'

@@ -1,10 +1,11 @@
+from rst_include.libs import lib_assemble_block
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block, SourceLine
-
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
 from rst_include.libs import lib_path
-from rst_include.libs import lib_assemble_block
+from rst_include.libs import lib_test_compare_results
+
 
 import logging
 import os
@@ -21,7 +22,7 @@ def run_template_tests() -> None:
         expected = source.replace('template', 'expected')
         rst_file = lib_classes.RstFile(source=source, target=result)
         lib_assemble_block.create_rst_file_from_template(rst_file)
-        assert compare_results_equal(expected=expected, result=result)
+        assert lib_test_compare_results.compare_results_equal(expected_file=expected, result_file=result)
 
 
 def run_template_tests_not_supported() -> None:
@@ -32,63 +33,7 @@ def run_template_tests_not_supported() -> None:
         expected = source.replace('template', 'expected')
         rst_file = lib_classes.RstFile(source=source, target=result)
         lib_assemble_block.create_rst_file_from_template(rst_file)
-        assert not compare_results_equal(expected=expected, result=result)
-
-
-def compare_results_equal(expected: str, result: str,
-                          expected_file_encoding: str = 'utf-8-sig', result_file_encoding: str = 'utf-8-sig'):
-    """
-    >>> test_dir = get_test_dir()
-    >>> expected_file = test_dir + '/test_compare_file_original.txt'
-    >>> compare_results_equal(expected_file, test_dir + '/test_compare_file_result_equal.txt')
-    True
-    >>> compare_results_equal(expected_file, test_dir + '/test_compare_file_result_different.txt')
-    False
-    >>> compare_results_equal(expected_file, test_dir + '/test_compare_file_result_longer.txt')
-    False
-    >>> compare_results_equal(expected_file, test_dir + '/test_compare_file_result_shorter.txt')
-    False
-
-    """
-
-    logger = logging.getLogger('compare_results')
-
-    with open(expected, mode='r', encoding=expected_file_encoding) as f_expected_file:
-        l_expected_lines = f_expected_file.readlines()
-
-    with open(result, mode='r', encoding=result_file_encoding) as f_result_file:
-        l_result_lines = f_result_file.readlines()
-
-    len_expected_lines = len(l_expected_lines)
-    len_result_lines = len(l_result_lines)
-
-    min_lines = min(len_expected_lines, len_result_lines)
-
-    if len_expected_lines != len_result_lines:
-        logger.error('Different Size, Expected File {expected_file}: {len_expected_lines} Lines, Result File {result_file}: {len_result_lines} Lines'.format(
-            expected_file=expected,
-            len_expected_lines=len_expected_lines,
-            result_file=result,
-            len_result_lines=len_result_lines))
-
-    for index in range(min_lines):
-        if l_expected_lines[index] != l_result_lines[index]:
-            logger.error('Difference, Expected File {expected_file}, Line {index}: "{original_line}"'.format(
-                expected_file=expected,
-                index=index,
-                original_line=l_expected_lines[index].replace('\n', '<ret>')))
-
-            logger.error('Difference, Result   File {result_file}, Line {index}: "{result_line}"'.format(
-                result_file=result,
-                index=index,
-                result_line=l_result_lines[index].replace('\n', '<ret>')))
-
-            return False
-
-    if len_expected_lines != len_result_lines:
-        return False
-    else:
-        return True
+        assert not lib_test_compare_results.compare_results_equal(expected_file=expected, result_file=result)
 
 
 def read_include_file_2() -> Block:

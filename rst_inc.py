@@ -4,6 +4,7 @@ from rst_include import *
 from rst_include.libs import lib_log
 from rst_include.libs import lib_args
 from rst_include.libs import lib_test
+from rst_include.libs import lib_test_compare_results
 
 import sys
 
@@ -46,12 +47,12 @@ def main(sys_argv=sys.argv[1:]):
     >>> expected_file = lib_test.get_test_dir() + '/test1_no_includes_expected.rst'
     >>> lib_test.remove_file_silent(target_file)
     >>> main(['replace', '-s', source_file, '-t', target_file, '=', '*', '-1'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test.compare_results_equal(expected_file_replace, target_file)
+    >>> assert lib_test_compare_results.compare_results_equal(expected_file_replace, target_file)
 
     >>> # test include source and target given
     >>> lib_test.remove_file_silent(target_file)
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
 
     >>> # test default config file from current directory
     >>> save_dir = os.path.abspath(os.curdir)
@@ -59,14 +60,14 @@ def main(sys_argv=sys.argv[1:]):
     >>> os.chdir(test_dir)
     >>> lib_test.remove_file_silent(target_file)
     >>> main(['include', '-c'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
     >>> os.chdir(save_dir)
 
     >>> # test load config file
     >>> lib_test.remove_file_silent(target_file)
     >>> config_file = lib_test.get_test_dir() + '/conf_rst_include_test.py'
     >>> main(['include', '-c', config_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test.compare_results_equal(expected_file, target_file)
+    >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
 
     """
 

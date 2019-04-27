@@ -6,6 +6,7 @@ from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_test
+from rst_include.libs import lib_test_compare_results
 
 
 def create_l_rst_files_from_templates(l_rst_files: [RstFile]) -> None:
@@ -17,7 +18,7 @@ def create_l_rst_files_from_templates(l_rst_files: [RstFile]) -> None:
     >>> expected = test_dir + '/test1_no_includes_expected.rst'
     >>> l_rst_files = [lib_classes.RstFile(source, target)]
     >>> create_l_rst_files_from_templates(l_rst_files)
-    >>> assert lib_test.compare_results_equal(expected, target)
+    >>> assert lib_test_compare_results.compare_results_equal(expected, target)
 
     """
     for rst_file in l_rst_files:
