@@ -1,3 +1,6 @@
 [run]
 source = rst_include
 
+[report]
+exclude_lines=
+    pragma: no cover

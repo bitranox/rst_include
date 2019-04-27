@@ -6,7 +6,6 @@ from rst_include import *
 from rst_include.libs import lib_log
 import subprocess
 
-import sys
 
 # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
 codeclimate_link_hash = "ff3f414903627e5cfc35"
@@ -84,9 +83,11 @@ def main(args):
 
 
 if __name__ == '__main__':
+    lib_log.setup_logger()
+    main_logger = logging.getLogger('main')
     try:
-        lib_log.setup_logger()
         _args, _parser = parse_args()
+
         main(_args)
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
