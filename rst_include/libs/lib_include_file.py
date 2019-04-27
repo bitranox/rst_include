@@ -2,7 +2,6 @@ from rst_include.libs import lib_classes
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_test
 
-import io   # for python 2.7 compatibility
 import logging
 import sys
 
@@ -21,12 +20,19 @@ def read_include_file(block):
     IndexError: list index out of range
     >>> assert block.include_file_lines == ['def my_include():\\n', '    pass\\n']
 
+    >>> block.include_filename_absolut='non_existing_file'
+    >>> content = read_include_file(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    OSError: Error in File "...", Line 47100: File read Error "[Errno ...] No such file or directory: 'non_existing_file'"
+
+
     """
 
     logger = logging.getLogger('read_include_file')
 
     try:
-        with io.open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
+        with open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
             include_file_lines = include_file.readlines()
             block.include_file_lines = include_file_lines
         return include_file_lines
@@ -56,7 +62,9 @@ def slice_include_file_lines(block):
     # type: (lib_classes.Block) -> None
     """
     >>> block = lib_test.read_include_file_2()
+    >>> block.include_file_lines = ['\\n'] + block.include_file_lines   # add an empty line in front and end
     >>> slice_include_file_lines(block)
+
     >>> assert block.include_file_lines == ['def my_include2_1():\\n', '    pass\\n', '\\n', '    pass\\n', '\\n',
     ...                                     '\\n', '# start-marker\\n', '\\n', 'def my_include2_2():\\n', '    pass\\n',
     ...                                     '\\n', '    pass\\n', '\\n', '# end-marker\\n', '\\n', '\\n',

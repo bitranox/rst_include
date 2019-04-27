@@ -1,2 +1,5 @@
 def test():
+    """
+    >>> test()
+    """
     pass

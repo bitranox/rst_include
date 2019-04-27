@@ -269,6 +269,10 @@ def get_rst_include_dir():
 
 
 def import_test():
+    """
+    >>> import_test()
+    True
+    """
     return True
 
 
