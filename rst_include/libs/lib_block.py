@@ -4,8 +4,7 @@ from rst_include.libs import lib_classes
 from rst_include.libs import lib_source_line
 
 
-def is_include_block(block):
-    # type: (Block) -> bool
+def is_include_block(block: Block) -> bool:
     """
     >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='something')
@@ -32,8 +31,7 @@ def is_include_block(block):
     return False
 
 
-def get_block_source_lines_joined(l_source_lines):
-    # type: ([SourceLine]) -> str
+def get_block_source_lines_joined(l_source_lines: [SourceLine]) -> str:
     """
     >>> l_source_lines = list()
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='aa\\n')
