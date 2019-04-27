@@ -8,7 +8,7 @@ class RstFile(object):
 
 class RstConf(object):
     def __init__(self):
-        self.l_rst_files: [RstFile] = []
+        self.l_rst_files = []
 
 
 class SourceLine(object):
