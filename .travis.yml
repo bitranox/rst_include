@@ -217,7 +217,7 @@ script:
     - if [[ "${setup_py_found}" == "True" ]]; then ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; fi
     - if [[ "${setup_py_found}" == "True" ]]; then ${CMDPREFIX} ${python_command} -m pytest --pep8 --cov ; fi
 
-    - ${CMDPREFIX} ${python_command} build_readme.py ${TRAVIS_REPO_SLUG}
+    - ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}
 
 after_success:
     - ${CMDPREFIX} coverage report
