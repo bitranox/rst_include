@@ -40,16 +40,20 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     IndexError: list line_number out of range
     """
     pass_through_options = list()
-    processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     for source_line in block.l_source_lines[1:]:
         if lib_source_line.source_line_contains_option(source_line):
-            option_key = lib_block_options.get_option_key_from_source_line(source_line)
-            if option_key not in processed_option_keys:
-                pass_through_options.append(source_line)
+            append_if_pass_through_option(source_line, pass_through_options)
         else:
             break
     block.pass_through_options = pass_through_options
     return pass_through_options
+
+
+def append_if_pass_through_option(source_line: SourceLine, pass_through_options: [SourceLine]):
+    processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
+    option_key = lib_block_options.get_option_key_from_source_line(source_line)
+    if option_key not in processed_option_keys:
+        pass_through_options.append(source_line)
 
 
 def get_include_block_additional_content(block: Block) -> [SourceLine]:

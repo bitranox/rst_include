@@ -129,16 +129,10 @@ def get_source_line_number_for_option(option: str, block: Block) -> bool:
       ...
     ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line 47100
     """
-
+    raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
-        if lib_source_line.source_line_contains_option(source_line):
-            if is_option_in_source_line(source_line, option):
-                return source_line.line_number
-        else:
-            raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
-                file=block.source_file_name,
-                option=option,
-                line=block.l_source_lines[0].line_number))
+        if is_option_in_source_line(source_line, option):
+            return source_line.line_number
 
 
 def is_option_in_source_line(source_line: SourceLine, option: str) -> bool:
