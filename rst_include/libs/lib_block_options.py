@@ -80,16 +80,25 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     ...
     ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
+    raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
-        if lib_source_line.is_source_line_block_option(source_line):
+        if lib_source_line.source_line_contains_option(source_line):
             if is_option_in_source_line(source_line, option):
-                value = source_line.content.split(':', 2)[2].strip()
-                return value
-        else:
-            raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
-                file=block.source_file_name,
-                option=option,
-                line=block.l_source_lines[0].line_number))
+                option_value = get_option_value_from_source_line(source_line, option)
+                return option_value
+
+
+def raise_value_error_if_option_not_in_block(option, block):
+    if not is_option_in_block(option, block):
+        raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
+            file=block.source_file_name,
+            option=option,
+            line=block.l_source_lines[0].line_number))
+
+
+def get_option_value_from_source_line(source_line: SourceLine, option: str) -> str:
+    option_value = source_line.content.split(':', 2)[2].strip()
+    return option_value
 
 
 def is_option_in_block(option: str, block: Block) -> bool:
@@ -102,7 +111,7 @@ def is_option_in_block(option: str, block: Block) -> bool:
 
     """
     for source_line in block.l_source_lines:
-        if lib_source_line.is_source_line_block_option(source_line):
+        if lib_source_line.source_line_contains_option(source_line):
             if is_option_in_source_line(source_line, option):
                 return True
         else:
@@ -123,7 +132,7 @@ def get_source_line_number_for_option(option: str, block: Block) -> bool:
     """
 
     for source_line in block.l_source_lines:
-        if lib_source_line.is_source_line_block_option(source_line):
+        if lib_source_line.source_line_contains_option(source_line):
             if is_option_in_source_line(source_line, option):
                 return source_line.line_number
         else:

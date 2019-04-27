@@ -68,27 +68,27 @@ def source_line_starts_with_include_statement(source_line: SourceLine) -> bool:
         return False
 
 
-def is_source_line_block_option(source_line: SourceLine) -> bool:
+def source_line_contains_option(source_line: SourceLine) -> bool:
     """
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='  :code: python ')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     True
 
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='  :line-numbers:')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     True
 
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='.. include::')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     True
     >>> source_line = lib_classes.SourceLine(line_number=4711, content=' :not an option:')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     False
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     False
     >>> source_line = lib_classes.SourceLine(line_number=4711, content=' :not an option')
-    >>> is_source_line_block_option(source_line)
+    >>> source_line_contains_option(source_line)
     False
 
     """

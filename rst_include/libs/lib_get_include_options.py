@@ -42,7 +42,7 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     pass_through_options = list()
     processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     for source_line in block.l_source_lines[1:]:
-        if lib_source_line.is_source_line_block_option(source_line):
+        if lib_source_line.source_line_contains_option(source_line):
             option_key = lib_block_options.get_option_key_from_source_line(source_line)
             if option_key not in processed_option_keys:
                 pass_through_options.append(source_line)
@@ -74,7 +74,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     max_line = len(block.l_source_lines)
     l_additional_content = list()
     for index in range(max_line):
-        if not lib_source_line.is_source_line_block_option(block.l_source_lines[index]):
+        if not lib_source_line.source_line_contains_option(block.l_source_lines[index]):
             l_additional_content = block.l_source_lines[index:]
             break
     block.additional_content = l_additional_content
