@@ -92,7 +92,7 @@ def get_option_value_from_block(option: str, block: Block) -> str:
                 line=block.l_source_lines[0].line_number))
 
 
-def is_option_in_block(option: str, block:  Block) -> bool:
+def is_option_in_block(option: str, block: Block) -> bool:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> is_option_in_block('code', block)

@@ -39,7 +39,7 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     ...
     IndexError: list index out of range
     """
-    pass_through_options: [SourceLine] = list()
+    pass_through_options = list()
     processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     for source_line in block.l_source_lines[1:]:
         if lib_source_line.is_source_line_block_option(source_line):
