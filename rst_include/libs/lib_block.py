@@ -26,7 +26,7 @@ def is_include_block(block: Block) -> bool:
 
     """
     if block.l_source_lines:
-        if lib_source_line.is_source_line_include_block_start(block.l_source_lines[0]):
+        if lib_source_line.source_line_starts_with_include_statement(block.l_source_lines[0]):
             return True
     return False
 

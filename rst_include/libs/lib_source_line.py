@@ -38,24 +38,27 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: [SourceLin
     >>> assert blocks[2].l_source_lines[1].content == '    :code: yaml'
 
     """
-    blocks = list()                   # type: [lib_classes.Block]
-    block = lib_classes.Block(source_file_name)   # type: lib_classes.Block
+    blocks = list()                               # type: [Block]
+    block = lib_classes.Block(source_file_name)   # type: Block
     for source_line in source_lines:
-        if is_source_line_include_block_start(source_line):
-            if block.l_source_lines:
-                blocks.append(block)
+        if source_line_starts_with_include_statement(source_line):
+            append_non_empty_block(block, blocks)
             block = lib_classes.Block(source_file_name)
         block.l_source_lines.append(source_line)
-    if block.l_source_lines:
-        blocks.append(block)
+    append_non_empty_block(block, blocks)
     return blocks
 
 
-def is_source_line_include_block_start(source_line: SourceLine) -> bool:
+def append_non_empty_block(block: Block, blocks: [Block]):
+    if block.l_source_lines:
+        blocks.append(block)
+
+
+def source_line_starts_with_include_statement(source_line: SourceLine) -> bool:
     """
-    >>> is_source_line_include_block_start(lib_classes.SourceLine(line_number=4711, content='.. some comment or other block\\n'))
+    >>> source_line_starts_with_include_statement(lib_classes.SourceLine(line_number=4711, content='.. some comment or other block\\n'))
     False
-    >>> is_source_line_include_block_start(lib_classes.SourceLine(line_number=4711, content='.. include:: test_include.py\\n'))
+    >>> source_line_starts_with_include_statement(lib_classes.SourceLine(line_number=4711, content='.. include:: test_include.py\\n'))
     True
     """
 
