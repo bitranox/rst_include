@@ -12,7 +12,7 @@ def get_module_from_file(module_name, path_to_module):
     >>> assert test.my_include() == None
 
     """
-    if sys.version_info < (3, 0):
+    if sys.version_info < (3, 0):  # pragma: no cover
         import imp
         module = imp.load_source(module_name, path_to_module)
         sys.modules[module_name] = module
@@ -26,7 +26,7 @@ def get_module_from_file(module_name, path_to_module):
         sys.modules[module_name] = module
         return module
 
-    elif sys.version_info < (3, 5):
+    elif sys.version_info < (3, 5):  # pragma: no cover
         from importlib.machinery import SourceFileLoader
         module = SourceFileLoader(module_name, path_to_module).load_module()
         sys.modules[module_name] = module

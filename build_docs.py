@@ -34,7 +34,7 @@ def parse_args(cmd_args=sys.argv[1:]):
 
 
 def main(args):
-    logger = logging.getLogger('create_readme')
+    logger = logging.getLogger('build_docs')
     logger.info('create the README.rst')
     travis_repo_slug = args.travis_repo_slug
     repository = travis_repo_slug.split('/')[1]

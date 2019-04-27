@@ -39,7 +39,12 @@ This has many advantages like :
 - commandline or programmatic interface, You can even use it in the travis.yml
 - commandline interface supporting shellscript, cmd, pipes, config-files
 
-This README was also created with rst_include, You might look at ./docs/README_template.rst , build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
+This README was also created with rst_include, You might look at ./docs/README_template.rst ,
+build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
+
+The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
+
+rst_include does only work with python3 - it can be installed on python2.x for easier handling with travis matrix, and will return with exitcode 0 when issued under python 2.7 (but doing nothing).
 
 
 `100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
