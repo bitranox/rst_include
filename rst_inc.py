@@ -7,16 +7,18 @@ from rst_include.libs import lib_test
 
 import sys
 
-# for python 2.7 compatibility
-try:
-    FileNotFoundError
-except NameError:
-    FileNotFoundError = IOError
-    FileExistsError = IOError
+
+def handle_include_command(argparse_namespace, sys_argv):
+    if lib_args.cmd_args_config_flag_given(sys_argv):
+        rst_inc_from_config(argparse_namespace.config)
+    else:
+        rst_inc(argparse_namespace.source,
+                argparse_namespace.target,
+                argparse_namespace.source_encoding,
+                argparse_namespace.target_encoding)
 
 
-def main(cmd_args=sys.argv[1:]):
-    # type ([str]) -> None
+def main(sys_argv=sys.argv[1:]):
     """
 
     >>> source_file = './docs/README_template.rst'
@@ -68,16 +70,14 @@ def main(cmd_args=sys.argv[1:]):
 
     """
 
-    args, parser = lib_args.parse_args(cmd_args)
+    argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
-    if lib_args.is_replace_command(args):
-        rst_str_replace(args.source, args.target, args.old, args.new, args.count, args.source_encoding, args.target_encoding)
-
-    elif lib_args.is_include_command(args):
-        if lib_args.cmd_args_config_flag_given(cmd_args):
-            rst_inc_from_config(args.config)
-        else:
-            rst_inc(args.source, args.target, args.source_encoding, args.target_encoding)
+    if lib_args.is_replace_command(argparse_namespace):
+        rst_str_replace(argparse_namespace.source, argparse_namespace.target,
+                        argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
+                        argparse_namespace.source_encoding, argparse_namespace.target_encoding)
+    elif lib_args.is_include_command(argparse_namespace):
+        handle_include_command(argparse_namespace, sys_argv)
     else:
         parser.print_help()
 
