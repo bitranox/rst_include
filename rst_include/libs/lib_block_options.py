@@ -1,10 +1,8 @@
+import logging
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block, SourceLine
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_test
-
-
-import logging
 
 
 def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block: Block, value_must_be_int: bool = False) -> str:
@@ -24,7 +22,8 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block:
     >>> # option not found
     >>> get_option_value_from_block_or_raise_if_empty_or_invalid('no-option', block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
-    ValueError: Error in File ".../README.template.rst", option "no-option" not found in Block starting with Line: 47100
+    ...
+    ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
 
     >>> # option check type integer ok
     >>> get_option_value_from_block_or_raise_if_empty_or_invalid('start-line', block, value_must_be_int=True)
@@ -38,34 +37,11 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block:
 
     """
     logger = logging.getLogger('get_option_value')
-    if is_option_in_block(option, block):
-        value = get_option_value_from_block(option, block)
-        if not value:
-            line_number = get_source_line_number_for_option(option, block)
-            s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has no value'.format(
-                source_file=block.source_file_name,
-                line_number=line_number,
-                option=option)
-            logger.error(s_error)
-            raise ValueError(s_error)
-        elif value_must_be_int and not value.isdigit():
-            line_number = get_source_line_number_for_option(option, block)
-            s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has to be integer'.format(
-                source_file=block.source_file_name,
-                line_number=line_number,
-                option=option)
-            logger.error(s_error)
-            raise TypeError(s_error)
-        else:
-            return value
-    else:
-        line_number = block.l_source_lines[0].line_number
-        s_error = 'Error in File "{source_file}", option "{option}" not found in Block starting with Line: {line_number}'.format(
-            source_file=block.source_file_name,
-            line_number=line_number,
-            option=option)
-        logger.error(s_error)
-        raise ValueError(s_error)
+    log_and_raise_value_error_if_option_not_in_block(option, block)
+    value = get_option_value_from_block(option, block)
+    log_and_raise_if_value_of_option_in_block_is_empty(value, option, block)
+    log_and_raise_if_value_of_option_in_block_must_be_int_castable_but_is_not(value, option, block, value_must_be_int)
+    return value
 
 
 def get_option_value_from_block(option: str, block: Block) -> str:
@@ -78,21 +54,13 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     >>> get_option_value_from_block('no-option', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
+    ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
-    raise_value_error_if_option_not_in_block(option, block)
+    log_and_raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
         if is_option_in_source_line(source_line, option):
             option_value = get_option_value_from_source_line(source_line, option)
             return option_value
-
-
-def raise_value_error_if_option_not_in_block(option, block):
-    if not is_option_in_block(option, block):
-        raise ValueError('File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
-            file=block.source_file_name,
-            option=option,
-            line=block.l_source_lines[0].line_number))
 
 
 def get_option_value_from_source_line(source_line: SourceLine, option: str) -> str:
@@ -129,7 +97,7 @@ def get_source_line_number_for_option(option: str, block: Block) -> bool:
       ...
     ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line 47100
     """
-    raise_value_error_if_option_not_in_block(option, block)
+    log_and_raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
         if is_option_in_source_line(source_line, option):
             return source_line.line_number
@@ -159,3 +127,38 @@ def get_option_key_from_source_line(source_line: SourceLine) -> str:
     """
     key = source_line.content.split(':')[1]
     return key
+
+
+def log_and_raise_value_error_if_option_not_in_block(option, block):
+    if not is_option_in_block(option, block):
+        logger = logging.getLogger('get_option_value')
+        s_error = 'Error in File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
+            file=block.source_file_name,
+            option=option,
+            line=block.l_source_lines[0].line_number)
+        logger.error(s_error)
+        raise ValueError(s_error)
+
+
+def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, block: Block, ):
+    if not value:
+        logger = logging.getLogger('get_option_value')
+        line_number = get_source_line_number_for_option(option, block)
+        s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has no value'.format(
+            source_file=block.source_file_name,
+            line_number=line_number,
+            option=option)
+        logger.error(s_error)
+        raise ValueError(s_error)
+
+
+def log_and_raise_if_value_of_option_in_block_must_be_int_castable_but_is_not(value, option, block, value_must_be_int):
+    if value_must_be_int and not value.isdigit():
+        logger = logging.getLogger('get_option_value')
+        line_number = get_source_line_number_for_option(option, block)
+        s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has to be integer'.format(
+            source_file=block.source_file_name,
+            line_number=line_number,
+            option=option)
+        logger.error(s_error)
+        raise TypeError(s_error)
