@@ -110,11 +110,11 @@ def is_option_in_block(option: str, block: Block) -> bool:
 
     """
     for source_line in block.l_source_lines:
-        if lib_source_line.source_line_contains_option(source_line):
-            if is_option_in_source_line(source_line, option):
-                return True
-        else:
-            return False
+        if is_option_in_source_line(source_line, option):
+            return True
+        if not lib_source_line.source_line_contains_option(source_line):
+            break
+    return False
 
 
 def get_source_line_number_for_option(option: str, block: Block) -> bool:
