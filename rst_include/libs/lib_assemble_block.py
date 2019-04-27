@@ -1,4 +1,5 @@
 from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block, RstFile
 from rst_include.libs import lib_block
 from rst_include.libs import lib_check_files
 from rst_include.libs import lib_get_include_options
@@ -7,8 +8,7 @@ from rst_include.libs import lib_source_line
 from rst_include.libs import lib_test
 
 
-def create_l_rst_files_from_templates(l_rst_files):
-    # type: ([lib_classes.RstFile]) -> None
+def create_l_rst_files_from_templates(l_rst_files: [RstFile]) -> None:
     """
     >>> # test files without include
     >>> test_dir = lib_test.get_test_dir()
@@ -24,16 +24,14 @@ def create_l_rst_files_from_templates(l_rst_files):
         create_rst_file_from_template(rst_file)
 
 
-def create_rst_file_from_template(rst_file):
-    # type: (lib_classes.RstFile) -> None
+def create_rst_file_from_template(rst_file: RstFile) -> None:
     l_source_lines = lib_check_files.read_source_lines(rst_file.source, rst_file.source_encoding)
     l_blocks = lib_source_line.divide_source_line_in_blocks(rst_file.source, source_lines=l_source_lines)
     content = assemble_blocks(l_blocks)
     lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
 
 
-def assemble_blocks(l_blocks):
-    # type: ([lib_classes.Block]) -> str
+def assemble_blocks(l_blocks: [Block]) -> str:
     content = ''
     for block in l_blocks:
         if lib_block.is_include_block(block):
@@ -45,8 +43,7 @@ def assemble_blocks(l_blocks):
     return content
 
 
-def create_content_from_include(block):
-    # type: (lib_classes.Block) -> str
+def create_content_from_include(block: Block) -> str:
     lib_get_include_options.get_include_options(block)
     lib_include_file.read_include_file(block)
     lib_include_file.process_include_file_lines(block)
@@ -55,8 +52,7 @@ def create_content_from_include(block):
     return content
 
 
-def assemble_additional_content(block):
-    # type: (lib_classes.Block) -> str
+def assemble_additional_content(block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -75,7 +71,7 @@ def assemble_additional_content(block):
     return content
 
 
-def delete_leading_empty_additional_content_lines(block):
+def delete_leading_empty_additional_content_lines(block: Block) -> None:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -90,7 +86,7 @@ def delete_leading_empty_additional_content_lines(block):
             break
 
 
-def delete_trailing_empty_additional_content_lines(block):
+def delete_trailing_empty_additional_content_lines(block: Block) -> None:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -105,8 +101,7 @@ def delete_trailing_empty_additional_content_lines(block):
             break
 
 
-def assemble_include_block(block):
-    # type: (lib_classes.Block) -> str
+def assemble_include_block(block: Block) -> str:
     """
     >>> # test :code: python
     >>> block = lib_test.get_test_block_include2_ok()
@@ -132,8 +127,7 @@ def assemble_include_block(block):
     return content
 
 
-def get_block_header(block):
-    # type: (lib_classes.Block) -> str
+def get_block_header(block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -158,8 +152,7 @@ def get_block_header(block):
     return content
 
 
-def set_number_of_blanks_to_add(block):
-    # type: (lib_classes.Block) -> int
+def set_number_of_blanks_to_add(block: Block) -> int:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -182,8 +175,7 @@ def set_number_of_blanks_to_add(block):
     return block.include_file_number_of_blanks_to_add_to_content
 
 
-def get_include_lines_content(block):
-    # type: (lib_classes.Block) -> str
+def get_include_lines_content(block: Block) -> str:
     """
     >>> # test :code: python
     >>> block = lib_test.get_test_block_include2_ok()

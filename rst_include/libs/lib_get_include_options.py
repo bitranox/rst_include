@@ -39,7 +39,7 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     ...
     IndexError: list index out of range
     """
-    pass_through_options = list()  # type: [lib_classes.SourceLine]
+    pass_through_options: [SourceLine] = list()
     processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     for source_line in block.l_source_lines[1:]:
         if lib_source_line.is_source_line_block_option(source_line):
@@ -72,7 +72,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     IndexError: list index out of range
     """
     max_line = len(block.l_source_lines)
-    l_additional_content = list()       # type: [lib_classes.SourceLine]
+    l_additional_content: [SourceLine] = list()
     for index in range(max_line):
         if not lib_source_line.is_source_line_block_option(block.l_source_lines[index]):
             l_additional_content = block.l_source_lines[index:]
