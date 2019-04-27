@@ -1,4 +1,5 @@
 from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_test
 
@@ -6,8 +7,7 @@ import logging
 import sys
 
 
-def read_include_file(block):
-    # type: (lib_classes.Block) -> [str]
+def read_include_file(block: Block) -> [str]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> lib_get_include_options.get_include_options(block)
@@ -47,8 +47,7 @@ def read_include_file(block):
         raise IOError(s_error)
 
 
-def process_include_file_lines(block):
-    # type: (lib_classes.Block) -> None
+def process_include_file_lines(block: Block) -> None:
     """
     >>> block = lib_test.read_include_file_2()
     >>> process_include_file_lines(block)
@@ -58,8 +57,7 @@ def process_include_file_lines(block):
     slice_include_file_markers(block)
 
 
-def slice_include_file_lines(block):
-    # type: (lib_classes.Block) -> None
+def slice_include_file_lines(block: Block) -> None:
     """
     >>> block = lib_test.read_include_file_2()
     >>> block.include_file_lines = ['\\n'] + block.include_file_lines   # add an empty line in front and end
@@ -76,7 +74,7 @@ def slice_include_file_lines(block):
     delete_trailing_empty_include_file_lines(block)
 
 
-def delete_leading_empty_include_file_lines(block):
+def delete_leading_empty_include_file_lines(block: Block) -> None:
     while len(block.include_file_lines):
         if not block.include_file_lines[0].strip():
             block.include_file_lines = block.include_file_lines[1:]
@@ -84,7 +82,7 @@ def delete_leading_empty_include_file_lines(block):
             break
 
 
-def delete_trailing_empty_include_file_lines(block):
+def delete_trailing_empty_include_file_lines(block: Block) -> None:
     while len(block.include_file_lines):
         if not block.include_file_lines[-1].strip():
             block.include_file_lines = block.include_file_lines[0:-1]
@@ -92,8 +90,7 @@ def delete_trailing_empty_include_file_lines(block):
             break
 
 
-def slice_include_file_markers(block):
-    # type: (lib_classes.Block) -> None
+def slice_include_file_markers(block: Block) -> None:
     """
     >>> # test ok
     >>> block = lib_test.read_include_file_2()

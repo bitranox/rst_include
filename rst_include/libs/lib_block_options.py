@@ -1,4 +1,5 @@
 from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block, SourceLine
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_test
 
@@ -6,8 +7,8 @@ from rst_include.libs import lib_test
 import logging
 
 
-def get_option_value_from_block_or_raise_if_empty_or_invalid(option, block, value_must_be_int=False):
-    # type: (str, lib_classes.Block, bool) -> str
+def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block: Block, value_must_be_int: bool = False) -> str:
+
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test ok
@@ -67,8 +68,7 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option, block, valu
         raise ValueError(s_error)
 
 
-def get_option_value_from_block(option, block):
-    # type: (str, lib_classes.Block) -> str
+def get_option_value_from_block(option: str, block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> get_option_value_from_block('code', block)
@@ -92,8 +92,7 @@ def get_option_value_from_block(option, block):
                 line=block.l_source_lines[0].line_number))
 
 
-def is_option_in_block(option, block):
-    # type: (str, lib_classes.Block) -> bool
+def is_option_in_block(option: str, block:  Block) -> bool:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> is_option_in_block('code', block)
@@ -110,8 +109,7 @@ def is_option_in_block(option, block):
             return False
 
 
-def get_source_line_number_for_option(option, block):
-    # type: (str, lib_classes.Block) -> bool
+def get_source_line_number_for_option(option: str, block: Block) -> bool:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> get_source_line_number_for_option('code', block)
@@ -135,8 +133,7 @@ def get_source_line_number_for_option(option, block):
                 line=block.l_source_lines[0].line_number))
 
 
-def is_option_in_source_line(source_line, option):
-    # type: (lib_classes.SourceLine, str) -> bool
+def is_option_in_source_line(source_line: SourceLine, option: str) -> bool:
     """
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='   :code:')
     >>> is_option_in_source_line(source_line, 'code')
@@ -152,8 +149,7 @@ def is_option_in_source_line(source_line, option):
         return False
 
 
-def get_option_key_from_source_line(source_line):
-    # type: (lib_classes.SourceLine) -> str
+def get_option_key_from_source_line(source_line: SourceLine) -> str:
     """
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='   :code:')
     >>> get_option_key_from_source_line(source_line)

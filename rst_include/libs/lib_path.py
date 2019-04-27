@@ -9,8 +9,7 @@ def get_is_windows():
 is_windows = get_is_windows()
 
 
-def is_relative_path(doc_file_name):
-    # type: (str) -> bool
+def is_relative_path(doc_file_name: str) -> bool:
     """
     >>> is_relative_path('/test/test.txt')
     False
@@ -49,8 +48,7 @@ def is_relative_path(doc_file_name):
         return False
 
 
-def get_current_dir():
-    # type: () -> str
+def get_current_dir() -> str:
     """
     >>> path = get_current_dir()
     """
@@ -59,7 +57,7 @@ def get_current_dir():
     return current_dir
 
 
-def is_windows_network_unc(path):
+def is_windows_network_unc(path: str) -> bool:
     """
     >>> is_windows_network_unc('/test')
     False
@@ -75,7 +73,7 @@ def is_windows_network_unc(path):
         return False
 
 
-def substract_windows_drive_letter(path):
+def substract_windows_drive_letter(path: str) -> str:
     """
     >>> substract_windows_drive_letter('//main/install')
     '//main/install'
@@ -90,8 +88,7 @@ def substract_windows_drive_letter(path):
     return path
 
 
-def path_starts_with_windows_drive_letter(path):
-    # type: (str) -> bool
+def path_starts_with_windows_drive_letter(path: str) -> bool:
     """
     >>> path_starts_with_windows_drive_letter('//main/install')
     False
@@ -107,8 +104,7 @@ def path_starts_with_windows_drive_letter(path):
         return False
 
 
-def strip_and_replace_backslashes(path):
-    # type: (str) -> str
+def strip_and_replace_backslashes(path: str) -> str:
     """
     >>> strip_and_replace_backslashes('c:\\\\test')
     'c:/test'
@@ -119,8 +115,7 @@ def strip_and_replace_backslashes(path):
     return path
 
 
-def get_absolute_path(path):
-    # type: (str) -> str
+def get_absolute_path(path: str) -> str:
     """
     >>> get_absolute_path('./test.py')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '.../test.py'
@@ -130,9 +125,7 @@ def get_absolute_path(path):
     return path
 
 
-def get_absolute_dirname(path):
-    # type: (str) -> str
-
+def get_absolute_dirname(path: str) -> str:
     """
     >>> get_absolute_dirname('./test.py')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     '...rst_include...'
@@ -143,14 +136,13 @@ def get_absolute_dirname(path):
     return absolute_dirname
 
 
-def chdir_to_path_of_file(file):
+def chdir_to_path_of_file(file: str) -> None:
     if file:
         absolute_dirname = get_absolute_dirname(file)
         os.chdir(absolute_dirname)
 
 
-def get_absolute_path_relative_from_path(path, path2):
-    # type: (str, str) -> str
+def get_absolute_path_relative_from_path(path: str, path2: str) -> str:
     """
     if the first path is relative, on windows the drive will be the current drive.
     this is necessary because WINE gives drive "Z" back !

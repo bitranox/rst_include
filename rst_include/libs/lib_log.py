@@ -1,7 +1,7 @@
 import logging
 
 
-def setup_logger():
+def setup_logger() -> None:
     """
     >>> setup_logger()
     >>> logger = logging.getLogger('DOCTEST LOGGER')

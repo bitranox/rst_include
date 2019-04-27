@@ -2,12 +2,7 @@ import argparse
 import sys
 
 
-def parse_args(cmd_args=sys.argv[1:]):
-    # type: ([]) -> []
-    """
-    >>> # parse_args()
-
-    """
+def parse_args(cmd_args: [str] = sys.argv[1:]) -> (argparse.Namespace, argparse.ArgumentParser):
     parser = argparse.ArgumentParser(
         description='Process .rst File Includes',
         epilog='check the documentation on github',
@@ -36,8 +31,7 @@ def parse_args(cmd_args=sys.argv[1:]):
     return args, parser
 
 
-def cmd_args_config_flag_given(cmd_args):
-    # type: ([str]) -> bool
+def cmd_args_config_flag_given(cmd_args: [str]) -> bool:
     """
     >>> assert cmd_args_config_flag_given(['']) == False
     >>> assert cmd_args_config_flag_given(['-c']) == True
@@ -49,11 +43,14 @@ def cmd_args_config_flag_given(cmd_args):
         return False
 
 
-def is_replace_command(args):  # type: (dict) -> bool
+def is_replace_command(args: argparse.Namespace) -> bool:
     """
-    >>> is_replace_command({'old':''})
+    >>> args = argparse.Namespace()
+    >>> args.old = ''
+    >>> is_replace_command(args)
     True
-    >>> is_replace_command({'something':''})
+    >>> del args.old
+    >>> is_replace_command(args)
     False
     """
     if 'old' in args:
@@ -62,11 +59,14 @@ def is_replace_command(args):  # type: (dict) -> bool
         return False
 
 
-def is_include_command(args):  # type: (dict) -> bool
+def is_include_command(args: argparse.Namespace) -> bool:
     """
-    >>> is_include_command({'config':''})
+    >>> args = argparse.Namespace()
+    >>> args.config = ''
+    >>> is_include_command(args)
     True
-    >>> is_include_command({'something':''})
+    >>> del args.config
+    >>> is_include_command(args)
     False
     """
     if 'config' in args:

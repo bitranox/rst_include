@@ -1,5 +1,5 @@
 from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import RstFile
+from rst_include.libs.lib_classes import RstFile, SourceLine
 from rst_include.libs import lib_test
 
 import logging
@@ -8,8 +8,7 @@ import sys
 from typing import Any
 
 
-def check_l_rst_files(l_rst_files):
-    # type: ([RstFile]) -> None
+def check_l_rst_files(l_rst_files: [RstFile]) -> None:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -44,8 +43,7 @@ def check_l_rst_files(l_rst_files):
         check_source_and_target(rst_file.source, rst_file.target)
 
 
-def log_and_raise_if_no_files_given(l_rst_files):
-    # type: ([RstFile]) -> None
+def log_and_raise_if_no_files_given(l_rst_files: [RstFile]) -> None:
     """
     >>> # test no rst_file given
     >>> log_and_raise_if_no_files_given([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -64,8 +62,7 @@ def log_and_raise_if_no_files_given(l_rst_files):
         raise FileNotFoundError(error_message)
 
 
-def check_source_and_target(source, target):
-    # type: (str, str) -> None
+def check_source_and_target(source: str, target: str) -> None:
     """
     >>> check_source_and_target(sys.stdin, sys.stdout)
     """
@@ -74,8 +71,7 @@ def check_source_and_target(source, target):
     log_warning_if_target_file_exist(target)
 
 
-def log_and_raise_if_source_file_not_ok(source):
-    # type: (str) -> None
+def log_and_raise_if_source_file_not_ok(source: str) -> None:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -100,8 +96,7 @@ def log_and_raise_if_source_file_not_ok(source):
             raise FileNotFoundError(error_message)
 
 
-def log_and_raise_if_source_file_equals_target_file(source, target):
-    # type: (str, str) -> None
+def log_and_raise_if_source_file_equals_target_file(source: str, target: str) -> None:
     """
     >>> # check input sys.stdin, output sys.stdout
     >>> log_and_raise_if_source_file_equals_target_file(sys.stdin, sys.stdout)
@@ -123,8 +118,7 @@ def log_and_raise_if_source_file_equals_target_file(source, target):
         raise FileExistsError(error_message)
 
 
-def log_warning_if_target_file_exist(target):
-    # type: (str) -> None
+def log_warning_if_target_file_exist(target: str) -> None:
     """
     >>> log_warning_if_target_file_exist(target='README.rst')
     >>> log_warning_if_target_file_exist(sys.stdout)
@@ -136,8 +130,7 @@ def log_warning_if_target_file_exist(target):
             logger.warning('RST File "{target}" exists and will be overwritten'.format(target=target))
 
 
-def file_exists(file):
-    # type: (str) -> bool
+def file_exists(file: str) -> bool:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -147,9 +140,7 @@ def file_exists(file):
     return os.path.isfile(file)
 
 
-def read_input(source, encoding='utf-8-sig'):
-    # type: (Any, str) -> str
-
+def read_input(source: Any, encoding: str = 'utf-8-sig') -> str:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -171,9 +162,7 @@ def read_input(source, encoding='utf-8-sig'):
     return content
 
 
-def read_source_lines(source, encoding='utf-8-sig'):
-    # type: (Any, str) -> [lib_classes.SourceLine]
-
+def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> [SourceLine]:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -218,8 +207,7 @@ def read_source_lines(source, encoding='utf-8-sig'):
     return l_source_lines
 
 
-def write_output(target, content, encoding='utf-8'):
-    # type: (Any, str, str) -> None
+def write_output(target: Any, content: str, encoding: str = 'utf-8') -> None:
     """
     >>> test_dir = lib_test.get_test_dir()
 

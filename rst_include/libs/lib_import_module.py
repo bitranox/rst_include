@@ -3,8 +3,7 @@ from types import ModuleType
 from rst_include.libs import lib_test
 
 
-def get_module_from_file(module_name, path_to_module):
-    # type: (str,str) -> ModuleType
+def get_module_from_file(module_name: str, path_to_module: str) -> ModuleType:
     """
     >>> module = get_module_from_file('test', lib_test.get_test_dir()+'/include1.py')
     >>> assert module.my_include() == None

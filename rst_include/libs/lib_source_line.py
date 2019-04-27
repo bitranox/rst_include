@@ -1,8 +1,8 @@
 from rst_include.libs import lib_classes
+from rst_include.libs.lib_classes import Block, SourceLine
 
 
-def divide_source_line_in_blocks(source_file_name, source_lines):
-    # type: (str, [lib_classes.SourceLine]) -> [lib_classes.Block]
+def divide_source_line_in_blocks(source_file_name: str, source_lines: [SourceLine]) -> [Block]:
     """
     return blocks  - each block starts with ".." and ends with a line that does not begin with tab or blank
     or begins with .. (another block)
@@ -51,8 +51,7 @@ def divide_source_line_in_blocks(source_file_name, source_lines):
     return blocks
 
 
-def is_source_line_include_block_start(source_line):
-    # type: (lib_classes.SourceLine) -> bool
+def is_source_line_include_block_start(source_line: SourceLine) -> bool:
     """
     >>> is_source_line_include_block_start(lib_classes.SourceLine(line_number=4711, content='.. some comment or other block\\n'))
     False
@@ -66,8 +65,7 @@ def is_source_line_include_block_start(source_line):
         return False
 
 
-def is_source_line_block_option(source_line):
-    # type: (lib_classes.SourceLine) -> bool
+def is_source_line_block_option(source_line: SourceLine) -> bool:
     """
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='  :code: python ')
     >>> is_source_line_block_option(source_line)

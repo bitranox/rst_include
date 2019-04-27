@@ -14,6 +14,9 @@ via pip latest Release:
     # latest Release from pypi
     pip install {repository}
 
+    # test without installing
+    pip install {repository} --install-option test
+
 via pip latest Development Version:
 
 .. code-block:: bash

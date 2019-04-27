@@ -1,5 +1,5 @@
 from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import Block
+from rst_include.libs.lib_classes import Block, SourceLine
 from rst_include.libs import lib_block_options
 from rst_include.libs import lib_source_line
 from rst_include.libs import lib_path
@@ -9,8 +9,7 @@ import logging
 import os
 
 
-def get_include_options(block):
-    # type: (Block) -> None
+def get_include_options(block: Block) -> None:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> get_include_options(block)
@@ -29,8 +28,7 @@ def get_include_options(block):
     get_blanks_to_add_to_content(block)
 
 
-def get_include_block_pass_through_options(block):
-    # type: (Block) -> [lib_classes.SourceLine]
+def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> pass_through_options = get_include_block_pass_through_options(block)
@@ -54,8 +52,7 @@ def get_include_block_pass_through_options(block):
     return pass_through_options
 
 
-def get_include_block_additional_content(block):
-    # type: (Block) -> [lib_classes.SourceLine]
+def get_include_block_additional_content(block: Block) -> [SourceLine]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> l_additional_content = get_include_block_additional_content(block)
@@ -84,8 +81,7 @@ def get_include_block_additional_content(block):
     return l_additional_content
 
 
-def get_include_filename(block):
-    # type: (Block) -> (str, str)
+def get_include_filename(block: Block) -> (str, str):
     """
     >>> block = lib_test.get_test_block_ok()
 
@@ -130,8 +126,7 @@ def get_include_filename(block):
     return include_filename, include_filename_absolut
 
 
-def get_include_file_code(block):
-    # type: (Block) -> str
+def get_include_file_code(block: Block) -> str:
     """
     >>> # test code set to python
     >>> block = lib_test.get_test_block_ok()
@@ -160,8 +155,7 @@ def get_include_file_code(block):
     return code
 
 
-def get_include_file_encoding(block):
-    # type: (Block) -> str
+def get_include_file_encoding(block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test encoding set to utf-8
@@ -190,8 +184,7 @@ def get_include_file_encoding(block):
     return encoding
 
 
-def get_include_file_start_line(block):
-    # type: (Block) -> int
+def get_include_file_start_line(block: Block) -> int:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test start-line set to 10
@@ -228,8 +221,7 @@ def get_include_file_start_line(block):
     return include_file_start_line
 
 
-def get_include_file_end_line(block):
-    # type: (Block) -> int
+def get_include_file_end_line(block: Block) -> int:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test end-line set to 25
@@ -265,8 +257,7 @@ def get_include_file_end_line(block):
     return include_file_end_line
 
 
-def get_include_file_start_after(block):
-    # type: (Block) -> str
+def get_include_file_start_after(block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_ok()
 
@@ -296,8 +287,7 @@ def get_include_file_start_after(block):
     return include_file_start_after
 
 
-def get_include_file_end_before(block):
-    # type: (Block) -> str
+def get_include_file_end_before(block: Block) -> str:
     """
     >>> # test end-before set to 'end-marker'
     >>> block = lib_test.get_test_block_ok()
@@ -325,12 +315,7 @@ def get_include_file_end_before(block):
     return include_file_end_before
 
 
-def get_blanks_to_add_to_content(block):
-    # type: (Block) -> int
-    """
-
-
-    """
+def get_blanks_to_add_to_content(block: Block) -> int:
     if block.pass_through_options:
         number_of_blanks_to_add_to_content = len(block.pass_through_options[0].content) - len(block.pass_through_options[0].content.lstrip())
     else:

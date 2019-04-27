@@ -8,8 +8,7 @@ import os
 from types import ModuleType
 
 
-def config_exists(config_file_name):
-    # type: (str) -> bool
+def config_exists(config_file_name: str) -> bool:
     """
     >>> # test file exists
     >>> config_file_name = lib_test.get_test_dir() + '/conf_rst_include_test.py'
@@ -26,8 +25,7 @@ def config_exists(config_file_name):
         return False
 
 
-def load_config_file(conf_file_name):
-    # type: (str) -> ModuleType
+def load_config_file(conf_file_name: str) -> ModuleType:
     """
     >>> # test load named config File
     >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test.py'
@@ -77,7 +75,7 @@ def load_config_file(conf_file_name):
     return module
 
 
-def raise_config_import_error(conf_file_name, attribute):
+def raise_config_import_error(conf_file_name: str, attribute: str):
     logger = logging.getLogger('load_config_file')
     s_error = 'the config file "{conf_file_name}" has not the correct attribute "{attribute}"'.format(
         conf_file_name=conf_file_name, attribute=attribute)
