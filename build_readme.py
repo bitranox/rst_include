@@ -15,9 +15,9 @@ def project_specific(repository_slug, repository, repository_dashed):
     logger = logging.getLogger('project_specific')
     logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
 
-    os.system('"{sys_executable} ./rst_inc.py -h > ./docs/rst_include_help_output.txt"'.format(sys_executable=sys.executable))
-    os.system('"{sys_executable} ./rst_inc.py include -h > ./docs/rst_include_help_include_output.txt"'.format(sys_executable=sys.executable))
-    os.system('"{sys_executable} ./rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt"'.format(sys_executable=sys.executable))
+    os.system('{sys_executable} ./rst_inc.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable))
+    os.system('{sys_executable} ./rst_inc.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable))
+    os.system('{sys_executable} ./rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable))
 
 
 def parse_args(cmd_args=sys.argv[1:]):
