@@ -82,10 +82,9 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     """
     raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
-        if lib_source_line.source_line_contains_option(source_line):
-            if is_option_in_source_line(source_line, option):
-                option_value = get_option_value_from_source_line(source_line, option)
-                return option_value
+        if is_option_in_source_line(source_line, option):
+            option_value = get_option_value_from_source_line(source_line, option)
+            return option_value
 
 
 def raise_value_error_if_option_not_in_block(option, block):
