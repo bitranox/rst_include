@@ -1,5 +1,5 @@
 from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import Block
+from rst_include.libs.lib_classes import Block, SourceLine
 
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
@@ -99,30 +99,29 @@ def read_include_file_2() -> Block:
 
 
 def get_test_block_ok() -> Block:
-    test_dir = get_test_dir()
-    source_file_name = test_dir + '/README.template.rst'
-    block = lib_classes.Block(source_file_name)
-    l_source_lines = list()
-    l_source_lines.append(lib_classes.SourceLine(line_number=47100, content='.. include:: include1.py'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47101, content='    :code: python'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47102, content='    :encoding: utf-8'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47103, content='    :start-line: 10'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47104, content='    :end-line: 25'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47105, content='    :start-after: # start-marker'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47106, content='    :end-before: # end-marker'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47107, content='    :pass-through1:'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47108, content='    :pass-through2: value2'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47209, content='    '))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47210, content=''))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47211, content='    :no-option:'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47212, content=''))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47213, content='additional content1'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47214, content='additional content2'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47215, content='additional content3'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47216, content='additional content4'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47217, content='additional content5'))
-    l_source_lines.append(lib_classes.SourceLine(line_number=47218, content=''))
-    block.l_source_lines = l_source_lines
+    source_file_name = get_test_dir() + '/README.template.rst'
+    block = Block(source_file_name)
+    block.l_source_lines = [
+        SourceLine(line_number=47100, content='.. include:: include1.py'),
+        SourceLine(line_number=47101, content='    :code: python'),
+        SourceLine(line_number=47102, content='    :encoding: utf-8'),
+        SourceLine(line_number=47103, content='    :start-line: 10'),
+        SourceLine(line_number=47104, content='    :end-line: 25'),
+        SourceLine(line_number=47105, content='    :start-after: # start-marker'),
+        SourceLine(line_number=47106, content='    :end-before: # end-marker'),
+        SourceLine(line_number=47107, content='    :pass-through1:'),
+        SourceLine(line_number=47108, content='    :pass-through2: value2'),
+        SourceLine(line_number=47209, content='    '),
+        SourceLine(line_number=47210, content=''),
+        SourceLine(line_number=47211, content='    :no-option:'),
+        SourceLine(line_number=47212, content=''),
+        SourceLine(line_number=47213, content='additional content1'),
+        SourceLine(line_number=47214, content='additional content2'),
+        SourceLine(line_number=47215, content='additional content3'),
+        SourceLine(line_number=47216, content='additional content4'),
+        SourceLine(line_number=47217, content='additional content5'),
+        SourceLine(line_number=47218, content='')
+    ]
     return block
 
 
