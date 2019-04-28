@@ -1,14 +1,14 @@
 __title__ = 'rst_include'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 __name__ = 'rst_include'
 
 import sys
 import logging
 
 if sys.version_info < (3, 5):
-    logging.basicConfig(level=logging.ERROR)
+    logging.basicConfig(level=logging.info)
     main_logger = logging.getLogger('init')
-    main_logger.error('only Python 3 is supported, exit with exitcode 0')
+    main_logger.info('only Python Versions from 3.5 are supported, exit with exitcode 0')
     sys.exit(0)
 
 from rst_include.libs.lib_classes import RstFile
