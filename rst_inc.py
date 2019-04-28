@@ -2,9 +2,9 @@ import logging
 import sys
 
 if sys.version_info < (3, 5):
-    logging.basicConfig(level=logging.ERROR)
+    logging.basicConfig(level=logging.INFO)
     main_logger = logging.getLogger('init')
-    main_logger.error('only Python 3 is supported, exit with exitcode 0')
+    main_logger.info('only Python 3 is supported, exit with exitcode 0')
     sys.exit(0)
 
 import errno
