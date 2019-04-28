@@ -1,3 +1,11 @@
+import logging
+import sys
+
+if sys.version_info < (3, 5):
+    main_logger = logging.getLogger('init')
+    main_logger.error('only Python 3 is supported, exit with exitcode 0')
+    sys.exit(0)
+
 import errno
 import os
 from rst_include import *
@@ -5,8 +13,6 @@ from rst_include.libs import lib_log
 from rst_include.libs import lib_args
 from rst_include.libs import lib_test
 from rst_include.libs import lib_test_compare_results
-
-import sys
 
 
 def handle_include_command(argparse_namespace, sys_argv):
