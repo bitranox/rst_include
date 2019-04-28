@@ -1,5 +1,5 @@
 __title__ = 'rst_include'
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __name__ = 'rst_include'
 
 import sys

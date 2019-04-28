@@ -18,17 +18,31 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
-dirname = os.path.dirname(__file__)
+description = 'include files to rst for documentation purposes'
 
-long_description = (
-    codecs.open(os.path.join(dirname, 'README.rst'), encoding='utf-8').read() + '\n' +
-    codecs.open(os.path.join(dirname, 'CHANGES.rst'), encoding='utf-8').read()
-)
+dirname = os.path.dirname(__file__)
+readme_filename = os.path.join(dirname, 'README.rst')
+changes_filename = os.path.join(dirname, 'CHANGES.rst')
+
+long_description = description
+if os.path.exists(readme_filename):
+    try:
+        readme_content = codecs.open(readme_filename, encoding='utf-8').read()
+        long_description = readme_content
+    except Exception:
+        pass
+
+if os.path.exists(changes_filename):
+    try:
+        changes_content = codecs.open(changes_filename, encoding='utf-8').read()
+        long_description = '\n'.join((long_description, changes_content))
+    except Exception:
+        pass
 
 setup(
     name='rst_include',
-    version='1.0.3',
-    description='include files to rst for documentation purposes',
+    version='1.0.4',
+    description=description,
     long_description=long_description,
     long_description_content_type='text/x-rst',
     author='Robert Nowotny',
