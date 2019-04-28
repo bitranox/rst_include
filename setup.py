@@ -34,7 +34,7 @@ setup(
     author='Robert Nowotny',
     author_email='rnowotny1966@gmail.com',
     url='https://github.com/bitranox/rst_include',
-    packages=['rst_include'],
+    packages=['rst_include', 'rst_include.libs'],
     install_requires=['pytest',
                       'typing'],
     classifiers=CLASSIFIERS,
