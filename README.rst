@@ -1,7 +1,7 @@
 rst_include
 ===========
 
-|Pypi Status| |license| |maintenance|
+|Pypi Status| |pyversion| |license| |maintenance|
 
 |Build Status| |Codecov Status| |Better Code| |code climate| |snyk security|
 
@@ -22,6 +22,9 @@ rst_include
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
+.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
+   :target: https://badge.fury.io/py/rst_include
+   :alt: Python Version
 
 since You can not include files into RST files on github, You can replace those imports with this software.
 
@@ -43,7 +46,7 @@ build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the sa
 
 The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
 
-rst_include does only work with python3 - it can be installed on python2.x for easier handling with travis matrix, and will return with exitcode 0 when issued under python 2.7 (but doing nothing).
+rst_include does only work with python3.5 or newer - it can be installed on earlier versions for easier handling with travis matrix, but will return with exitcode 0 and doing nothing.
 
 `100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 

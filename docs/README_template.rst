@@ -23,7 +23,7 @@ build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the sa
 
 The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
 
-rst_include does only work with python3 - it can be installed on python2.x for easier handling with travis matrix, and will return with exitcode 0 when issued under python 2.7 (but doing nothing).
+rst_include does only work with python3.5 or newer - it can be installed on earlier versions for easier handling with travis matrix, but will return with exitcode 0 and doing nothing.
 
 
 .. include:: ./tested_under.rst
