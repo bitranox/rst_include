@@ -32,6 +32,9 @@ rst_include does only work with python3 - it can be installed on python2.x for e
 
 - `Installation and Upgrade`_
 - `Basic Usage`_
+- `Example Build Script Python`_
+- `Example Build Script DOS Batch`_
+- `Example Build Script Shellscript`_
 - `RST Includes Example`_
 - `RST Include Parameters`_
 - `Requirements`_
@@ -140,6 +143,26 @@ piping under Linux:
 .. code-block:: shell
 
     $> rst_include.py replace -s ./source.rst {template_string} "new content" | rst_include.py include -t ./target.rst
+
+
+Example Build Script Python
+===========================
+
+.. include:: ../build_docs.py
+    :code: python
+
+Example Build Script DOS Batch
+==============================
+
+.. include:: ../build_docs.cmd
+    :code: bat
+
+
+Example Build Script Shellscript
+================================
+
+.. include:: ../build_docs.sh
+    :code: shell
 
 
 RST Includes Example

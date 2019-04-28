@@ -51,6 +51,9 @@ rst_include does only work with python3 - it can be installed on python2.x for e
 
 - `Installation and Upgrade`_
 - `Basic Usage`_
+- `Example Build Script Python`_
+- `Example Build Script DOS Batch`_
+- `Example Build Script Shellscript`_
 - `RST Includes Example`_
 - `RST Include Parameters`_
 - `Requirements`_
@@ -278,6 +281,228 @@ piping under Linux:
 
     $> rst_include.py replace -s ./source.rst {template_string} "new content" | rst_include.py include -t ./target.rst
 
+
+Example Build Script Python
+===========================
+
+.. code-block:: python
+
+    import argparse
+    import errno
+    import logging
+    import os
+    from rst_include import *
+    from rst_include.libs import lib_log
+    import subprocess
+
+
+    # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
+    codeclimate_link_hash = "ff3f414903627e5cfc35"
+
+
+    def project_specific(repository_slug, repository, repository_dashed):
+        # PROJECT SPECIFIC
+        logger = logging.getLogger('project_specific')
+        logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
+
+        subprocess.run('{sys_executable} ./rst_inc.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_inc.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+
+
+    def parse_args(cmd_args=sys.argv[1:]):
+        # type: ([]) -> []
+        parser = argparse.ArgumentParser(
+            description='Create Readme.rst',
+            epilog='check the documentation on github',
+            add_help=True)
+
+        parser.add_argument('travis_repo_slug', metavar='TRAVIS_REPO_SLUG in the form "<github_account>/<repository>"')
+        args = parser.parse_args(cmd_args)
+        return args, parser
+
+
+    def main(args):
+        logger = logging.getLogger('build_docs')
+        logger.info('create the README.rst')
+        travis_repo_slug = args.travis_repo_slug
+        repository = travis_repo_slug.split('/')[1]
+        repository_dashed = repository.replace('_', '-')
+
+        project_specific(travis_repo_slug, repository, repository_dashed)
+
+        """
+        paths absolute, or relative to the location of the config file
+        the notation for relative files is like on windows or linux - not like in python.
+        so You might use ../../some/directory/some_document.rst to go two levels back.
+        avoid absolute paths since You never know where the program will run.
+        """
+
+        logger.info('include the include blocks')
+        rst_inc(source='./docs/README_template.rst',
+                target='./docs/README_template_included.rst')
+
+        logger.info('replace repository related strings')
+        rst_str_replace(source='./docs/README_template_included.rst',
+                        target='./docs/README_template_repo_replaced.rst',
+                        old='bitranox/rst_include',
+                        new=travis_repo_slug)
+        rst_str_replace(source='./docs/README_template_repo_replaced.rst',
+                        target='./docs/README_template_repo_replaced2.rst',
+                        old='rst_include',
+                        new=repository)
+        rst_str_replace(source='./docs/README_template_repo_replaced2.rst',
+                        target='./docs/README_template_repo_replaced3.rst',
+                        old='rst-include',
+                        new=repository_dashed)
+
+        rst_str_replace(source='./docs/README_template_repo_replaced3.rst',
+                        target='./README.rst',
+                        old='ff3f414903627e5cfc35',
+                        new=codeclimate_link_hash)
+
+        logger.info('cleanup')
+        os.remove('./docs/README_template_included.rst')
+        os.remove('./docs/README_template_repo_replaced.rst')
+        os.remove('./docs/README_template_repo_replaced2.rst')
+        os.remove('./docs/README_template_repo_replaced3.rst')
+
+        logger.info('done')
+        sys.exit(0)
+
+
+    if __name__ == '__main__':
+        lib_log.setup_logger()
+        main_logger = logging.getLogger('main')
+        try:
+            _args, _parser = parse_args()
+
+            main(_args)
+        except FileNotFoundError:
+            # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
+            sys.exit(errno.ENOENT)      # No such file or directory
+        except FileExistsError:
+            sys.exit(errno.EEXIST)      # File exists
+        except TypeError:
+            sys.exit(errno.EINVAL)      # Invalid Argument
+        except ValueError:
+            sys.exit(errno.EINVAL)      # Invalid Argument
+
+Example Build Script DOS Batch
+==============================
+
+.. code-block:: bat
+
+    REM
+    REM rst_include needs to be installed and python paths set correctly
+    @echo off
+    cls
+
+    REM # You might also use Environment Variable here, or as commandline parameter
+    REM # this is just an example, I use actually the build_readme.py python file myself
+    REM # I do not recommend cmd files anymore - why it it is so much easier under python ...
+    REM # I am sure there is a more elegant was to do it on batch files, this is only an example
+
+    SET repository_slug="bitranox/rst_include"
+    SET repository="rst_include"
+    SET codeclimate_link_hash="ff3f414903627e5cfc35"
+
+    REM # get dashed repository name for pypi links
+    echo %repository% | rst_inc.py replace "_" "-" > temp.txt
+    set /p repository_dashed= < temp.txt
+    del temp.txt
+
+
+    REM paths absolute, or relative to the location of the config file
+    REM the notation for relative files is like on windows or linux - not like in python.
+    REM so You might use ../../some/directory/some_document.rst to go two levels back.
+    REM avoid absolute paths since You never know where the program will run.
+
+    echo 'create the sample help outputs'
+    rst_inc.py -h > ./docs/rst_include_help_output.txt
+    rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
+    rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
+
+    echo "import the include blocks"
+    rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+
+    echo "replace repository_slug"
+    rst_inc.py replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
+    echo "replace repository"
+    rst_inc.py replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
+    echo "replace repository_dashed"
+    rst_inc.py replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
+    echo "replace codeclimate_link_hash"
+    rst_inc.py replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
+
+    REM ### oddly del "./docs/README_template_included.rst" does not work here - You need to use backslashes
+    echo "cleanup"
+    del ".\docs\README_template_included.rst"
+    del ".\docs\README_template_repo_replaced.rst"
+    del ".\docs\README_template_repo_replaced2.rst"
+    del ".\docs\README_template_repo_replaced3.rst"
+
+    echo 'finished'
+
+Example Build Script Shellscript
+================================
+
+.. code-block:: shell
+
+    #!/bin/bash
+
+    ### CONSTANTS
+    codeclimate_link_hash="ff3f414903627e5cfc35"
+    # TRAVIS_TAG
+
+    function include_dependencies {
+        local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
+        chmod +x "${my_dir}"/lib_bash/*.sh
+        source "${my_dir}/lib_bash/lib_color.sh"
+    }
+
+    include_dependencies  # we need to do that via a function to have local scope of my_dir
+
+    function check_repository_name {
+        if [[ -z ${TRAVIS_REPO_SLUG} ]]
+            then
+                clr_bold clr_red "ERROR no travis repository name set - exiting"
+                exit 1
+            fi
+    }
+
+    clr_bold clr_green "Build README.rst for repository: ${TRAVIS_REPO_SLUG}"
+
+    check_repository_name
+
+    repository="${TRAVIS_REPO_SLUG#*/}"                                 # "username/repository_name" --> "repository_name"
+    repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
+
+    clr_green "create the sample help outputs"
+    rst_inc.py -h > ./docs/rst_include_help_output.txt
+    rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
+    rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
+
+    clr_green "import the include blocks"
+    rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+
+    clr_green "replace repository strings"
+
+    # example for piping
+    cat ./docs/README_template_included.rst \
+        | rst_inc.py replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
+        | rst_inc.py replace "rst_include" "$rst_include" \
+        | rst_inc.py replace "rst-include" "$rst-include" \
+        | rst_inc.py replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
+         > ./README.rst
+
+    clr_green "cleanup"
+    rm ./docs/README_template_included.rst
+
+    clr_green "done"
+    clr_green "******************************************************************************************************************"
+    clr_bold clr_green "FINISHED building README.rst"
+    clr_green "******************************************************************************************************************"
 
 RST Includes Example
 ====================
