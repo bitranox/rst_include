@@ -27,7 +27,7 @@ long_description = (
 
 setup(
     name='rst_include',
-    version='1.0.0',
+    version='1.0.1',
     description='include files to rst for documentation purposes',
     long_description=long_description,
     long_description_content_type='text/x-rst',

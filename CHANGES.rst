@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.1
+-----
+
+ 2019-04-28: add empty line at the end of the assembled documentation, to be able to add CHANGES.rst with setup.py
+
 1.0.0
 -----
 
