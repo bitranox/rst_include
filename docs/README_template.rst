@@ -179,6 +179,9 @@ RST Include Parameters
 
 Requirements
 ------------
+
+following modules will be automatically installed :
+
 .. include:: ../requirements.txt
         :code: shell
 

@@ -31,6 +31,7 @@ def create_rst_file_from_template(rst_file: RstFile) -> None:
     l_source_lines = lib_check_files.read_source_lines(rst_file.source, rst_file.source_encoding)
     l_blocks = lib_source_line.divide_source_line_in_blocks(rst_file.source, source_lines=l_source_lines)
     content = assemble_blocks(l_blocks)
+    content = '\n\n'.join((content, ''))
     lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
 
 

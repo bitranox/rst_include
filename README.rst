@@ -392,6 +392,8 @@ The following options are recognized:
 Requirements
 ------------
 
+following modules will be automatically installed :
+
 .. code-block:: shell
 
     pytest  # see : https://github.com/pytest-dev/pytest
@@ -412,3 +414,4 @@ License
 -------
 
 This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/MIT_License>`_
+
