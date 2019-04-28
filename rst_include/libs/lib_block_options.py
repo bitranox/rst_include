@@ -95,7 +95,7 @@ def get_source_line_number_for_option(option: str, block: Block) -> bool:
     >>> get_source_line_number_for_option('no-option', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
       ...
-    ValueError: File: ".../README.template.rst", option "no-option" not found in block starting with Line 47100
+    ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
     log_and_raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:

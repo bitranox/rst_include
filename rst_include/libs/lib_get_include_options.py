@@ -37,7 +37,7 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     >>> pass_through_options[2].content   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    IndexError: list line_number out of range
+    IndexError: list index out of range
     """
     pass_through_options = list()
     for source_line in block.l_source_lines[1:]:
@@ -73,7 +73,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     >>> l_additional_content[10]   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    IndexError: list line_number out of range
+    IndexError: list index out of range
     """
     max_line = len(block.l_source_lines)
     l_additional_content = list()

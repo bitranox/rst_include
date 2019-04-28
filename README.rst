@@ -1,7 +1,6 @@
 rst_include
 ===========
 
-
 |Pypi Status| |license| |maintenance|
 
 |Build Status| |Codecov Status| |Better Code| |code climate| |snyk security|
@@ -46,7 +45,6 @@ The travis.yml builds the Documentation on every run, so You can be sure that th
 
 rst_include does only work with python3 - it can be installed on python2.x for easier handling with travis matrix, and will return with exitcode 0 when issued under python 2.7 (but doing nothing).
 
-
 `100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
 ----
@@ -63,14 +61,10 @@ rst_include does only work with python3 - it can be installed on python2.x for e
 - `Code of Conduct <https://github.com/bitranox/rst_include/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 
-
-
-
 ----
 
 Installation and Upgrade
 ------------------------
-
 
 From source code:
 
@@ -151,7 +145,6 @@ Basic Usage
 
     check the documentation on github
 
-
 .. code-block:: shell
 
     # get help on shell or windows commandline for include
@@ -176,7 +169,6 @@ Basic Usage
       -c [configfile.py], --config [configfile.py]
                             If no filename is passed, the default conf_res_inc.py
                             is searched in the current directory
-
 
 .. code-block:: shell
 
@@ -204,7 +196,6 @@ Basic Usage
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
-
 
 - replace the include statements in source.rst and save it to target.rst via commandline parameters :
 
@@ -272,7 +263,6 @@ You might also specify the encoding for source and target files
                             RstFile(source='./rst_include/tests/test4_include_nocode_template.rst',
                                     target='./rst_include/tests/test4_include_nocode_result.rst')]
 
-
 Additional You can easily replace text strings :
 
 .. code-block:: shell
@@ -321,7 +311,6 @@ text or RST file include
 
 RST Include Parameters
 ======================
-
 
 taken from : http://docutils.sourceforge.net/docs/ref/rst/directives.html
 
@@ -408,22 +397,18 @@ Requirements
     pytest  # see : https://github.com/pytest-dev/pytest
     typing  # see : https://pypi.org/project/typing/
 
-
 Acknowledgements
 ----------------
-
 
 - special thanks to "uncle bob" Robert C. Martin, especially for his books on "clean code" and "clean architecture"
 
 Contribute
 ----------
 
-
 I would love for you to fork and send me pull request for this project.
 - `please Contribute <https://github.com/bitranox/rst_include/blob/master/CONTRIBUTING.md>`_
 
 License
 -------
-
 
 This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/MIT_License>`_

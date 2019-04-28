@@ -175,7 +175,7 @@ def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> [SourceLine]:
     >>> write_output(target_file,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
     >>> l_source_lines = read_source_lines(target_file)
     >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€\\n'
+    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
     >>> assert l_source_lines[1].line_number == 1
     >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
 
@@ -201,7 +201,7 @@ def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> [SourceLine]:
     for content in content_lines:
         source_line = lib_classes.SourceLine()
         source_line.line_number = line_number
-        source_line.content = content
+        source_line.content = content.rstrip()
         line_number = line_number + 1
         l_source_lines.append(source_line)
     return l_source_lines
@@ -216,7 +216,7 @@ def write_output(target: Any, content: str, encoding: str = 'utf-8') -> None:
     >>> write_output(target_file,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
     >>> l_source_lines = read_source_lines(target_file)
     >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€\\n'
+    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
     >>> assert l_source_lines[1].line_number == 1
     >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
 
@@ -227,7 +227,7 @@ def write_output(target: Any, content: str, encoding: str = 'utf-8') -> None:
     >>> target_file_object.close()
     >>> l_source_lines = read_source_lines(target_file_name)
     >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€\\n'
+    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
     >>> assert l_source_lines[1].line_number == 1
     >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
 

@@ -4,7 +4,9 @@ from rst_include.libs import lib_block
 from rst_include.libs import lib_check_files
 from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
+from rst_include.libs import lib_list
 from rst_include.libs import lib_source_line
+from rst_include.libs import lib_str
 from rst_include.libs import lib_test
 from rst_include.libs import lib_test_compare_results
 
@@ -36,11 +38,13 @@ def assemble_blocks(l_blocks: [Block]) -> str:
     content = ''
     for block in l_blocks:
         if lib_block.is_include_block(block):
-            content += create_content_from_include(block)
+            str_include_block = create_content_from_include(block)
+            content = lib_str.join_if_not_empty('\n\n', content, str_include_block)
         else:
-            content += lib_block.get_block_source_lines_joined(block.l_source_lines)
-            # save memory
-            del block.l_source_lines
+            str_standard_block = lib_block.get_block_source_lines_joined(block.l_source_lines)
+            content = lib_str.join_if_not_empty('\n\n', content, str_standard_block)
+        # save memory
+        del block.l_source_lines
     return content
 
 
@@ -48,9 +52,10 @@ def create_content_from_include(block: Block) -> str:
     lib_get_include_options.get_include_options(block)
     lib_include_file.read_include_file(block)
     lib_include_file.process_include_file_lines(block)
-    content = assemble_include_block(block)
-    content += assemble_additional_content(block)
-    return content
+    str_include_block = assemble_include_block(block)
+    str_additional_content = assemble_additional_content(block)
+    str_include = lib_str.join_if_not_empty('\n\n', str_include_block, str_additional_content)
+    return str_include
 
 
 def assemble_additional_content(block: Block) -> str:
@@ -58,48 +63,16 @@ def assemble_additional_content(block: Block) -> str:
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> assemble_additional_content(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '\\n    :no-option:\\n\\nadditional content1...additional content5\\n\\n'
+    '    :no-option:\\n\\nadditional content1...\\nadditional content5'
 
     """
-    delete_leading_empty_additional_content_lines(block)
-    delete_trailing_empty_additional_content_lines(block)
     content = ''
     l_content = [source_line.content.rstrip() for source_line in block.additional_content]
-    if l_content:
-        content = '\n' + '\n'.join(l_content) + '\n\n'
+    l_content = lib_list.strip_list_of_strings(l_content)
+    content = '\n'.join(l_content)
     # save memory
     del block.additional_content
     return content
-
-
-def delete_leading_empty_additional_content_lines(block: Block) -> None:
-    """
-    >>> block = lib_test.get_test_block_include2_ok()
-    >>> lib_get_include_options.get_include_options(block)
-    >>> delete_leading_empty_additional_content_lines(block)
-    >>> [source_line.content for source_line in block.additional_content]  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    ['    :no-option:', ..., '']
-    """
-    while len(block.additional_content):
-        if not block.additional_content[0].content.strip():
-            block.additional_content = block.additional_content[1:]
-        else:
-            break
-
-
-def delete_trailing_empty_additional_content_lines(block: Block) -> None:
-    """
-    >>> block = lib_test.get_test_block_include2_ok()
-    >>> lib_get_include_options.get_include_options(block)
-    >>> delete_trailing_empty_additional_content_lines(block)
-    >>> [source_line.content for source_line in block.additional_content]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    ['    ', ..., 'additional content5']
-    """
-    while len(block.additional_content):
-        if not block.additional_content[-1].content.strip():
-            block.additional_content = block.additional_content[0:-1]
-        else:
-            break
 
 
 def assemble_include_block(block: Block) -> str:
@@ -110,7 +83,7 @@ def assemble_include_block(block: Block) -> str:
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
     >>> assemble_include_block(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '.. code-block:: python\\n    :pass-through1:...        pass\\n\\n'
+    '.. code-block:: python\\n    :pass-through1:...        pass'
 
     >>> # test :code: ''
     >>> block = lib_test.get_test_block_include2_ok()
@@ -119,12 +92,11 @@ def assemble_include_block(block: Block) -> str:
     >>> block.include_file_code = ''
     >>> lib_include_file.process_include_file_lines(block)
     >>> assemble_include_block(block)
-    '\\ndef my_include2_2():\\n    pass\\n\\n    pass\\n'
-
+    'def my_include2_2():\\n    pass\\n\\n    pass'
     """
-    content = get_block_header(block) + '\n'
-    set_number_of_blanks_to_add(block)
-    content = content + get_include_lines_content(block) + '\n'
+    block_header = get_block_header(block)
+    intended_include_lines_content = get_intended_include_lines_content(block)
+    content = lib_str.join_if_not_empty('\n\n', block_header, intended_include_lines_content)
     return content
 
 
@@ -137,7 +109,7 @@ def get_block_header(block: Block) -> str:
 
     >>> # test :code: python
     >>> get_block_header(block)
-    '.. code-block:: python\\n    :pass-through1:\\n    :pass-through2: value2\\n'
+    '.. code-block:: python\\n    :pass-through1:\\n    :pass-through2: value2'
 
     >>> # test :code: ''
     >>> block.include_file_code = ''
@@ -149,7 +121,7 @@ def get_block_header(block: Block) -> str:
         content_lines = list()
         content_lines.append('.. code-block:: {code}'.format(code=block.include_file_code))
         content_lines = content_lines + [pass_through_option.content for pass_through_option in block.pass_through_options]
-        content = '\n'.join(content_lines) + '\n'
+        content = '\n'.join(content_lines)
     return content
 
 
@@ -176,7 +148,7 @@ def set_number_of_blanks_to_add(block: Block) -> int:
     return block.include_file_number_of_blanks_to_add_to_content
 
 
-def get_include_lines_content(block: Block) -> str:
+def get_intended_include_lines_content(block: Block) -> str:
     """
     >>> # test :code: python
     >>> block = lib_test.get_test_block_include2_ok()
@@ -184,8 +156,8 @@ def get_include_lines_content(block: Block) -> str:
     >>> include_file = lib_include_file.read_include_file(block)
     >>> lib_include_file.process_include_file_lines(block)
     >>> number_of_blanks_to_add = set_number_of_blanks_to_add(block)
-    >>> get_include_lines_content(block)
-    '    def my_include2_2():\\n        pass\\n\\n        pass\\n'
+    >>> get_intended_include_lines_content(block)
+    '    def my_include2_2():\\n        pass\\n\\n        pass'
 
     >>> # test :code: ''
     >>> block = lib_test.get_test_block_include2_ok()
@@ -194,26 +166,30 @@ def get_include_lines_content(block: Block) -> str:
     >>> lib_include_file.process_include_file_lines(block)
     >>> block.include_file_code = ''
     >>> number_of_blanks_to_add = set_number_of_blanks_to_add(block)
-    >>> get_include_lines_content(block)
+    >>> get_intended_include_lines_content(block)
     'def my_include2_2():\\n    pass\\n\\n    pass'
 
     """
+    set_number_of_blanks_to_add(block)
     if block.include_file_number_of_blanks_to_add_to_content:
-        blanks_to_add = ' ' * block.include_file_number_of_blanks_to_add_to_content
-        l_sliced_content = block.include_file_sliced_content.split('\n')
-        # save memory
-        del block.include_file_sliced_content
-
-        l_content_blanks_added = list()
-        for content_line in l_sliced_content:
-            if content_line.strip():
-                content_line = blanks_to_add + content_line.rstrip() + '\n'
-            else:
-                content_line = '\n'
-            l_content_blanks_added.append(content_line)
-        content = ''.join(l_content_blanks_added)
+        content = add_indention_to_include_file_content(block)
     else:
         content = block.include_file_sliced_content
-        # save memory
-        del block.include_file_sliced_content
+    # save memory
+    del block.include_file_sliced_content
+    return content
+
+
+def add_indention_to_include_file_content(block: Block) -> str:
+    """
+    >>> block=Block(source_file_name='some_file')
+    >>> block.include_file_number_of_blanks_to_add_to_content = 4
+    >>> block.include_file_sliced_content = 'abc\\n\\ndef'
+    >>> add_indention_to_include_file_content(block)
+    '    abc\\n\\n    def'
+    """
+    blanks_to_add = ' ' * block.include_file_number_of_blanks_to_add_to_content
+    l_sliced_content = block.include_file_sliced_content.split('\n')
+    l_sliced_content = [''.join((blanks_to_add, line)).rstrip() for line in l_sliced_content]
+    content = '\n'.join(l_sliced_content)
     return content

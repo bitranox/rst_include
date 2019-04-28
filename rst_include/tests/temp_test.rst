@@ -1,5 +1,5 @@
-TEST3 - include from subdirectory
-=================================
+TEST2 - include same directory
+==============================
 
 the content of this document does not really matter - it is used for testing against a stored file.
 
@@ -13,7 +13,7 @@ CODE
 
 .. code-block:: bash
 
-    .. include:: ./subdir/include_subdir.py
+    .. include:: ./include2.py
         :code: python
         :number-lines: 10
         :start-line: 6
@@ -37,10 +37,11 @@ EXPECTED
 RESULT
 ======
 
-.. code-block:: python
+.. include:: ./include2.py
+    :code: python
     :number-lines: 10
-
-    def my_include2_2():
-        pass
-
-        pass
+    :start-line: 6
+    :end-line: 23
+    :start-after: # start-marker
+    :end-before: # end-marker
+    :encoding: utf-8
