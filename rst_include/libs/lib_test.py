@@ -1,3 +1,4 @@
+import os
 from rst_include.libs import lib_assemble_block
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block, SourceLine
@@ -5,10 +6,6 @@ from rst_include.libs import lib_get_include_options
 from rst_include.libs import lib_include_file
 from rst_include.libs import lib_path
 from rst_include.libs import lib_test_compare_results
-
-
-import logging
-import os
 
 
 def run_template_tests() -> None:

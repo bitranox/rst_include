@@ -36,7 +36,6 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block:
     TypeError: Error in File ".../README.template.rst", Line 47105: option "start-after" has to be integer
 
     """
-    logger = logging.getLogger('get_option_value')
     log_and_raise_value_error_if_option_not_in_block(option, block)
     value = get_option_value_from_block(option, block)
     log_and_raise_if_value_of_option_in_block_is_empty(value, option, block)
@@ -59,11 +58,11 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     log_and_raise_value_error_if_option_not_in_block(option, block)
     for source_line in block.l_source_lines:
         if is_option_in_source_line(source_line, option):
-            option_value = get_option_value_from_source_line(source_line, option)
+            option_value = get_option_value_from_source_line(source_line)
             return option_value
 
 
-def get_option_value_from_source_line(source_line: SourceLine, option: str) -> str:
+def get_option_value_from_source_line(source_line: SourceLine) -> str:
     option_value = source_line.content.split(':', 2)[2].strip()
     return option_value
 

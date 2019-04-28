@@ -66,7 +66,6 @@ def assemble_additional_content(block: Block) -> str:
     '    :no-option:\\n\\nadditional content1...\\nadditional content5'
 
     """
-    content = ''
     l_content = [source_line.content.rstrip() for source_line in block.additional_content]
     l_content = lib_list.strip_list_of_strings(l_content)
     content = '\n'.join(l_content)

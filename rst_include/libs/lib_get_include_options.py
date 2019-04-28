@@ -1,4 +1,3 @@
-from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block, SourceLine
 from rst_include.libs import lib_block_options
 from rst_include.libs import lib_source_line

@@ -6,10 +6,13 @@ from rst_include.libs import lib_test
 def get_module_from_file(module_name: str, path_to_module: str) -> ModuleType:
     """
     >>> module = get_module_from_file('test', lib_test.get_test_dir()+'/include1.py')
-    >>> assert module.my_include() == None
+    >>> assert hasattr(module, 'my_include')
+    >>> function = getattr(module, 'my_include')
+    >>> assert function() is None
     >>> import test
-    >>> assert test.my_include() == None
-
+    >>> assert hasattr(test, 'my_include')
+    >>> function = getattr(test, 'my_include')
+    >>> assert function() is None
     """
     if sys.version_info < (3, 0):  # pragma: no cover
         import imp
