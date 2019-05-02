@@ -30,7 +30,8 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     >>> # test load named config File
     >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test.py'
     >>> module = load_config_file(conf_file_name)
-    >>> assert len(module.rst_conf.l_rst_files) > 1
+    >>> rst_conf = getattr(module, 'rst_conf')
+    >>> assert len(rst_conf.l_rst_files) > 1
 
     >>> # test config file not correct
     >>> conf_file_name = lib_test.get_test_dir() + '/conf_rst_include_test_attr_rst_conf_missing.py'
@@ -69,7 +70,7 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     if not hasattr(module, 'rst_conf'):
         raise_config_import_error(conf_file_name, 'rst_conf')
 
-    rst_conf = module.rst_conf
+    rst_conf = getattr(module, 'rst_conf')
     if not hasattr(rst_conf, 'l_rst_files'):
         raise_config_import_error(conf_file_name, 'l_rst_files')
     return module

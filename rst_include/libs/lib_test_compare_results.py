@@ -1,5 +1,6 @@
 import logging
 from rst_include.libs import lib_test
+from typing import List, Tuple
 
 logger = logging.getLogger('compare_results')
 
@@ -43,7 +44,7 @@ def compare_results_equal(expected_file: str, result_file: str,
 def read_files_into_lines(expected_file: str,
                           result_file: str,
                           expected_file_encoding: str = 'utf-8-sig',
-                          result_file_encoding: str = 'utf-8-sig') -> ([str], [str]):
+                          result_file_encoding: str = 'utf-8-sig') -> Tuple[List[str], List[str]]:
 
     with open(expected_file, mode='r', encoding=expected_file_encoding) as f_expected_file:
         l_expected_lines = f_expected_file.readlines()

@@ -56,10 +56,12 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
     log_and_raise_value_error_if_option_not_in_block(option, block)
+    option_value = ''
     for source_line in block.l_source_lines:
         if is_option_in_source_line(source_line, option):
             option_value = get_option_value_from_source_line(source_line)
-            return option_value
+            break
+    return option_value
 
 
 def get_option_value_from_source_line(source_line: SourceLine) -> str:
@@ -84,7 +86,7 @@ def is_option_in_block(option: str, block: Block) -> bool:
     return False
 
 
-def get_source_line_number_for_option(option: str, block: Block) -> bool:
+def get_source_line_number_for_option(option: str, block: Block) -> int:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> get_source_line_number_for_option('code', block)
@@ -97,9 +99,12 @@ def get_source_line_number_for_option(option: str, block: Block) -> bool:
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
     """
     log_and_raise_value_error_if_option_not_in_block(option, block)
+    line_number = 0
     for source_line in block.l_source_lines:
         if is_option_in_source_line(source_line, option):
-            return source_line.line_number
+            line_number = source_line.line_number
+            break
+    return line_number
 
 
 def is_option_in_source_line(source_line: SourceLine, option: str) -> bool:

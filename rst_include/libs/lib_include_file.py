@@ -6,9 +6,10 @@ from rst_include.libs import lib_test
 
 import logging
 import sys
+from typing import List
 
 
-def read_include_file(block: Block) -> [str]:
+def read_include_file(block: Block) -> List[str]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> lib_get_include_options.get_include_options(block)

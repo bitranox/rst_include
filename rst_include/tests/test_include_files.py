@@ -1,7 +1,14 @@
-import rst_include.tests.include1 as include1
-import rst_include.tests.include2 as include2
-import rst_include.tests.include3 as include3
-import rst_include.tests.subdir.include_subdir as include_subdir
+try:
+    import rst_include.tests.include1 as include1
+    import rst_include.tests.include2 as include2
+    import rst_include.tests.include3 as include3
+    import rst_include.tests.subdir.include_subdir as include_subdir
+except ImportError:  # pragma: no cover
+    # this we need for mypy, doctest
+    from . import include1
+    from . import include2
+    from . import include3
+    from .subdir import include_subdir
 
 
 def test():

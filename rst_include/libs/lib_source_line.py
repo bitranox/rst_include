@@ -1,8 +1,9 @@
+from typing import List
 from rst_include.libs import lib_classes
 from rst_include.libs.lib_classes import Block, SourceLine
 
 
-def divide_source_line_in_blocks(source_file_name: str, source_lines: [SourceLine]) -> [Block]:
+def divide_source_line_in_blocks(source_file_name: str, source_lines: List[SourceLine]) -> List[Block]:
     """
     return blocks  - each block starts with ".." and ends with a line that does not begin with tab or blank
     or begins with .. (another block)
@@ -38,7 +39,7 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: [SourceLin
     >>> assert blocks[2].l_source_lines[1].content == '    :code: yaml'
 
     """
-    blocks = list()                               # type: [Block]
+    blocks = list()                               # type: List[Block]
     block = lib_classes.Block(source_file_name)   # type: Block
     for source_line in source_lines:
         if source_line_starts_with_include_statement(source_line):
@@ -49,7 +50,7 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: [SourceLin
     return blocks
 
 
-def append_non_empty_block(block: Block, blocks: [Block]):
+def append_non_empty_block(block: Block, blocks: List[Block]):
     if block.l_source_lines:
         blocks.append(block)
 

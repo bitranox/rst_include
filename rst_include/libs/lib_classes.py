@@ -1,5 +1,6 @@
 from typing import List, Union
 
+
 class RstFile(object):
     def __init__(self, source: str, target: str, source_encoding: str = 'utf-8-sig', target_encoding: str = 'utf-8') -> None:
         self.source = source

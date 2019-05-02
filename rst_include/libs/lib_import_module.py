@@ -22,7 +22,9 @@ def get_module_from_file(module_name: str, path_to_module: str) -> ModuleType:
 
     elif sys.version_info >= (3, 5):
         import importlib.util
+        from importlib.abc import Loader
         spec = importlib.util.spec_from_file_location(module_name, path_to_module)
+        assert isinstance(spec.loader, Loader)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         sys.modules[module_name] = module

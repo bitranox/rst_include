@@ -1,8 +1,9 @@
 import argparse
 import sys
+from typing import List, Tuple
 
 
-def parse_args(cmd_args: [str] = sys.argv[1:]) -> (argparse.Namespace, argparse.ArgumentParser):
+def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, argparse.ArgumentParser]:
     parser = argparse.ArgumentParser(
         description='Process .rst File Includes',
         epilog='check the documentation on github',
@@ -31,7 +32,7 @@ def parse_args(cmd_args: [str] = sys.argv[1:]) -> (argparse.Namespace, argparse.
     return args, parser
 
 
-def cmd_args_config_flag_given(cmd_args: [str]) -> bool:
+def cmd_args_config_flag_given(cmd_args: List[str]) -> bool:
     """
     >>> assert cmd_args_config_flag_given(['']) == False
     >>> assert cmd_args_config_flag_given(['-c']) == True

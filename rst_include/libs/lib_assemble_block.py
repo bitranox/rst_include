@@ -10,8 +10,10 @@ from rst_include.libs import lib_str
 from rst_include.libs import lib_test
 from rst_include.libs import lib_test_compare_results
 
+from typing import List
 
-def create_l_rst_files_from_templates(l_rst_files: [RstFile]) -> None:
+
+def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
     """
     >>> # test files without include
     >>> test_dir = lib_test.get_test_dir()
@@ -35,7 +37,7 @@ def create_rst_file_from_template(rst_file: RstFile) -> None:
     lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
 
 
-def assemble_blocks(l_blocks: [Block]) -> str:
+def assemble_blocks(l_blocks: List[Block]) -> str:
     content = ''
     for block in l_blocks:
         if lib_block.is_include_block(block):

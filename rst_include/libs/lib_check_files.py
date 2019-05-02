@@ -5,10 +5,10 @@ from rst_include.libs import lib_test
 import logging
 import os
 import sys
-from typing import Any
+from typing import Any, List
 
 
-def check_l_rst_files(l_rst_files: [RstFile]) -> None:
+def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
     """
     >>> test_dir = lib_test.get_test_dir()
 
@@ -43,7 +43,7 @@ def check_l_rst_files(l_rst_files: [RstFile]) -> None:
         check_source_and_target(rst_file.source, rst_file.target)
 
 
-def log_and_raise_if_no_files_given(l_rst_files: [RstFile]) -> None:
+def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
     """
     >>> # test no rst_file given
     >>> log_and_raise_if_no_files_given([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -162,7 +162,7 @@ def read_input(source: Any, encoding: str = 'utf-8-sig') -> str:
     return content
 
 
-def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> [SourceLine]:
+def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> List[SourceLine]:
     """
     >>> test_dir = lib_test.get_test_dir()
 

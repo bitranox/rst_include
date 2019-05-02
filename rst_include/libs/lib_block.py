@@ -3,7 +3,7 @@ from rst_include.libs.lib_classes import SourceLine
 from rst_include.libs import lib_classes
 from rst_include.libs import lib_list
 from rst_include.libs import lib_source_line
-
+from typing import List
 
 def is_include_block(block: Block) -> bool:
     """
@@ -32,7 +32,7 @@ def is_include_block(block: Block) -> bool:
     return False
 
 
-def get_block_source_lines_joined(l_source_lines: [SourceLine]) -> str:
+def get_block_source_lines_joined(l_source_lines: List[SourceLine]) -> str:
     """
     >>> l_source_lines = list()
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='aa')

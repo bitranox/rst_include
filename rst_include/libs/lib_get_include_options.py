@@ -6,6 +6,7 @@ from rst_include.libs import lib_test
 
 import logging
 import os
+from typing import List, Tuple, Union
 
 
 def get_include_options(block: Block) -> None:
@@ -27,7 +28,7 @@ def get_include_options(block: Block) -> None:
     get_blanks_to_add_to_content(block)
 
 
-def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
+def get_include_block_pass_through_options(block: Block) -> List[SourceLine]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> pass_through_options = get_include_block_pass_through_options(block)
@@ -38,7 +39,7 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     ...
     IndexError: list index out of range
     """
-    pass_through_options = list()
+    pass_through_options = list()                       # type: List[SourceLine]
     for source_line in block.l_source_lines[1:]:
         if lib_source_line.source_line_contains_option(source_line):
             append_if_pass_through_option(source_line, pass_through_options)
@@ -48,14 +49,14 @@ def get_include_block_pass_through_options(block: Block) -> [SourceLine]:
     return pass_through_options
 
 
-def append_if_pass_through_option(source_line: SourceLine, pass_through_options: [SourceLine]):
+def append_if_pass_through_option(source_line: SourceLine, pass_through_options: List[SourceLine]):
     processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     option_key = lib_block_options.get_option_key_from_source_line(source_line)
     if option_key not in processed_option_keys:
         pass_through_options.append(source_line)
 
 
-def get_include_block_additional_content(block: Block) -> [SourceLine]:
+def get_include_block_additional_content(block: Block) -> List[SourceLine]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> l_additional_content = get_include_block_additional_content(block)
@@ -75,7 +76,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     IndexError: list index out of range
     """
     max_line = len(block.l_source_lines)
-    l_additional_content = list()
+    l_additional_content = list()                       # type: List[SourceLine]
     for index in range(max_line):
         if not lib_source_line.source_line_contains_option(block.l_source_lines[index]):
             l_additional_content = block.l_source_lines[index:]
@@ -84,7 +85,7 @@ def get_include_block_additional_content(block: Block) -> [SourceLine]:
     return l_additional_content
 
 
-def get_include_filename(block: Block) -> (str, str):
+def get_include_filename(block: Block) -> Tuple[str, str]:
     """
     >>> block = lib_test.get_test_block_ok()
 
@@ -187,7 +188,7 @@ def get_include_file_encoding(block: Block) -> str:
     return encoding
 
 
-def get_include_file_start_line(block: Block) -> int:
+def get_include_file_start_line(block: Block) -> Union[int, None]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test start-line set to 10
@@ -224,7 +225,7 @@ def get_include_file_start_line(block: Block) -> int:
     return include_file_start_line
 
 
-def get_include_file_end_line(block: Block) -> int:
+def get_include_file_end_line(block: Block) -> Union[int, None]:
     """
     >>> block = lib_test.get_test_block_ok()
     >>> # test end-line set to 25
