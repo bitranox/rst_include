@@ -1,4 +1,7 @@
-def strip_list_of_strings(list_of_strings: [str], chars: str = '') -> [str]:
+from typing import List
+
+
+def strip_list_of_strings(list_of_strings: List[str], chars: str = '') -> List[str]:
     """
     strips list elements of a list, were the value is chars
     >>> testlist = ['','','a','b','c','','']
@@ -12,7 +15,7 @@ def strip_list_of_strings(list_of_strings: [str], chars: str = '') -> [str]:
     return list_of_strings
 
 
-def lstrip_list_of_strings(list_of_strings: [str], chars: str = '') -> [str]:
+def lstrip_list_of_strings(list_of_strings: List[str], chars: str = '') -> List[str]:
     """
     strips list elements on the beginning of a list, were the value is chars
     >>> testlist = ['','','a','b','c','','']
@@ -27,7 +30,7 @@ def lstrip_list_of_strings(list_of_strings: [str], chars: str = '') -> [str]:
     return list_of_strings
 
 
-def rstrip_list_of_strings(list_of_strings: [str], chars: str = '') -> [str]:
+def rstrip_list_of_strings(list_of_strings: List[str], chars: str = '') -> List[str]:
     """
     strips list elements on the beginning of a list, were the value is chars
     >>> testlist = ['','','a','b','c','','']
