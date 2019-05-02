@@ -5,6 +5,7 @@ from rst_include.libs import lib_list
 from rst_include.libs import lib_source_line
 from typing import List
 
+
 def is_include_block(block: Block) -> bool:
     """
     >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
