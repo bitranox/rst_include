@@ -48,7 +48,7 @@ The travis.yml builds the Documentation on every run, so You can be sure that th
 
 rst_include does only work with python3.5 or newer - it can be installed on earlier versions for easier handling with travis matrix, but will return with exitcode 0 and doing nothing.
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
 ----
 
