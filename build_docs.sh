@@ -37,6 +37,11 @@ rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_inclu
 
 clr_green "replace repository strings"
 
+# please note that the replace syntax is not shown correctly in the README.rst,
+# because it gets replaced itself by the build_docs.py
+# we could overcome this by first replacing, and afterwards including -
+# check out the build_docs.sh for the correct syntax !
+
 # example for piping
 cat ./docs/README_template_included.rst \
     | rst_inc.py replace "{repository_slug}" "${TRAVIS_REPO_SLUG}" \

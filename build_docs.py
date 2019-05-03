@@ -61,6 +61,10 @@ def main(args):
     rst_inc(source='./docs/README_template.rst',
             target='./docs/README_template_included.rst')
 
+    # please note that the replace syntax is not shown correctly in the README.rst,
+    # because it gets replaced itself by the build_docs.py
+    # we could overcome this by first replacing, and afterwards including -
+    # check out the build_docs.py for the correct syntax !
     logger.info('replace repository related strings')
     rst_str_replace(source='./docs/README_template_included.rst',
                     target='./docs/README_template_repo_replaced.rst',

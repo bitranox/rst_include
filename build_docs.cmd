@@ -31,6 +31,11 @@ rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
 echo "import the include blocks"
 rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
+REM please note that the replace syntax is not shown correctly in the README.rst,
+REM because it gets replaced itself by the build_docs.py
+REM we could overcome this by first replacing, and afterwards including -
+REM check out the build_docs.cmd for the correct syntax !
+
 echo "replace repository_slug"
 rst_inc.py replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst {repository_slug} %repository_slug%
 echo "replace repository"

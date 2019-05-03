@@ -353,6 +353,10 @@ Example Build Script Python
         rst_inc(source='./docs/README_template.rst',
                 target='./docs/README_template_included.rst')
 
+        # please note that the replace syntax is not shown correctly in the README.rst,
+        # because it gets replaced itself by the build_docs.py
+        # we could overcome this by first replacing, and afterwards including -
+        # check out the build_docs.py for the correct syntax !
         logger.info('replace repository related strings')
         rst_str_replace(source='./docs/README_template_included.rst',
                         target='./docs/README_template_repo_replaced.rst',
@@ -437,6 +441,11 @@ Example Build Script DOS Batch
     echo "import the include blocks"
     rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
+    REM please note that the replace syntax is not shown correctly in the README.rst,
+    REM because it gets replaced itself by the build_docs.py
+    REM we could overcome this by first replacing, and afterwards including -
+    REM check out the build_docs.cmd for the correct syntax !
+
     echo "replace repository_slug"
     rst_inc.py replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
@@ -498,6 +507,11 @@ Example Build Script Shellscript
     rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
     clr_green "replace repository strings"
+
+    # please note that the replace syntax is not shown correctly in the README.rst,
+    # because it gets replaced itself by the build_docs.py
+    # we could overcome this by first replacing, and afterwards including -
+    # check out the build_docs.sh for the correct syntax !
 
     # example for piping
     cat ./docs/README_template_included.rst \
