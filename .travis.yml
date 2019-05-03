@@ -32,8 +32,8 @@ matrix:
       # this can be a security issue, check that You dont leak secrets here !
       filter_secrets: false
       before_install:
-        - choco install python3
-        - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+          - ./lib_bash/lib_retry.sh retry choco install python3
+          - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
 
     - os: linux
       language: python
@@ -44,9 +44,9 @@ matrix:
       python: '3.6'
       # we can do that also with env - but we dont want to show it on the travis build overview
       before_install:
-        - export mypy_static_typecheck="True"
-        - export build_docs="True"
-        - export deploy_on_pypi="True"
+          - export mypy_static_typecheck="True"
+          - export build_docs="True"
+          - export deploy_on_pypi="True"
 
     - os: linux
       language: python
