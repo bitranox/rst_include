@@ -45,8 +45,6 @@ rst_include does only work with python3.5 or newer - it can be installed on earl
 - `Code of Conduct <https://github.com/{repository_slug}/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 
-.. include:: ./link_to_issues.rst
-
 ----
 
 Installation and Upgrade
