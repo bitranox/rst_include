@@ -1,6 +1,10 @@
 import sys
 from types import ModuleType
-from rst_include.libs import lib_test
+
+try:
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from . import lib_test
 
 
 def get_module_from_file(module_name: str, path_to_module: str) -> ModuleType:

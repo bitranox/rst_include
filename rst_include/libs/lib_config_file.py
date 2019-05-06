@@ -1,11 +1,15 @@
 import logging
-from rst_include.libs import lib_path
-from rst_include.libs import lib_import_module
-from rst_include.libs import lib_test
-
-
 import os
 from types import ModuleType
+
+try:
+    from rst_include.libs import lib_path
+    from rst_include.libs import lib_import_module
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from . import lib_path
+    from . import lib_import_module
+    from . import lib_test
 
 
 def config_exists(config_file_name: str) -> bool:

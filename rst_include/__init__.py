@@ -11,8 +11,8 @@ if sys.version_info < (3, 5):
     main_logger.info('only Python Versions from 3.5 are supported, exit with exitcode 0')
     sys.exit(0)
 
-from rst_include.libs.lib_classes import RstFile
-from rst_include.libs.lib_classes import RstConf
-from rst_include.libs.lib_main import rst_str_replace
-from rst_include.libs.lib_main import rst_inc_from_config
-from rst_include.libs.lib_main import rst_inc
+from .libs.lib_classes import RstFile
+from .libs.lib_classes import RstConf
+from .libs.lib_main import rst_str_replace
+from .libs.lib_main import rst_inc_from_config
+from .libs.lib_main import rst_inc

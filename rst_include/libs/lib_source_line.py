@@ -1,6 +1,11 @@
 from typing import List
-from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import Block, SourceLine
+
+try:
+    from rst_include.libs import lib_classes
+    from rst_include.libs.lib_classes import Block, SourceLine
+except ImportError:  # pragma: no cover
+    from . import lib_classes
+    from .lib_classes import Block, SourceLine
 
 
 def divide_source_line_in_blocks(source_file_name: str, source_lines: List[SourceLine]) -> List[Block]:

@@ -1,9 +1,17 @@
-from rst_include.libs.lib_classes import Block
-from rst_include.libs.lib_classes import SourceLine
-from rst_include.libs import lib_classes
-from rst_include.libs import lib_list
-from rst_include.libs import lib_source_line
 from typing import List
+
+try:
+    from rst_include.libs.lib_classes import Block
+    from rst_include.libs.lib_classes import SourceLine
+    from rst_include.libs import lib_classes
+    from rst_include.libs import lib_list
+    from rst_include.libs import lib_source_line
+except ImportError:     # pragma: no cover
+    from .lib_classes import Block
+    from .lib_classes import SourceLine
+    from . import lib_classes
+    from . import lib_list
+    from . import lib_source_line
 
 
 def is_include_block(block: Block) -> bool:

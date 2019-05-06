@@ -1,16 +1,29 @@
-from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import Block, RstFile
-from rst_include.libs import lib_block
-from rst_include.libs import lib_check_files
-from rst_include.libs import lib_get_include_options
-from rst_include.libs import lib_include_file
-from rst_include.libs import lib_list
-from rst_include.libs import lib_source_line
-from rst_include.libs import lib_str
-from rst_include.libs import lib_test
-from rst_include.libs import lib_test_compare_results
-
 from typing import List
+
+try:
+    from rst_include.libs import lib_classes
+    from rst_include.libs.lib_classes import Block, RstFile
+    from rst_include.libs import lib_block
+    from rst_include.libs import lib_check_files
+    from rst_include.libs import lib_get_include_options
+    from rst_include.libs import lib_include_file
+    from rst_include.libs import lib_list
+    from rst_include.libs import lib_source_line
+    from rst_include.libs import lib_str
+    from rst_include.libs import lib_test
+    from rst_include.libs import lib_test_compare_results
+except ImportError:             # pragma: no cover
+    from . import lib_classes
+    from .lib_classes import Block, RstFile
+    from . import lib_block
+    from . import lib_check_files
+    from . import lib_get_include_options
+    from . import lib_include_file
+    from . import lib_list
+    from . import lib_source_line
+    from . import lib_str
+    from . import lib_test
+    from . import lib_test_compare_results
 
 
 def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:

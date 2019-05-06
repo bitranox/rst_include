@@ -1,8 +1,11 @@
 import logging
-from rst_include.libs import lib_test
 from typing import List, Tuple
-
 logger = logging.getLogger('compare_results')
+
+try:
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from . import lib_test
 
 
 def compare_results_equal(expected_file: str, result_file: str,

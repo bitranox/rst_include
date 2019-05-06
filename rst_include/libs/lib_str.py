@@ -1,4 +1,7 @@
-from rst_include.libs import lib_list
+try:
+    from rst_include.libs import lib_list
+except ImportError:  # pragma: no cover
+    from . import lib_list
 
 
 def strip_multiline_string(str_multiline: str) -> str:

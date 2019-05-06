@@ -1,8 +1,15 @@
 import logging
-from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import Block, SourceLine
-from rst_include.libs import lib_source_line
-from rst_include.libs import lib_test
+
+try:
+    from rst_include.libs import lib_classes
+    from rst_include.libs.lib_classes import Block, SourceLine
+    from rst_include.libs import lib_source_line
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from . import lib_classes
+    from .lib_classes import Block, SourceLine
+    from . import lib_source_line
+    from . import lib_test
 
 
 def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block: Block, value_must_be_int: bool = False) -> str:

@@ -1,12 +1,19 @@
-from rst_include.libs.lib_classes import Block, SourceLine
-from rst_include.libs import lib_block_options
-from rst_include.libs import lib_source_line
-from rst_include.libs import lib_path
-from rst_include.libs import lib_test
-
 import logging
 import os
 from typing import List, Tuple, Union
+
+try:
+    from rst_include.libs.lib_classes import Block, SourceLine
+    from rst_include.libs import lib_block_options
+    from rst_include.libs import lib_source_line
+    from rst_include.libs import lib_path
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from .lib_classes import Block, SourceLine
+    from . import lib_block_options
+    from . import lib_source_line
+    from . import lib_path
+    from . import lib_test
 
 
 def get_include_options(block: Block) -> None:

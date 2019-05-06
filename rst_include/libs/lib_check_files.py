@@ -1,11 +1,16 @@
-from rst_include.libs import lib_classes
-from rst_include.libs.lib_classes import RstFile, SourceLine
-from rst_include.libs import lib_test
-
 import logging
 import os
 import sys
 from typing import Any, List
+
+try:
+    from rst_include.libs import lib_classes
+    from rst_include.libs.lib_classes import RstFile, SourceLine
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from . import lib_classes
+    from .lib_classes import RstFile, SourceLine
+    from . import lib_test
 
 
 def check_l_rst_files(l_rst_files: List[RstFile]) -> None:

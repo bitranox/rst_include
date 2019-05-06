@@ -1,12 +1,19 @@
-from rst_include.libs.lib_classes import Block
-from rst_include.libs import lib_get_include_options
-from rst_include.libs import lib_list
-from rst_include.libs import lib_str
-from rst_include.libs import lib_test
-
 import logging
 import sys
 from typing import List
+
+try:
+    from rst_include.libs.lib_classes import Block
+    from rst_include.libs import lib_get_include_options
+    from rst_include.libs import lib_list
+    from rst_include.libs import lib_str
+    from rst_include.libs import lib_test
+except ImportError:  # pragma: no cover
+    from .lib_classes import Block
+    from . import lib_get_include_options
+    from . import lib_list
+    from . import lib_str
+    from . import lib_test
 
 
 def read_include_file(block: Block) -> List[str]:
