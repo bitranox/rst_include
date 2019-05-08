@@ -16,6 +16,10 @@ try:
     from .libs import lib_test_compare_results
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
     from libs import *
+    from libs import lib_log
+    from libs import lib_args
+    from libs import lib_test
+    from libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
