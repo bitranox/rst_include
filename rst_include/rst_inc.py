@@ -1,10 +1,17 @@
 import errno
 import os
+"""
 from rst_include import *
 from rst_include.libs import lib_log
 from rst_include.libs import lib_args
 from rst_include.libs import lib_test
 from rst_include.libs import lib_test_compare_results
+"""
+from . import *
+from .libs import lib_log
+from .libs import lib_args
+from .libs import lib_test
+from .libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
