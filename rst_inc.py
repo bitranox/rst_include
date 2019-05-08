@@ -1,6 +1,3 @@
-import logging
-import sys
-
 import errno
 import os
 from rst_include import *
@@ -71,23 +68,20 @@ def main(sys_argv=sys.argv[1:]):
     >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
 
     """
-
-    argparse_namespace, parser = lib_args.parse_args(sys_argv)
-
-    if lib_args.is_replace_command(argparse_namespace):
-        rst_str_replace(argparse_namespace.source, argparse_namespace.target,
-                        argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
-                        argparse_namespace.source_encoding, argparse_namespace.target_encoding)
-    elif lib_args.is_include_command(argparse_namespace):
-        handle_include_command(argparse_namespace, sys_argv)
-    else:
-        parser.print_help()
-
-
-if __name__ == '__main__':
     try:
+
         lib_log.setup_logger()
-        main()
+        argparse_namespace, parser = lib_args.parse_args(sys_argv)
+
+        if lib_args.is_replace_command(argparse_namespace):
+            rst_str_replace(argparse_namespace.source, argparse_namespace.target,
+                            argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
+                            argparse_namespace.source_encoding, argparse_namespace.target_encoding)
+        elif lib_args.is_include_command(argparse_namespace):
+            handle_include_command(argparse_namespace, sys_argv)
+        else:
+            parser.print_help()
+
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
         sys.exit(errno.ENOENT)      # No such file or directory
@@ -97,3 +91,7 @@ if __name__ == '__main__':
         sys.exit(errno.EINVAL)      # Invalid Argument
     except ValueError:
         sys.exit(errno.EINVAL)      # Invalid Argument
+
+
+if __name__ == '__main__':
+    main()

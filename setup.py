@@ -55,4 +55,11 @@ setup(
     classifiers=CLASSIFIERS,
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    scripts=['rst_inc.py'])
+    # scripts=['rst_inc.py'],   # old method - worked well on windows
+    entry_points={
+        'console_scripts': [
+            'rst_inc = rst_include.rst_inc:main'
+        ]
+    }
+
+)
