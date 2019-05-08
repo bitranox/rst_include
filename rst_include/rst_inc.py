@@ -8,11 +8,17 @@ from rst_include.libs import lib_args
 from rst_include.libs import lib_test
 from rst_include.libs import lib_test_compare_results
 """
-from . import *
-from libs import lib_log
-from libs import lib_args
-from libs import lib_test
-from libs import lib_test_compare_results
+try:
+    from . import *
+    from .libs import lib_log
+    from .libs import lib_args
+    from .libs import lib_test
+    from .libs import lib_test_compare_results
+except ModuleNotFoundError:  # pragma: no cover
+    from libs import lib_log
+    from libs import lib_args
+    from libs import lib_test
+    from libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
