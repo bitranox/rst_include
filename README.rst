@@ -45,8 +45,7 @@ This README was also created with rst_include, You might look at ./docs/README_t
 build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
 
 The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
-
-rst_include does only work with python3.5 or newer - it can be installed on earlier versions for easier handling with travis matrix, but will return with exitcode 0 and doing nothing.
+rst_include does only work on python > 3.5.2
 
 `100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
@@ -295,13 +294,6 @@ Example Build Script Python
     import logging
     import os
     import sys
-
-    if sys.version_info < (3, 5):
-        logging.basicConfig(level=logging.INFO)
-        main_logger = logging.getLogger('init')
-        main_logger.info('only Python Versions from 3.5 are supported, exit with exitcode 0')
-        sys.exit(0)
-
     from rst_include import *
     from rst_include.libs import lib_log
     import subprocess
