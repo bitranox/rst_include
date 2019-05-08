@@ -60,7 +60,7 @@ Basic Usage
 .. code-block:: shell
 
     # get help on shell or windows commandline
-    $> rst_inc.py -h
+    $> rst_inc -h
 
 .. include:: ./rst_include_help_output.txt
         :code: shell
@@ -69,7 +69,7 @@ Basic Usage
 .. code-block:: shell
 
     # get help on shell or windows commandline for include
-    $> rst_inc.py include -h
+    $> rst_inc include -h
 
 .. include:: ./rst_include_help_include_output.txt
         :code: shell
@@ -77,7 +77,7 @@ Basic Usage
 .. code-block:: shell
 
     # get help on shell or windows commandline for string replace
-    $> rst_inc.py replace -h
+    $> rst_inc replace -h
 
 .. include:: ./rst_include_help_replace_output.txt
         :code: shell
@@ -91,16 +91,16 @@ Basic Usage
     # examples :
 
     # relativ path
-    $> rst_inc.py include -s ./source.rst -t ./target.rst
+    $> rst_inc include -s ./source.rst -t ./target.rst
 
     # absolute path
-    $> rst_inc.py include -s /project/docs/source.rst -t /project/docs/target.rst
+    $> rst_inc include -s /project/docs/source.rst -t /project/docs/target.rst
 
     # on linux via pipe
-    $> cat /project/docs/source.rst | rst_inc.py include > /project/docs/target.rst
+    $> cat /project/docs/source.rst | rst_inc include > /project/docs/target.rst
 
     # on Windows via pipe
-    $> type /project/docs/source.rst | rst_inc.py include > /project/docs/target.rst
+    $> type /project/docs/source.rst | rst_inc include > /project/docs/target.rst
 
 
 - replace include statements on multiple files via config.py :
@@ -112,10 +112,10 @@ Basic Usage
     # option -c or --config :
 
     # will try to load the default conf_res_inc.py from the current directory
-    $> rst_inc.py include -c
+    $> rst_inc include -c
 
     # will load another config file another directory
-    $> rst_inc.py include -c ./conf_this_project.py
+    $> rst_inc include -c ./conf_this_project.py
 
 Structure of the configuration file:
 
@@ -133,13 +133,13 @@ Additional You can easily replace text strings :
     # replace text strings easily
     # examples :
 
-    $> rst_inc.py -s ./source.rst -t ./target.rst replace {template_string} "new content"
+    $> rst_inc -s ./source.rst -t ./target.rst replace {template_string} "new content"
 
 piping under Linux:
 
 .. code-block:: shell
 
-    $> rst_inc.py replace -s ./source.rst {template_string} "new content" | rst_inc.py include -t ./target.rst
+    $> rst_inc replace -s ./source.rst {template_string} "new content" | rst_inc include -t ./target.rst
 
 
 Example Build Script Python
