@@ -12,7 +12,7 @@ from .libs.lib_main import rst_inc_from_config
 from .libs.lib_main import rst_inc
 
 
-def main(sys_argv=sys.argv[1:]):
+def __main__(sys_argv=sys.argv[1:]):
     from .libs import lib_args
     from .libs import lib_log
     from .libs import lib_test
