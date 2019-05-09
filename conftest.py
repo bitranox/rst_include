@@ -1,5 +1,5 @@
 # ignore for pytest collection
-collect_ignore = ['build_docs.py']
+collect_ignore = ['build_docs.py', 'rst_include/__main__.py']
 
 """
 collect_ignore = ['build_docs.py',
