@@ -4,6 +4,7 @@ __name__ = 'rst_include'
 
 import sys
 import logging
+from . import rst_include
 from .libs.lib_classes import RstFile
 from .libs.lib_classes import RstConf
 from .libs.lib_main import rst_str_replace
