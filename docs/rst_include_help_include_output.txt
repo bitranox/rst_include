@@ -1,6 +1,6 @@
-usage: rst_inc.py include [-h] [-s [source]] [-t [target]]
-                          [-se [source encoding]] [-te [target encoding]]
-                          [-c [configfile.py]]
+usage: __main__.py include [-h] [-s [source]] [-t [target]]
+                           [-se [source encoding]] [-te [target encoding]]
+                           [-c [configfile.py]]
 
 optional arguments:
   -h, --help            show this help message and exit

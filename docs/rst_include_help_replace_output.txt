@@ -1,6 +1,6 @@
-usage: rst_inc.py replace [-h] [-s [source]] [-t [target]]
-                          [-se [source encoding]] [-te [target encoding]]
-                          old new [count]
+usage: __main__.py replace [-h] [-s [source]] [-t [target]]
+                           [-se [source encoding]] [-te [target encoding]]
+                           old new [count]
 
 positional arguments:
   old                   old

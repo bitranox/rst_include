@@ -6,24 +6,26 @@ try:
     from . import *
     from .libs import lib_log
     from .libs import lib_args
+    from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
 except ImportError:
     from rst_include import *
     from rst_include.libs import lib_log
     from rst_include.libs import lib_args
+    from rst_include.libs import lib_main
     from rst_include.libs import lib_test
     from rst_include.libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
     if lib_args.cmd_args_config_flag_given(sys_argv):
-        rst_inc_from_config(argparse_namespace.config)
+        lib_main.rst_inc_from_config(argparse_namespace.config)
     else:
-        rst_inc(argparse_namespace.source,
-                argparse_namespace.target,
-                argparse_namespace.source_encoding,
-                argparse_namespace.target_encoding)
+        lib_main.rst_inc(argparse_namespace.source,
+                         argparse_namespace.target,
+                         argparse_namespace.source_encoding,
+                         argparse_namespace.target_encoding)
 
 
 def main(sys_argv=sys.argv[1:]):
@@ -83,9 +85,9 @@ def main(sys_argv=sys.argv[1:]):
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
         if lib_args.is_replace_command(argparse_namespace):
-            rst_str_replace(argparse_namespace.source, argparse_namespace.target,
-                            argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
-                            argparse_namespace.source_encoding, argparse_namespace.target_encoding)
+            lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
+                                     argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
+                                     argparse_namespace.source_encoding, argparse_namespace.target_encoding)
         elif lib_args.is_include_command(argparse_namespace):
             handle_include_command(argparse_namespace, sys_argv)
         else:

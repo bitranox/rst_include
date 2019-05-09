@@ -136,7 +136,7 @@ Basic Usage
 
 .. code-block:: shell
 
-    usage: rst_inc.py [-h] {include,replace} ...
+    usage: __main__.py [-h] {include,replace} ...
 
     Process .rst File Includes
 
@@ -157,9 +157,9 @@ Basic Usage
 
 .. code-block:: shell
 
-    usage: rst_inc.py include [-h] [-s [source]] [-t [target]]
-                              [-se [source encoding]] [-te [target encoding]]
-                              [-c [configfile.py]]
+    usage: __main__.py include [-h] [-s [source]] [-t [target]]
+                               [-se [source encoding]] [-te [target encoding]]
+                               [-c [configfile.py]]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -182,9 +182,9 @@ Basic Usage
 
 .. code-block:: shell
 
-    usage: rst_inc.py replace [-h] [-s [source]] [-t [target]]
-                              [-se [source encoding]] [-te [target encoding]]
-                              old new [count]
+    usage: __main__.py replace [-h] [-s [source]] [-t [target]]
+                               [-se [source encoding]] [-te [target encoding]]
+                               old new [count]
 
     positional arguments:
       old                   old
@@ -307,9 +307,9 @@ Example Build Script Python
         # PROJECT SPECIFIC
         logger = logging.getLogger('project_specific')
         logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
-        subprocess.run('{sys_executable} ./rst_include/rst_inc.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_inc.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/__main__.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/__main__.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/__main__.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
 
 
     def parse_args(cmd_args=sys.argv[1:]):
