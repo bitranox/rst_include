@@ -28,12 +28,12 @@ repository="${TRAVIS_REPO_SLUG#*/}"                                 # "username/
 repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
 
 clr_green "create the sample help outputs"
-rst_inc.py -h > ./docs/rst_include_help_output.txt
-rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
-rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
+rst_inc -h > ./docs/rst_include_help_output.txt
+rst_inc include -h > ./docs/rst_include_help_include_output.txt
+rst_inc replace -h > ./docs/rst_include_help_replace_output.txt
 
 clr_green "import the include blocks"
-rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+rst_inc include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
 clr_green "replace repository strings"
 
@@ -44,10 +44,10 @@ clr_green "replace repository strings"
 
 # example for piping
 cat ./docs/README_template_included.rst \
-    | rst_inc.py replace "{repository_slug}" "${TRAVIS_REPO_SLUG}" \
-    | rst_inc.py replace "{repository}" "${repository}" \
-    | rst_inc.py replace "{repository_dashed}" "${repository_dashed}" \
-    | rst_inc.py replace "{codeclimate_link_hash}" "${codeclimate_link_hash}" \
+    | rst_inc replace "{repository_slug}" "${TRAVIS_REPO_SLUG}" \
+    | rst_inc replace "{repository}" "${repository}" \
+    | rst_inc replace "{repository_dashed}" "${repository_dashed}" \
+    | rst_inc replace "{codeclimate_link_hash}" "${codeclimate_link_hash}" \
      > ./README.rst
 
 clr_green "cleanup"
