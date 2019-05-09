@@ -2,7 +2,6 @@
 
 from rst_include.libs import lib_classes
 
-
 # set config here
 rst_conf = lib_classes.RstConf()
 

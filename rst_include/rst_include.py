@@ -9,6 +9,7 @@ try:
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
+# pragma: no cover
 except (ImportError, SystemError):                   # we need SystemError for pypy 3.5 here
     from libs import lib_log                         # type: ignore
     from libs import lib_args                        # type: ignore
