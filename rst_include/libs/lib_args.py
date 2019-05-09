@@ -7,6 +7,7 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser = argparse.ArgumentParser(
         description='Process .rst File Includes',
         epilog='check the documentation on github',
+        prog='rst_include',
         add_help=True)
 
     subparsers = parser.add_subparsers()
