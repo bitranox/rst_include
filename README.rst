@@ -127,7 +127,24 @@ via python:
 Basic Usage
 -----------
 
-rst_include is registered as a console script, so You can just use the command rst_include (not rst_include.py)
+since rst_include is registered as a console script command with Your current python interpreter, You have to use the command "rst_include" (not "rst_include.py")
+
+
+- issue command :
+
+.. code-block:: shell
+
+    # issue command on shell or windows commandline
+    $> rst_include [OPTIONS]
+
+    # or, if python/bin is not in Your python path :
+    # on Windows
+    $> c:\python37\scripts\rst_include [OPTIONS]
+    # on Linux/oSX
+    $> /python37/bin/rst_include [OPTIONS]
+
+    # issue command with python interpreter
+    $> python -m rst_include [OPTIONS]
 
 
 

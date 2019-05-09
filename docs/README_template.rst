@@ -65,6 +65,12 @@ since rst_include is registered as a console script command with Your current py
     # issue command on shell or windows commandline
     $> rst_include [OPTIONS]
 
+    # or, if python/bin is not in Your python path :
+    # on Windows
+    $> c:\python37\scripts\rst_include [OPTIONS]
+    # on Linux/oSX
+    $> /python37/bin/rst_include [OPTIONS]
+
     # issue command with python interpreter
     $> python -m rst_include [OPTIONS]
 
