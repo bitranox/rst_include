@@ -172,7 +172,7 @@ Basic Usage
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
       -c [configfile.py], --config [configfile.py]
-                            If no filename is passed, the default conf_res_inc.py
+                            If no filename is passed, the default conf_rst_inc.py
                             is searched in the current directory
 
 .. code-block:: shell
@@ -231,7 +231,7 @@ Basic Usage
     # path to the config file can be absolute or relative path
     # option -c or --config :
 
-    # will try to load the default conf_res_inc.py from the current directory
+    # will try to load the default conf_rst_inc.py from the current directory
     $> rst_inc include -c
 
     # will load another config file another directory
@@ -304,7 +304,12 @@ Example Build Script Python
 
 
     def project_specific(repository_slug, repository, repository_dashed):
-        pass
+        # PROJECT SPECIFIC
+        logger = logging.getLogger('project_specific')
+        logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
+        subprocess.run('{sys_executable} ./rst_include/rst_inc.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_inc.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
 
 
     def parse_args(cmd_args=sys.argv[1:]):
@@ -409,7 +414,7 @@ Example Build Script DOS Batch
     SET codeclimate_link_hash="ff3f414903627e5cfc35"
 
     REM # get dashed repository name for pypi links
-    echo %repository% | rst_inc.py replace "_" "-" > temp.txt
+    echo %repository% | rst_inc replace "_" "-" > temp.txt
     set /p repository_dashed= < temp.txt
     del temp.txt
 
@@ -420,12 +425,12 @@ Example Build Script DOS Batch
     REM avoid absolute paths since You never know where the program will run.
 
     echo 'create the sample help outputs'
-    rst_inc.py -h > ./docs/rst_include_help_output.txt
-    rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
-    rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_inc -h > ./docs/rst_include_help_output.txt
+    rst_inc include -h > ./docs/rst_include_help_include_output.txt
+    rst_inc replace -h > ./docs/rst_include_help_replace_output.txt
 
     echo "import the include blocks"
-    rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_inc include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
     REM please note that the replace syntax is not shown correctly in the README.rst,
     REM because it gets replaced itself by the build_docs.py
@@ -433,13 +438,13 @@ Example Build Script DOS Batch
     REM check out the build_docs.cmd for the correct syntax !
 
     echo "replace repository_slug"
-    rst_inc.py replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
+    rst_inc replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
-    rst_inc.py replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
+    rst_inc replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
     echo "replace repository_dashed"
-    rst_inc.py replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
+    rst_inc replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
     echo "replace codeclimate_link_hash"
-    rst_inc.py replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
+    rst_inc replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
 
     REM ### oddly del "./docs/README_template_included.rst" does not work here - You need to use backslashes
     echo "cleanup"
@@ -485,12 +490,12 @@ Example Build Script Shellscript
     repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
 
     clr_green "create the sample help outputs"
-    rst_inc.py -h > ./docs/rst_include_help_output.txt
-    rst_inc.py include -h > ./docs/rst_include_help_include_output.txt
-    rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_inc -h > ./docs/rst_include_help_output.txt
+    rst_inc include -h > ./docs/rst_include_help_include_output.txt
+    rst_inc replace -h > ./docs/rst_include_help_replace_output.txt
 
     clr_green "import the include blocks"
-    rst_inc.py include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_inc include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
     clr_green "replace repository strings"
 
@@ -501,10 +506,10 @@ Example Build Script Shellscript
 
     # example for piping
     cat ./docs/README_template_included.rst \
-        | rst_inc.py replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
-        | rst_inc.py replace "rst_include" "$rst_include" \
-        | rst_inc.py replace "rst-include" "$rst-include" \
-        | rst_inc.py replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
+        | rst_inc replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
+        | rst_inc replace "rst_include" "$rst_include" \
+        | rst_inc replace "rst-include" "$rst-include" \
+        | rst_inc replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
          > ./README.rst
 
     clr_green "cleanup"

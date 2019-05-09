@@ -111,7 +111,7 @@ Basic Usage
     # path to the config file can be absolute or relative path
     # option -c or --config :
 
-    # will try to load the default conf_res_inc.py from the current directory
+    # will try to load the default conf_rst_inc.py from the current directory
     $> rst_inc include -c
 
     # will load another config file another directory
@@ -123,7 +123,7 @@ the files are processed in the given order, by that way You can even realize nes
 
 You might also specify the encoding for source and target files
 
-.. include:: ../conf_res_inc_sample.py
+.. include:: ../conf_rst_inc_sample.py
     :code: python
 
 Additional You can easily replace text strings :

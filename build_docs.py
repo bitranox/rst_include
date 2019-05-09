@@ -13,7 +13,12 @@ codeclimate_link_hash = "ff3f414903627e5cfc35"
 
 
 def project_specific(repository_slug, repository, repository_dashed):
-    pass
+    # PROJECT SPECIFIC
+    logger = logging.getLogger('project_specific')
+    logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
+    subprocess.run('{sys_executable} ./rst_include/rst_inc.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+    subprocess.run('{sys_executable} ./rst_include/rst_inc.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+    subprocess.run('{sys_executable} ./rst_include/rst_inc.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
 
 
 def parse_args(cmd_args=sys.argv[1:]):

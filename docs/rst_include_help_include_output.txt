@@ -13,5 +13,5 @@ optional arguments:
   -te [target encoding], --target_encoding [target encoding]
                         default: utf-8
   -c [configfile.py], --config [configfile.py]
-                        If no filename is passed, the default conf_res_inc.py
+                        If no filename is passed, the default conf_rst_inc.py
                         is searched in the current directory

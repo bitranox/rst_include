@@ -55,13 +55,13 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     >>> module = load_config_file('')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    FileNotFoundError: can not load config file .../conf_res_inc.py
+    FileNotFoundError: can not load config file .../conf_rst_inc.py
 
     """
     logger = logging.getLogger('load_config_file')
     if not conf_file_name:
-        conf_file_name = 'conf_res_inc.py'
-        logger.info('loading default config file "conf_res_inc.py" from current directory')
+        conf_file_name = 'conf_rst_inc.py'
+        logger.info('loading default config file "conf_rst_inc.py" from current directory')
 
     conf_file_name_absolute = lib_path.strip_and_replace_backslashes(os.path.abspath(conf_file_name))
     if not os.path.isfile(conf_file_name_absolute):

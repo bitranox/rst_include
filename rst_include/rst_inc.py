@@ -2,11 +2,18 @@ import errno
 import os
 import sys
 
-from . import *
-from .libs import lib_log
-from .libs import lib_args
-from .libs import lib_test
-from .libs import lib_test_compare_results
+try:
+    from . import *
+    from .libs import lib_log
+    from .libs import lib_args
+    from .libs import lib_test
+    from .libs import lib_test_compare_results
+except ImportError:
+    from rst_include import *
+    from rst_include.libs import lib_log
+    from rst_include.libs import lib_args
+    from rst_include.libs import lib_test
+    from rst_include.libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
@@ -86,14 +93,18 @@ def main(sys_argv=sys.argv[1:]):
 
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
-        sys.exit(errno.ENOENT)      # No such file or directory
+        # No such file or directory
+        sys.exit(errno.ENOENT)      # pragma: no cover
     except FileExistsError:
-        sys.exit(errno.EEXIST)      # File exists
+        # File exists
+        sys.exit(errno.EEXIST)      # pragma: no cover
     except TypeError:
-        sys.exit(errno.EINVAL)      # Invalid Argument
+        # Invalid Argument
+        sys.exit(errno.EINVAL)      # pragma: no cover
+        # Invalid Argument
     except ValueError:
-        sys.exit(errno.EINVAL)      # Invalid Argument
+        sys.exit(errno.EINVAL)      # pragma: no cover
 
 
 if __name__ == '__main__':
-    main()
+    main()                          # pragma: no cover
