@@ -26,11 +26,13 @@ rst_include
    :target: https://badge.fury.io/py/rst_include
    :alt: Python Version
 
-since You can not include files into RST files on github, You can replace those imports with this software.
+since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
 
 That means You can locally write Your RST documents (for instance with pycharm) and use there
 the .. include: option to include other RST Files or code snippets into Your Document.
 Afterwards You can run this software to create a monolithic README.rst that can be viewed on Github or Pypi
+
+You might also include Text/Code from Jupyter Notebooks (sorry, no pictures at the moment, but it is not very hard to do that)
 
 This has many advantages like :
 
