@@ -10,12 +10,12 @@ try:
     from .libs import lib_test
     from .libs import lib_test_compare_results
 # we need SystemError for pypy 3.5 here
-except (ImportError, SystemError):                   # pragma: no cover # type: ignore
-    from libs import lib_log                         # pragma: no cover # type: ignore
-    from libs import lib_args                        # pragma: no cover # type: ignore
-    from libs import lib_main                        # pragma: no cover # type: ignore
-    from libs import lib_test                        # pragma: no cover # type: ignore
-    from libs import lib_test_compare_results        # pragma: no cover # type: ignore
+except (ImportError, SystemError):                   # pragma: no cover     type: ignore
+    from libs import lib_log                         # pragma: no cover     type: ignore
+    from libs import lib_args                        # pragma: no cover     type: ignore
+    from libs import lib_main                        # pragma: no cover     type: ignore
+    from libs import lib_test                        # pragma: no cover     type: ignore
+    from libs import lib_test_compare_results        # pragma: no cover     type: ignore
 
 
 def handle_include_command(argparse_namespace, sys_argv):
