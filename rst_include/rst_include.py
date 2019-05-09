@@ -9,7 +9,7 @@ try:
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
-except (ImportError, ModuleNotFoundError):
+except ImportError:
     from libs import lib_log
     from libs import lib_args
     from libs import lib_main
