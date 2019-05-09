@@ -9,12 +9,12 @@ try:
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
-except ImportError:
-    from libs import lib_log
-    from libs import lib_args
-    from libs import lib_main
-    from libs import lib_test
-    from libs import lib_test_compare_results
+except (ImportError, SystemError):                   # we need SystemError for pypy 3.5 here
+    from libs import lib_log                         # type: ignore
+    from libs import lib_args                        # type: ignore
+    from libs import lib_main                        # type: ignore
+    from libs import lib_test                        # type: ignore
+    from libs import lib_test_compare_results        # type: ignore
 
 
 def handle_include_command(argparse_namespace, sys_argv):
