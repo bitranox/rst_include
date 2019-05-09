@@ -55,10 +55,11 @@ rst_include does only work on python > 3.5.2
 
 - `Installation and Upgrade`_
 - `Basic Usage`_
-- `Example Build Script Python`_
-- `Example Build Script DOS Batch`_
-- `Example Build Script Shellscript`_
-- `RST Includes Examples`_
+- Examples
+    - `Example Build Script Python`_
+    - `Example Build Script DOS Batch`_
+    - `Example Build Script Shellscript`_
+    - `RST Includes Examples`_
     - `simple code include`_
     - `text or RST file include`_
     - `include jupyter notebooks`_
@@ -71,7 +72,7 @@ rst_include does only work on python > 3.5.2
 - `Code of Conduct <https://github.com/bitranox/rst_include/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 
-----
+-----------------------------------------------------------------
 
 Installation and Upgrade
 ------------------------
@@ -128,6 +129,8 @@ via python:
 
     # for the latest Development Version
     python -m pip install upgrade https://github.com/bitranox/rst_include/archive/master.zip
+
+-----------------------------------------------------------------
 
 Basic Usage
 -----------
@@ -309,6 +312,7 @@ piping under Linux:
 
     $> rst_include replace -s ./source.rst {template_string} "new content" | rst_include include -t ./target.rst
 
+-----------------------------------------------------------------
 
 Example Build Script Python
 ===========================
@@ -546,6 +550,8 @@ Example Build Script Shellscript
     clr_bold clr_green "FINISHED building README.rst"
     clr_green "******************************************************************************************************************"
 
+-----------------------------------------------------------------
+
 RST Includes Examples
 =====================
 
@@ -593,6 +599,7 @@ unfortunately the pictures are not shown and needed to be extracted - a first hi
 I would prefer to exctract the pictures after the conversion to RST, and make it a module in rst_include.
 Filenames can be a hash of the picture data, in order to avoid web caching issues.
 
+-----------------------------------------------------------------
 
 RST Include Parameters
 ======================
@@ -674,6 +681,8 @@ The following options are recognized:
     With code or literal the common options :class: and :name: are recognized as well.
     all other option in the format :<option>: are just passed through the codeblock
 
+-----------------------------------------------------------------
+
 Requirements
 ------------
 
@@ -684,16 +693,22 @@ following modules will be automatically installed :
     pytest  # see : https://github.com/pytest-dev/pytest
     typing  # see : https://pypi.org/project/typing/
 
+-----------------------------------------------------------------
+
 Acknowledgements
 ----------------
 
 - special thanks to "uncle bob" Robert C. Martin, especially for his books on "clean code" and "clean architecture"
+
+-----------------------------------------------------------------
 
 Contribute
 ----------
 
 I would love for you to fork and send me pull request for this project.
 - `please Contribute <https://github.com/bitranox/rst_include/blob/master/CONTRIBUTING.md>`_
+
+-----------------------------------------------------------------
 
 License
 -------
