@@ -55,12 +55,28 @@ Installation and Upgrade
 Basic Usage
 -----------
 
+since rst_include is registered as a console script command with Your current python interpreter, You have to use the command "rst_include" (not "rst_include.py")
+
+
+- issue command :
+
+.. code-block:: shell
+
+    # issue command on shell or windows commandline
+    $> rst_include [OPTIONS]
+
+    # issue command with python interpreter
+    $> python -m rst_include [OPTIONS]
+
+
+
 - get help :
 
 .. code-block:: shell
 
     # get help on shell or windows commandline
     $> rst_include -h
+
 
 .. include:: ./rst_include_help_output.txt
         :code: shell

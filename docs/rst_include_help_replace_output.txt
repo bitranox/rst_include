@@ -1,4 +1,4 @@
-usage: __main__.py replace [-h] [-s [source]] [-t [target]]
+usage: rst_include replace [-h] [-s [source]] [-t [target]]
                            [-se [source encoding]] [-te [target encoding]]
                            old new [count]
 

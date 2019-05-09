@@ -1,4 +1,4 @@
-usage: __main__.py include [-h] [-s [source]] [-t [target]]
+usage: rst_include include [-h] [-s [source]] [-t [target]]
                            [-se [source encoding]] [-te [target encoding]]
                            [-c [configfile.py]]
 

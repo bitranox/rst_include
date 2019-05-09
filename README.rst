@@ -127,16 +127,20 @@ via python:
 Basic Usage
 -----------
 
+rst_include is registered as a console script, so You can just use the command rst_include (not rst_include.py)
+
+
+
 - get help :
 
 .. code-block:: shell
 
     # get help on shell or windows commandline
-    $> rst_inc -h
+    $> rst_include -h
 
 .. code-block:: shell
 
-    usage: __main__.py [-h] {include,replace} ...
+    usage: rst_include [-h] {include,replace} ...
 
     Process .rst File Includes
 
@@ -153,11 +157,11 @@ Basic Usage
 .. code-block:: shell
 
     # get help on shell or windows commandline for include
-    $> rst_inc include -h
+    $> rst_include include -h
 
 .. code-block:: shell
 
-    usage: __main__.py include [-h] [-s [source]] [-t [target]]
+    usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
                                [-c [configfile.py]]
 
@@ -178,11 +182,11 @@ Basic Usage
 .. code-block:: shell
 
     # get help on shell or windows commandline for string replace
-    $> rst_inc replace -h
+    $> rst_include replace -h
 
 .. code-block:: shell
 
-    usage: __main__.py replace [-h] [-s [source]] [-t [target]]
+    usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
                                old new [count]
 
@@ -211,16 +215,16 @@ Basic Usage
     # examples :
 
     # relativ path
-    $> rst_inc include -s ./source.rst -t ./target.rst
+    $> rst_include include -s ./source.rst -t ./target.rst
 
     # absolute path
-    $> rst_inc include -s /project/docs/source.rst -t /project/docs/target.rst
+    $> rst_include include -s /project/docs/source.rst -t /project/docs/target.rst
 
     # on linux via pipe
-    $> cat /project/docs/source.rst | rst_inc include > /project/docs/target.rst
+    $> cat /project/docs/source.rst | rst_include include > /project/docs/target.rst
 
     # on Windows via pipe
-    $> type /project/docs/source.rst | rst_inc include > /project/docs/target.rst
+    $> type /project/docs/source.rst | rst_include include > /project/docs/target.rst
 
 
 - replace include statements on multiple files via config.py :
@@ -232,10 +236,10 @@ Basic Usage
     # option -c or --config :
 
     # will try to load the default conf_rst_inc.py from the current directory
-    $> rst_inc include -c
+    $> rst_include include -c
 
     # will load another config file another directory
-    $> rst_inc include -c ./conf_this_project.py
+    $> rst_include include -c ./conf_this_project.py
 
 Structure of the configuration file:
 
@@ -275,13 +279,13 @@ Additional You can easily replace text strings :
     # replace text strings easily
     # examples :
 
-    $> rst_inc -s ./source.rst -t ./target.rst replace {template_string} "new content"
+    $> rst_include -s ./source.rst -t ./target.rst replace {template_string} "new content"
 
 piping under Linux:
 
 .. code-block:: shell
 
-    $> rst_inc replace -s ./source.rst {template_string} "new content" | rst_inc include -t ./target.rst
+    $> rst_include replace -s ./source.rst {template_string} "new content" | rst_include include -t ./target.rst
 
 
 Example Build Script Python
@@ -307,9 +311,9 @@ Example Build Script Python
         # PROJECT SPECIFIC
         logger = logging.getLogger('project_specific')
         logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
-        subprocess.run('{sys_executable} ./rst_include/__main__.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/__main__.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/__main__.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
 
 
     def parse_args(cmd_args=sys.argv[1:]):
@@ -414,7 +418,7 @@ Example Build Script DOS Batch
     SET codeclimate_link_hash="ff3f414903627e5cfc35"
 
     REM # get dashed repository name for pypi links
-    echo %repository% | rst_inc replace "_" "-" > temp.txt
+    echo %repository% | rst_include replace "_" "-" > temp.txt
     set /p repository_dashed= < temp.txt
     del temp.txt
 
@@ -425,12 +429,12 @@ Example Build Script DOS Batch
     REM avoid absolute paths since You never know where the program will run.
 
     echo 'create the sample help outputs'
-    rst_inc -h > ./docs/rst_include_help_output.txt
-    rst_inc include -h > ./docs/rst_include_help_include_output.txt
-    rst_inc replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_include -h > ./docs/rst_include_help_output.txt
+    rst_include include -h > ./docs/rst_include_help_include_output.txt
+    rst_include replace -h > ./docs/rst_include_help_replace_output.txt
 
     echo "import the include blocks"
-    rst_inc include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_include include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
     REM please note that the replace syntax is not shown correctly in the README.rst,
     REM because it gets replaced itself by the build_docs.py
@@ -438,13 +442,13 @@ Example Build Script DOS Batch
     REM check out the build_docs.cmd for the correct syntax !
 
     echo "replace repository_slug"
-    rst_inc replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
+    rst_include replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
-    rst_inc replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
+    rst_include replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
     echo "replace repository_dashed"
-    rst_inc replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
+    rst_include replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
     echo "replace codeclimate_link_hash"
-    rst_inc replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
+    rst_include replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
 
     REM ### oddly del "./docs/README_template_included.rst" does not work here - You need to use backslashes
     echo "cleanup"
@@ -490,12 +494,12 @@ Example Build Script Shellscript
     repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
 
     clr_green "create the sample help outputs"
-    rst_inc -h > ./docs/rst_include_help_output.txt
-    rst_inc include -h > ./docs/rst_include_help_include_output.txt
-    rst_inc replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_include -h > ./docs/rst_include_help_output.txt
+    rst_include include -h > ./docs/rst_include_help_include_output.txt
+    rst_include replace -h > ./docs/rst_include_help_replace_output.txt
 
     clr_green "import the include blocks"
-    rst_inc include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_include include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
 
     clr_green "replace repository strings"
 
@@ -506,10 +510,10 @@ Example Build Script Shellscript
 
     # example for piping
     cat ./docs/README_template_included.rst \
-        | rst_inc replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
-        | rst_inc replace "rst_include" "$rst_include" \
-        | rst_inc replace "rst-include" "$rst-include" \
-        | rst_inc replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
+        | rst_include replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
+        | rst_include replace "rst_include" "$rst_include" \
+        | rst_include replace "rst-include" "$rst-include" \
+        | rst_include replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
          > ./README.rst
 
     clr_green "cleanup"

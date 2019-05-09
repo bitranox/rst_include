@@ -9,13 +9,12 @@ try:
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
-except ImportError:
-    from rst_include import *
-    from rst_include.libs import lib_log
-    from rst_include.libs import lib_args
-    from rst_include.libs import lib_main
-    from rst_include.libs import lib_test
-    from rst_include.libs import lib_test_compare_results
+except (ImportError, ModuleNotFoundError):
+    from libs import lib_log
+    from libs import lib_args
+    from libs import lib_main
+    from libs import lib_test
+    from libs import lib_test_compare_results
 
 
 def handle_include_command(argparse_namespace, sys_argv):
