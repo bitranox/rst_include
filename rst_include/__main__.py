@@ -1,1 +1,2 @@
-from . import rst_include as main
+from . import rst_include
+rst_include.main()
