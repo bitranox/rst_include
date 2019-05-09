@@ -5,6 +5,7 @@ __name__ = 'rst_include'
 import errno
 import sys
 import logging
+from . import __main__
 from .libs.lib_classes import RstFile
 from .libs.lib_classes import RstConf
 from .libs.lib_main import rst_str_replace
