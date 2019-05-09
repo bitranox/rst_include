@@ -58,7 +58,7 @@ setup(
     # scripts=['rst_inc.py'],   # old method - worked well on windows
     entry_points={
         'console_scripts': [
-            'rst_include = rst_include.rst_inc:main'
+            'rst_include = rst_include.rst_include:main'
         ]
     }
 

@@ -1,1 +1,1 @@
-from . import rst_inc as main
+from . import rst_include as main

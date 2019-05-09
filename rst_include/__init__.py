@@ -1,7 +1,6 @@
 import errno
 import sys
 import logging
-from . import rst_inc
 from .libs.lib_classes import RstFile
 from .libs.lib_classes import RstConf
 from .libs.lib_main import rst_str_replace
