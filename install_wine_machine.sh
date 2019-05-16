@@ -25,21 +25,21 @@ if [[ ${xvfb_framebuffer_service_active} == "True" ]]; then sudo service xvfb st
 winecfg
 if [[ ${xvfb_framebuffer_service_active} == "True" ]]; then sudo service xvfb start ; fi     # winecfg fails if xvfb server is running
 
-clr-green "Disable GUI Crash Dialogs"
+clr_green "Disable GUI Crash Dialogs"
 winetricks nocrashdialog
 
-clr-green "Set Windows Version to ${wine_windows_version}"
+clr_green "Set Windows Version to ${wine_windows_version}"
 winetricks -q ${wine_windows_version}
 
-clr-green "Install common Packets :"
+clr_green "Install common Packets :"
 
-clr-green "install windowscodecs"
+clr_green "install windowscodecs"
 retry winetricks -q windowscodecs
 
-clr-green "install msxml3"
-if [[ ${wine_version_number} == "wine-4.8" ]] ; then clr_red "known regression, msxml3 does not work on wine-4.8"; else retry winetricks -q msxml3; fi
+clr_green "install msxml3"
+if [[ ${wine_version_number} == "wine-4.8" ]] ; then clr_bold clr_red "known regression, msxml3 does not work on wine-4.8"; else retry winetricks -q msxml3; fi
 
-clr-green "install msxml6"
+clr_green "install msxml6"
 retry winetricks -q msxml6
 
 clr_green "done"
