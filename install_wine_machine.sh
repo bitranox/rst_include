@@ -33,7 +33,7 @@ winetricks -q ${wine_windows_version}
 echo "Install common Packets"
 
 retry winetricks -q windowscodecs
-# retry winetricks -q msxml3  # does not work on wine 4.8 - known issue, reported, should work again on wine 4.9
+# retry winetricks -q msxml3  # 2019-05-16 does not work on wine 4.8 - known issue, regression reported, should work again on wine 4.9
 retry winetricks -q msxml6
 
 clr_green "done"
