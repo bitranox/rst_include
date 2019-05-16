@@ -37,7 +37,7 @@ clr_green "install windowscodecs"
 retry winetricks -q windowscodecs
 
 clr_green "install msxml3"
-if [[ ${wine_version_number} == "wine-4.8" ]] ; then clr_bold clr_red "known regression, msxml3 does not work on wine-4.8"; else retry winetricks -q msxml3; fi
+if [[ ${wine_version_number} == "wine-4.8" ]]; then clr_bold clr_red "known regression, msxml3 does not work on wine-4.8" ; else retry winetricks -q msxml3 ; fi
 
 clr_green "install msxml6"
 retry winetricks -q msxml6
