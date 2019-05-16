@@ -14,6 +14,7 @@ check_wine_prefix
 check_wine_arch
 check_wine_windows_version
 check_headless_xvfb
+export_wine_version_number
 
 clr_green "Setup Wine Machine at ${WINEPREFIX}, WINEARCH=${WINEARCH}, wine_windows_version=${wine_windows_version}"
 mkdir -p ${WINEPREFIX}
@@ -33,7 +34,9 @@ winetricks -q ${wine_windows_version}
 echo "Install common Packets"
 
 retry winetricks -q windowscodecs
-# retry winetricks -q msxml3  # 2019-05-16 does not work on wine 4.8 - known issue, regression reported, should work again on wine 4.9
+
+if [[ ${wine_version_number} == "wine-4.8" ]]; then clr_red "known regression, msxml3 does not work on wine-4.8" else retry winetricks -q msxml3 ; fi
+
 retry winetricks -q msxml6
 
 clr_green "done"
