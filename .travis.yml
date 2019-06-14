@@ -198,7 +198,6 @@ matrix:
 
 
 install:
-    - python --version
     - chmod +x ./*.sh             # make shellscripts executable
     - chmod +x ./lib_bash/*.sh    # make shellscript lib executable
     - export REPOSITORY_NAME=${TRAVIS_REPO_SLUG#*/} && ./lib_bash/lib_color.sh clr_bold clr_green "Export Repository Name ${REPOSITORY_NAME}"
