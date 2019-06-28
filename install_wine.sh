@@ -9,7 +9,7 @@ function include_dependencies {
     source "${my_dir}/lib_bash/lib_helpers.sh"
 }
 
-include_dependencies  # me need to do that via a function to have local scope of my_dir
+include_dependencies  # we need to do that via a function to have local scope of my_dir
 get_linux_codename
 clr_bold clr_green "Install WINE on ${linux_codename}"
 clr_green "add 386 Architecture"
