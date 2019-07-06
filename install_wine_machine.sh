@@ -14,7 +14,7 @@ check_wine_prefix
 check_wine_arch
 check_wine_windows_version
 check_headless_xvfb
-export_wine_version_number
+wine_version_number=$(get_wine_version_number)
 
 clr_bold clr_green "Setup Wine Machine at ${WINEPREFIX}, WINEARCH=${WINEARCH}, wine_windows_version=${wine_windows_version}"
 mkdir -p ${WINEPREFIX}
@@ -37,7 +37,7 @@ retry winetricks -q windowscodecs
 
 clr_bold clr_bold clr_green "******************************************************************************************************************"
 clr_bold clr_green "install msxml3"
-if [[ ${wine_version_number} == "wine-4.8" ]]; then clr_bold clr_red "known regression, msxml3 does not work on wine-4.8" ; else retry winetricks -q msxml3 ; fi
+retry winetricks -q msxml3
 clr_bold clr_bold clr_green "******************************************************************************************************************"
 clr_bold clr_green "install msxml6"
 retry winetricks -q msxml6
