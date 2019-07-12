@@ -37,12 +37,12 @@ REM we could overcome this by first replacing, and afterwards including -
 REM check out the build_docs.cmd for the correct syntax !
 
 echo "replace repository_slug"
-rst_include replace --inplace -s ./docs/README_template.rst {repository_slug} %repository_slug%
+rst_include --inplace replace -s ./docs/README_template.rst {repository_slug} %repository_slug%
 echo "replace repository"
-rst_include replace --inplace -s ./docs/README_template.rst {repository} %repository%
+rst_include --inplace replace -s ./docs/README_template.rst {repository} %repository%
 echo "replace repository_dashed"
-rst_include replace --inplace -s ./docs/README_template.rst {repository_dashed} %repository_dashed%
+rst_include --inplace replace -s ./docs/README_template.rst {repository_dashed} %repository_dashed%
 echo "replace codeclimate_link_hash"
-rst_include replace --inplace -s ./docs/README_template.rst {codeclimate_link_hash} %codeclimate_link_hash%
+rst_include --inplace replace -s ./docs/README_template.rst {codeclimate_link_hash} %codeclimate_link_hash%
 
 echo 'finished'

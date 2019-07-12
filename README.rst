@@ -168,7 +168,7 @@ since rst_include is registered as a console script command with Your current py
 
 .. code-block:: shell
 
-    usage: rst_include [-h] {include,replace} ...
+    usage: rst_include [-h] [-i] [-q] {include,replace} ...
 
     Process .rst File Includes
 
@@ -179,6 +179,8 @@ since rst_include is registered as a console script command with Your current py
 
     optional arguments:
       -h, --help         show this help message and exit
+      -i, --inplace      inplace - target file = sourcefile
+      -q, --quiet        quiet
 
     check the documentation on github
 
@@ -191,7 +193,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-q] [-c [configfile.py]]
+                               [-c [configfile.py]]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -203,8 +205,6 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
-      -i, --inplace         inplace - target file = sourcefile
-      -q, --quiet           quiet
       -c [configfile.py], --config [configfile.py]
                             If no filename is passed, the default conf_rst_inc.py
                             is searched in the current directory
@@ -218,7 +218,6 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-q]
                                old new [count]
 
     positional arguments:
@@ -236,8 +235,6 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
-      -i, --inplace         inplace - target file = sourcefile
-      -q, --quiet           quiet
 
 - replace the include statements in source.rst and save it to target.rst via commandline parameters :
 
@@ -312,11 +309,11 @@ Additional You can easily replace (also multiline) text strings :
     # replace text strings easily
     # examples :
 
-    $> rst_include replace -s ./source.rst -t ./target.rst {template_string} "new content"
+    $> rst_include replace -s ./source.rst -t ./target.rst "{template_string}" "new content"
 
     # multiline example
     # note ${IFS} is the standard bash seperator
-    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+    $> rst_include --inplace replace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
 
 
 piping under Linux:
@@ -486,13 +483,13 @@ Example Build Script DOS Batch
     REM check out the build_docs.cmd for the correct syntax !
 
     echo "replace repository_slug"
-    rst_include replace --inplace -s ./docs/README_template.rst bitranox/rst_include %repository_slug%
+    rst_include --inplace replace -s ./docs/README_template.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
-    rst_include replace --inplace -s ./docs/README_template.rst rst_include %repository%
+    rst_include --inplace replace -s ./docs/README_template.rst rst_include %repository%
     echo "replace repository_dashed"
-    rst_include replace --inplace -s ./docs/README_template.rst rst-include %repository_dashed%
+    rst_include --inplace replace -s ./docs/README_template.rst rst-include %repository_dashed%
     echo "replace codeclimate_link_hash"
-    rst_include replace --inplace -s ./docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
+    rst_include --inplace replace -s ./docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
 
     echo 'finished'
 

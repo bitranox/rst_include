@@ -163,11 +163,11 @@ Additional You can easily replace (also multiline) text strings :
     # replace text strings easily
     # examples :
 
-    $> rst_include replace -s ./source.rst -t ./target.rst {template_string} "new content"
+    $> rst_include replace -s ./source.rst -t ./target.rst "{template_string}" "new content"
 
     # multiline example
     # note ${IFS} is the standard bash seperator
-    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+    $> rst_include --inplace replace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
 
 
 piping under Linux:
