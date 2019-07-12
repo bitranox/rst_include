@@ -36,11 +36,12 @@ EXPECTED
 RESULT
 ======
 
-    .. code-block:: python
+    .. include:: ./include2.py
+        :code: sh
         :number-lines: 10
-
-        def my_include2_2():
-            pass
-
-            pass
+        :start-line: 6
+        :end-line: 23
+        :start-after: # start-marker
+        :end-before: # end-marker
+        :encoding: utf-8
 

@@ -40,7 +40,6 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
         prog='rst_include',
         add_help=True)
 
-
     subparsers = parser.add_subparsers()
 
     parser_include = subparsers.add_parser('include', help='include rst includes')

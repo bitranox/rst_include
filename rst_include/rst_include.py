@@ -32,8 +32,8 @@ def handle_include_command(argparse_namespace, sys_argv):
 def main(sys_argv=sys.argv[1:]):
     """
 
-    >>> source_file = './docs/README_template.rst'
-    >>> target_file = './docs/README_template_included.rst'
+    >>> source_file = '../docs/README_template.rst'
+    >>> target_file = '../docs/README_template_included.rst'
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 
 
@@ -55,10 +55,6 @@ def main(sys_argv=sys.argv[1:]):
     >>> target_file = lib_test.get_test_dir() + '/test1_no_includes_result.rst'
     >>> expected_file_replace = lib_test.get_test_dir() + '/test1_no_includes_expected_replace.rst'
     >>> expected_file = lib_test.get_test_dir() + '/test1_no_includes_expected.rst'
-
-    >>> lib_test.remove_file_silent(target_file)
-    >>> main(['replace', '-s', source_file, '-t', target_file, '=', '\\n test', '-1'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_compare_results.compare_results_equal(expected_file_replace, target_file)
 
     >>> lib_test.remove_file_silent(target_file)
     >>> main(['replace', '-s', source_file, '-t', target_file, '=', '*', '-1'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
