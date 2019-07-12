@@ -32,8 +32,8 @@ def handle_include_command(argparse_namespace, sys_argv):
 def main(sys_argv=sys.argv[1:]):
     """
 
-    >>> source_file = '../docs/README_template.rst'
-    >>> target_file = '../docs/README_template_included.rst'
+    >>> source_file = './docs/README_template.rst'
+    >>> target_file = './docs/README_template_included.rst'
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 
 
