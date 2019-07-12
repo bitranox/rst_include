@@ -1,13 +1,17 @@
+# STDLIB
 import logging
 import os
 import sys
 from typing import Any, List
 
+# PROJECT
 try:
+    from rst_include.libs import lib_args
     from rst_include.libs import lib_classes
     from rst_include.libs.lib_classes import RstFile, SourceLine
     from rst_include.libs import lib_test
 except ImportError:  # pragma: no cover
+    from . import lib_args
     from . import lib_classes
     from .lib_classes import RstFile, SourceLine
     from . import lib_test
@@ -67,13 +71,14 @@ def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
         raise FileNotFoundError(error_message)
 
 
-def check_source_and_target(source: str, target: str) -> None:
+def check_source_and_target(source: str, target: str, cmd_args: List[str] = sys.argv[1:]) -> None:
     """
-    >>> check_source_and_target(sys.stdin, sys.stdout)
+    >>> check_source_and_target(sys.stdin, sys.stdout, cmd_args=['replace', 'x', 'y'])
     """
     log_and_raise_if_source_file_not_ok(source)
-    log_and_raise_if_source_file_equals_target_file(source, target)
-    log_warning_if_target_file_exist(target)
+    if not lib_args.is_option_inplace_set(cmd_args):
+        log_and_raise_if_source_file_equals_target_file(source, target)
+        log_warning_if_target_file_exist(target)
 
 
 def log_and_raise_if_source_file_not_ok(source: str) -> None:
