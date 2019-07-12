@@ -14,6 +14,26 @@ logger = logging.getLogger()
 
 
 def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, argparse.ArgumentParser]:
+    """
+    >>> args, parser = parse_args(cmd_args = ['include', '-t', './test.txt'])
+    >>> assert lib_classes.GlobalSettings.quiet == False
+
+    >>> args, parser = parse_args(cmd_args = ['include', '-q', '-t', './test.txt'])
+    >>> assert lib_classes.GlobalSettings.quiet == True
+
+    >>> args, parser = parse_args(cmd_args = ['include'])
+    >>> assert lib_classes.GlobalSettings.quiet == True
+
+    >>> args, parser = parse_args(cmd_args = ['replace', 'x', 'y'])
+    >>> assert lib_classes.GlobalSettings.quiet == True
+
+    >>> args, parser = parse_args(cmd_args = ['replace', '-q', 'x', 'y'])
+    >>> assert lib_classes.GlobalSettings.quiet == True
+
+    >>> args, parser = parse_args(cmd_args = ['replace', '--quiet', 'x', 'y'])
+    >>> assert lib_classes.GlobalSettings.quiet == True
+
+    """
     parser = argparse.ArgumentParser(
         description='Process .rst File Includes',
         epilog='check the documentation on github',
@@ -44,7 +64,8 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser_replace.add_argument('count', type=int, nargs='?', help='count', default=-1)
 
     args = parser.parse_args(cmd_args)
-    if args.quiet:
+
+    if args.quiet or args.target == sys.stdout:
         lib_classes.GlobalSettings.quiet = True
 
     return args, parser
