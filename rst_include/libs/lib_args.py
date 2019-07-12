@@ -15,6 +15,8 @@ logger = logging.getLogger()
 
 def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, argparse.ArgumentParser]:
     """
+    >>> lib_classes.GlobalSettings.quiet = False  # Reset the setting from Tests before (for pytest)
+
     >>> args, parser = parse_args(cmd_args = ['include', '-t', './test.txt'])
     >>> assert lib_classes.GlobalSettings.quiet == False
 
