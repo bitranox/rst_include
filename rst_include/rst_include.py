@@ -25,7 +25,8 @@ def handle_include_command(argparse_namespace, sys_argv):
         lib_main.rst_inc(argparse_namespace.source,
                          argparse_namespace.target,
                          argparse_namespace.source_encoding,
-                         argparse_namespace.target_encoding)
+                         argparse_namespace.target_encoding,
+                         argparse_namespace.inplace)
 
 
 def main(sys_argv=sys.argv[1:]):
@@ -92,7 +93,7 @@ def main(sys_argv=sys.argv[1:]):
         if lib_args.is_replace_command(argparse_namespace):
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
-                                     argparse_namespace.source_encoding, argparse_namespace.target_encoding)
+                                     argparse_namespace.source_encoding, argparse_namespace.target_encoding, argparse_namespace.inplace)
         elif lib_args.is_include_command(argparse_namespace):
             handle_include_command(argparse_namespace, sys_argv)
         else:

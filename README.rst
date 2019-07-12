@@ -91,21 +91,23 @@ via pip latest Release:
 .. code-block:: bash
 
     # latest Release from pypi
-    pip install rst_include
+    # under Linux You have to use sudo, or it will not be installed as a commandline application
+    # [sudo] means, that the command "sudo" is optional for Linux if You want to use it from bash commandline
+    [sudo] pip3 install rst_include
 
     # test without installing
-    pip install rst_include --install-option test
+    [sudo] pip3 install rst_include --install-option test
 
 via pip latest Development Version:
 
 .. code-block:: bash
 
     # upgrade all dependencies regardless of version number (PREFERRED)
-    pip install --upgrade https://github.com/bitranox/rst_include/archive/master.zip --upgrade-strategy eager
+    [sudo] pip3 install --upgrade https://github.com/bitranox/rst_include/archive/master.zip --upgrade-strategy eager
     # normal install
-    pip install --upgrade https://github.com/bitranox/rst_include/archive/master.zip
+    [sudo] pip3 install --upgrade https://github.com/bitranox/rst_include/archive/master.zip
     # test without installing
-    pip install https://github.com/bitranox/rst_include/archive/master.zip --install-option test
+    [sudo] pip3 install https://github.com/bitranox/rst_include/archive/master.zip --install-option test
 
 via requirements.txt:
 
@@ -118,17 +120,17 @@ via requirements.txt:
     https://github.com/bitranox/rst_include/archive/master.zip
 
     # to install and upgrade all modules mentioned in requirements.txt:
-    pip install --upgrade -r /<path>/requirements.txt
+    [sudo] pip3 install --upgrade -r /<path>/requirements.txt
 
 via python:
 
 .. code-block:: python
 
     # for the latest Release
-    python -m pip install upgrade rst_include
+    [sudo] python3 -m pip install upgrade rst_include
 
     # for the latest Development Version
-    python -m pip install upgrade https://github.com/bitranox/rst_include/archive/master.zip
+    [sudo] python3 -m pip install upgrade https://github.com/bitranox/rst_include/archive/master.zip
 
 -----------------------------------------------------------------
 
@@ -188,7 +190,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-c [configfile.py]]
+                               [-i] [-c [configfile.py]]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -200,6 +202,7 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
+      -i, --inplace         inplace - target file = sourcefile, implies -f
       -c [configfile.py], --config [configfile.py]
                             If no filename is passed, the default conf_rst_inc.py
                             is searched in the current directory
@@ -213,6 +216,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
+                               [-i]
                                old new [count]
 
     positional arguments:
@@ -230,6 +234,7 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
+      -i, --inplace         inplace - target file = sourcefile, implies -f
 
 - replace the include statements in source.rst and save it to target.rst via commandline parameters :
 

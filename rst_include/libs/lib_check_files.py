@@ -49,7 +49,7 @@ def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
     """
     log_and_raise_if_no_files_given(l_rst_files)
     for rst_file in l_rst_files:
-        check_source_and_target(rst_file.source, rst_file.target)
+        check_source_and_target(rst_file.source, rst_file.target, in_place=False)
 
 
 def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
@@ -71,12 +71,12 @@ def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
         raise FileNotFoundError(error_message)
 
 
-def check_source_and_target(source: str, target: str, cmd_args: List[str] = sys.argv[1:]) -> None:
+def check_source_and_target(source: str, target: str, in_place: bool) -> None:
     """
-    >>> check_source_and_target(sys.stdin, sys.stdout, cmd_args=['replace', 'x', 'y'])
+    >>> check_source_and_target(sys.stdin, sys.stdout, in_place=False)
     """
     log_and_raise_if_source_file_not_ok(source)
-    if not lib_args.is_option_inplace_set(cmd_args):
+    if in_place:
         log_and_raise_if_source_file_equals_target_file(source, target)
         log_warning_if_target_file_exist(target)
 

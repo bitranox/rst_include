@@ -1,6 +1,6 @@
 usage: rst_include include [-h] [-s [source]] [-t [target]]
                            [-se [source encoding]] [-te [target encoding]]
-                           [-c [configfile.py]]
+                           [-i] [-c [configfile.py]]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -12,6 +12,7 @@ optional arguments:
                         default: utf-8-sig
   -te [target encoding], --target_encoding [target encoding]
                         default: utf-8
+  -i, --inplace         inplace - target file = sourcefile, implies -f
   -c [configfile.py], --config [configfile.py]
                         If no filename is passed, the default conf_rst_inc.py
                         is searched in the current directory
