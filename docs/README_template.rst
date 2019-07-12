@@ -167,7 +167,7 @@ Additional You can easily replace (also multiline) text strings :
 
     # multiline example
     # note ${IFS} is the standard bash seperator
-    $> rst_include --inplace replace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
 
 
 piping under Linux:

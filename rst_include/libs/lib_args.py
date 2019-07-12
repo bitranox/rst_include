@@ -18,7 +18,7 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     >>> args, parser = parse_args(cmd_args = ['include', '-t', './test.txt'])
     >>> assert lib_classes.GlobalSettings.quiet == False
 
-    >>> args, parser = parse_args(cmd_args = ['-q', 'include', '-t', './test.txt'])
+    >>> args, parser = parse_args(cmd_args = ['include', '-q', '-t', './test.txt'])
     >>> assert lib_classes.GlobalSettings.quiet == True
 
     >>> args, parser = parse_args(cmd_args = ['include'])
@@ -27,10 +27,10 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     >>> args, parser = parse_args(cmd_args = ['replace', 'x', 'y'])
     >>> assert lib_classes.GlobalSettings.quiet == True
 
-    >>> args, parser = parse_args(cmd_args = ['-q', 'replace', 'x', 'y'])
+    >>> args, parser = parse_args(cmd_args = ['replace', '-q', 'x', 'y'])
     >>> assert lib_classes.GlobalSettings.quiet == True
 
-    >>> args, parser = parse_args(cmd_args = ['--quiet', 'replace', 'x', 'y'])
+    >>> args, parser = parse_args(cmd_args = ['replace', '--quiet', 'x', 'y'])
     >>> assert lib_classes.GlobalSettings.quiet == True
 
     """
