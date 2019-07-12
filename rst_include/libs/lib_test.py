@@ -42,7 +42,7 @@ def run_template_tests_not_supported() -> None:
         expected = source.replace('template', 'expected')
         rst_file = lib_classes.RstFile(source=source, target=result)
         lib_assemble_block.create_rst_file_from_template(rst_file)
-        assert not lib_test_compare_results.compare_results_equal(expected_file=expected, result_file=result)
+        assert lib_test_compare_results.compare_results_equal(expected_file=expected, result_file=result)
 
 
 def read_include_file_2() -> Block:
