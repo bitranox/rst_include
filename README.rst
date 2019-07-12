@@ -733,6 +733,12 @@ This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/M
 Changelog
 =========
 
+1.0.7
+-----
+
+2019-07-12: automatic quiet when target == stdout - for piping
+
+
 1.0.6
 -----
 
