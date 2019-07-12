@@ -42,7 +42,7 @@ if os.path.exists(changes_filename):
 setup(
     name='rst_include',
     python_requires='>3.5.2',
-    version='1.0.5',
+    version='1.0.6',
     description=description,
     long_description=long_description,
     long_description_content_type='text/x-rst',

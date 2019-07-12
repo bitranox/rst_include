@@ -2,7 +2,7 @@
 import logging
 import os
 import sys
-from typing import Any, List
+from typing import Any, List, Tuple
 
 # PROJECT
 try:
@@ -15,6 +15,8 @@ except ImportError:  # pragma: no cover
     from . import lib_classes
     from .lib_classes import RstFile, SourceLine
     from . import lib_test
+
+logger = logging.getLogger()
 
 
 def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
@@ -49,7 +51,7 @@ def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
     """
     log_and_raise_if_no_files_given(l_rst_files)
     for rst_file in l_rst_files:
-        check_source_and_target(rst_file.source, rst_file.target, in_place=False)
+        rst_file.source, rst_file.target = check_and_return_source_and_target(rst_file.source, rst_file.target, in_place=False)
 
 
 def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
@@ -71,14 +73,49 @@ def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
         raise FileNotFoundError(error_message)
 
 
-def check_source_and_target(source: str, target: str, in_place: bool) -> None:
+def check_and_return_source_and_target(source: str, target: str, in_place: bool) -> Tuple[str, str]:
     """
-    >>> check_source_and_target(sys.stdin, sys.stdout, in_place=False)
+    # checks ane returns source and target
+
+    >>> test_dir = lib_test.get_test_dir()
+    >>> source, target = check_and_return_source_and_target(sys.stdin, sys.stdout, in_place=False)
+
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = '', in_place=True)
+    >>> assert source == target
+
+    >>> source, target = check_and_return_source_and_target(source = sys.stdin, target = '', in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    SyntaxError: You need to specify the input file if You use option --inplace
+
+
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = test_dir + '/include1.py', in_place=True)
+    >>> assert source == target
+
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = test_dir + '/include2.py', in_place=True) # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    ...
+    SyntaxError: You dont have to use option --inplace and specify a target file different to the input file
+
+
+
     """
     log_and_raise_if_source_file_not_ok(source)
     if in_place:
+        if source == sys.stdin:
+            raise SyntaxError('You need to specify the input file if You use option --inplace')
+        elif target and (target == source) and not not lib_classes.GlobalSettings.quiet:
+            logger.warning('You dont need to specify the target file if You use option --inplace')
+        elif target and (target != sys.stdout):
+            raise SyntaxError('You dont have to use option --inplace and specify a target file different to the input file')
+        target = source
+    else:
         log_and_raise_if_source_file_equals_target_file(source, target)
         log_warning_if_target_file_exist(target)
+
+    if target == sys.stdout:
+        lib_classes.GlobalSettings.quiet = True
+    return source, target
 
 
 def log_and_raise_if_source_file_not_ok(source: str) -> None:
@@ -136,7 +173,7 @@ def log_warning_if_target_file_exist(target: str) -> None:
     """
     if target != sys.stdout:
         logger = logging.getLogger('warn_target_exists')
-        if file_exists(target):
+        if file_exists(target) and not lib_classes.GlobalSettings.quiet:
             logger.warning('RST File "{target}" exists and will be overwritten'.format(target=target))
 
 

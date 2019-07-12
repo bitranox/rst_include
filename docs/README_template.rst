@@ -155,20 +155,32 @@ You might also specify the encoding for source and target files
 .. include:: ../conf_rst_inc_sample.py
     :code: python
 
-Additional You can easily replace text strings :
+Additional You can easily replace (also multiline) text strings :
 
 .. code-block:: shell
 
     # replace text strings easily
     # examples :
 
-    $> rst_include -s ./source.rst -t ./target.rst replace {template_string} "new content"
+    $> rst_include replace -s ./source.rst -t ./target.rst {template_string} "new content"
+
+    # multiline example
+    # note ${IFS} is the standard bash seperator
+    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+
 
 piping under Linux:
 
 .. code-block:: shell
 
-    $> rst_include replace -s ./source.rst {template_string} "new content" | rst_include include -t ./target.rst
+    # piping examples
+    $> rst_include include -s ./source.rst | rst_include replace -t ./target.rst "{template_string}" "new content"
+    # same result
+    $> cat ./source.rst | rst_include include | rst_include replace "{template_string}" "new content" > ./target.rst
+
+    # multiline example
+    $> cat ./text.txt | rst_include replace "line1${IFS}line2" "line1${IFS}something_between${IFS}line2" > ./text.txt
+
 
 -----------------------------------------------------------------
 

@@ -3,10 +3,12 @@ import os
 from types import ModuleType
 
 try:
+    from rst_include.libs import lib_classes
     from rst_include.libs import lib_path
     from rst_include.libs import lib_import_module
     from rst_include.libs import lib_test
 except ImportError:  # pragma: no cover
+    from . import lib_classes
     from . import lib_path
     from . import lib_import_module
     from . import lib_test
@@ -61,7 +63,8 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     logger = logging.getLogger('load_config_file')
     if not conf_file_name:
         conf_file_name = 'conf_rst_inc.py'
-        logger.info('loading default config file "conf_rst_inc.py" from current directory')
+        if not lib_classes.GlobalSettings.quiet:
+            logger.info('loading default config file "conf_rst_inc.py" from current directory')
 
     conf_file_name_absolute = lib_path.strip_and_replace_backslashes(os.path.abspath(conf_file_name))
     if not os.path.isfile(conf_file_name_absolute):

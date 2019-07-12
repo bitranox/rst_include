@@ -190,7 +190,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-c [configfile.py]]
+                               [-i] [-q] [-c [configfile.py]]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -202,7 +202,8 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
-      -i, --inplace         inplace - target file = sourcefile, implies -f
+      -i, --inplace         inplace - target file = sourcefile
+      -q, --quiet           quiet
       -c [configfile.py], --config [configfile.py]
                             If no filename is passed, the default conf_rst_inc.py
                             is searched in the current directory
@@ -216,7 +217,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-i]
+                               [-i] [-q]
                                old new [count]
 
     positional arguments:
@@ -234,7 +235,8 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
-      -i, --inplace         inplace - target file = sourcefile, implies -f
+      -i, --inplace         inplace - target file = sourcefile
+      -q, --quiet           quiet
 
 - replace the include statements in source.rst and save it to target.rst via commandline parameters :
 
@@ -302,20 +304,32 @@ You might also specify the encoding for source and target files
                             RstFile(source='./rst_include/tests/test4_include_nocode_template.rst',
                                     target='./rst_include/tests/test4_include_nocode_result.rst')]
 
-Additional You can easily replace text strings :
+Additional You can easily replace (also multiline) text strings :
 
 .. code-block:: shell
 
     # replace text strings easily
     # examples :
 
-    $> rst_include -s ./source.rst -t ./target.rst replace {template_string} "new content"
+    $> rst_include replace -s ./source.rst -t ./target.rst {template_string} "new content"
+
+    # multiline example
+    # note ${IFS} is the standard bash seperator
+    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+
 
 piping under Linux:
 
 .. code-block:: shell
 
-    $> rst_include replace -s ./source.rst {template_string} "new content" | rst_include include -t ./target.rst
+    # piping examples
+    $> rst_include include -s ./source.rst | rst_include replace -t ./target.rst "{template_string}" "new content"
+    # same result
+    $> cat ./source.rst | rst_include include | rst_include replace "{template_string}" "new content" > ./target.rst
+
+    # multiline example
+    $> cat ./text.txt | rst_include replace "line1${IFS}line2" "line1${IFS}something_between${IFS}line2" > ./text.txt
+
 
 -----------------------------------------------------------------
 
@@ -377,36 +391,34 @@ Example Build Script Python
 
         logger.info('include the include blocks')
         rst_inc(source='./docs/README_template.rst',
-                target='./docs/README_template_included.rst')
+                target='./README.rst')
 
         # please note that the replace syntax is not shown correctly in the README.rst,
         # because it gets replaced itself by the build_docs.py
         # we could overcome this by first replacing, and afterwards including -
         # check out the build_docs.py for the correct syntax !
         logger.info('replace repository related strings')
-        rst_str_replace(source='./docs/README_template_included.rst',
-                        target='./docs/README_template_repo_replaced.rst',
+        rst_str_replace(source='./README.rst',
+                        target='',
                         old='bitranox/rst_include',
-                        new=travis_repo_slug)
-        rst_str_replace(source='./docs/README_template_repo_replaced.rst',
-                        target='./docs/README_template_repo_replaced2.rst',
+                        new=travis_repo_slug,
+                        inplace=True)
+        rst_str_replace(source='./README.rst',
+                        target='',
                         old='rst_include',
-                        new=repository)
-        rst_str_replace(source='./docs/README_template_repo_replaced2.rst',
-                        target='./docs/README_template_repo_replaced3.rst',
+                        new=repository,
+                        inplace=True)
+        rst_str_replace(source='./README.rst',
+                        target='',
                         old='rst-include',
-                        new=repository_dashed)
+                        new=repository_dashed,
+                        inplace=True)
 
-        rst_str_replace(source='./docs/README_template_repo_replaced3.rst',
-                        target='./README.rst',
+        rst_str_replace(source='./README.rst',
+                        target='',
                         old='ff3f414903627e5cfc35',
-                        new=codeclimate_link_hash)
-
-        logger.info('cleanup')
-        os.remove('./docs/README_template_included.rst')
-        os.remove('./docs/README_template_repo_replaced.rst')
-        os.remove('./docs/README_template_repo_replaced2.rst')
-        os.remove('./docs/README_template_repo_replaced3.rst')
+                        new=codeclimate_link_hash,
+                        inplace=True)
 
         logger.info('done')
         sys.exit(0)
@@ -465,7 +477,7 @@ Example Build Script DOS Batch
     rst_include replace -h > ./docs/rst_include_help_replace_output.txt
 
     echo "import the include blocks"
-    rst_include include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_include include -s ./docs/README_template.rst -t ./README.rst
 
     REM please note that the replace syntax is not shown correctly in the README.rst,
     REM because it gets replaced itself by the build_docs.py
@@ -473,20 +485,13 @@ Example Build Script DOS Batch
     REM check out the build_docs.cmd for the correct syntax !
 
     echo "replace repository_slug"
-    rst_include replace -s ./docs/README_template_included.rst -t ./docs/README_template_repo_replaced.rst bitranox/rst_include %repository_slug%
+    rst_include replace --inplace -s ./docs/README_template.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
-    rst_include replace -s ./docs/README_template_repo_replaced.rst -t ./docs/README_template_repo_replaced2.rst rst_include %repository%
+    rst_include replace --inplace -s ./docs/README_template.rst rst_include %repository%
     echo "replace repository_dashed"
-    rst_include replace -s ./docs/README_template_repo_replaced2.rst -t ./docs/README_template_repo_replaced3.rst rst-include %repository_dashed%
+    rst_include replace --inplace -s ./docs/README_template.rst rst-include %repository_dashed%
     echo "replace codeclimate_link_hash"
-    rst_include replace -s ./docs/README_template_repo_replaced3.rst -t ./README.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
-
-    REM ### oddly del "./docs/README_template_included.rst" does not work here - You need to use backslashes
-    echo "cleanup"
-    del ".\docs\README_template_included.rst"
-    del ".\docs\README_template_repo_replaced.rst"
-    del ".\docs\README_template_repo_replaced2.rst"
-    del ".\docs\README_template_repo_replaced3.rst"
+    rst_include replace --inplace -s ./docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
 
     echo 'finished'
 

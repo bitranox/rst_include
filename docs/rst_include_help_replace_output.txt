@@ -1,6 +1,6 @@
 usage: rst_include replace [-h] [-s [source]] [-t [target]]
                            [-se [source encoding]] [-te [target encoding]]
-                           [-i]
+                           [-i] [-q]
                            old new [count]
 
 positional arguments:
@@ -18,4 +18,5 @@ optional arguments:
                         default: utf-8-sig
   -te [target encoding], --target_encoding [target encoding]
                         default: utf-8
-  -i, --inplace         inplace - target file = sourcefile, implies -f
+  -i, --inplace         inplace - target file = sourcefile
+  -q, --quiet           quiet

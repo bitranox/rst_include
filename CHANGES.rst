@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.6
+-----
+
+2019-07-12: implement --inplace option, fix documentation
+
+
 1.0.2
 -----
 
