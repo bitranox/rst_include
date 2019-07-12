@@ -168,7 +168,7 @@ since rst_include is registered as a console script command with Your current py
 
 .. code-block:: shell
 
-    usage: rst_include [-h] [-i] [-q] {include,replace} ...
+    usage: rst_include [-h] {include,replace} ...
 
     Process .rst File Includes
 
@@ -179,8 +179,6 @@ since rst_include is registered as a console script command with Your current py
 
     optional arguments:
       -h, --help         show this help message and exit
-      -i, --inplace      inplace - target file = sourcefile
-      -q, --quiet        quiet
 
     check the documentation on github
 
@@ -193,7 +191,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-c [configfile.py]]
+                               [-i] [-q] [-c [configfile.py]]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -205,6 +203,8 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
+      -i, --inplace         inplace - target file = sourcefile
+      -q, --quiet           quiet
       -c [configfile.py], --config [configfile.py]
                             If no filename is passed, the default conf_rst_inc.py
                             is searched in the current directory
@@ -218,6 +218,7 @@ since rst_include is registered as a console script command with Your current py
 
     usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
+                               [-i] [-q]
                                old new [count]
 
     positional arguments:
@@ -235,6 +236,8 @@ since rst_include is registered as a console script command with Your current py
                             default: utf-8-sig
       -te [target encoding], --target_encoding [target encoding]
                             default: utf-8
+      -i, --inplace         inplace - target file = sourcefile
+      -q, --quiet           quiet
 
 - replace the include statements in source.rst and save it to target.rst via commandline parameters :
 

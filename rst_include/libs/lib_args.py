@@ -40,8 +40,6 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
         prog='rst_include',
         add_help=True)
 
-    parser.add_argument('-i', '--inplace', help='inplace - target file = sourcefile', action="store_true")
-    parser.add_argument('-q', '--quiet', help='quiet', action="store_true")
 
     subparsers = parser.add_subparsers()
 
@@ -50,6 +48,9 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser_include.add_argument('-t', '--target', nargs='?', metavar='target', default=sys.stdout, help='default: stdout')
     parser_include.add_argument('-se', '--source_encoding', metavar='source encoding', nargs='?', default='utf-8-sig', help='default: utf-8-sig')
     parser_include.add_argument('-te', '--target_encoding', metavar='target encoding', nargs='?', default='utf-8', help='default: utf-8')
+    parser_include.add_argument('-i', '--inplace', help='inplace - target file = sourcefile', action="store_true")
+    parser_include.add_argument('-q', '--quiet', help='quiet', action="store_true")
+
     parser_include.add_argument('-c', '--config', metavar='configfile.py', nargs='?',
                                 help='If no filename is passed, the default conf_rst_inc.py is searched in the current directory')
 
@@ -58,14 +59,22 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser_replace.add_argument('-t', '--target', nargs='?', metavar='target', default=sys.stdout, help='default: stdout')
     parser_replace.add_argument('-se', '--source_encoding', metavar='source encoding', nargs='?', default='utf-8-sig', help='default: utf-8-sig')
     parser_replace.add_argument('-te', '--target_encoding', metavar='target encoding', nargs='?', default='utf-8', help='default: utf-8')
+    parser_replace.add_argument('-i', '--inplace', help='inplace - target file = sourcefile', action="store_true")
+    parser_replace.add_argument('-q', '--quiet', help='quiet', action="store_true")
     parser_replace.add_argument('old', type=str, help='old')
     parser_replace.add_argument('new', type=str, help='new')
     parser_replace.add_argument('count', type=int, nargs='?', help='count', default=-1)
 
     args = parser.parse_args(cmd_args)
 
-    if args.quiet or args.target == sys.stdout:
-        lib_classes.GlobalSettings.quiet = True
+    if hasattr(args, 'quiet'):
+        # we need hasattr - if neither 'include' or 'replace' has been passed, the attribute is not there
+        if args.quiet:
+            lib_classes.GlobalSettings.quiet = True
+    elif hasattr(args, 'target'):
+        # we need hasattr - if neither 'include' or 'replace' has been passed, the attribute is not there
+        if args.target == sys.stdout:
+            lib_classes.GlobalSettings.quiet = True
 
     return args, parser
 
