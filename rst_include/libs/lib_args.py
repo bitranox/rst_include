@@ -66,12 +66,10 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
 
     args = parser.parse_args(cmd_args)
 
-    if hasattr(args, 'quiet'):
+    if hasattr(args, 'source'):
         # we need hasattr - if neither 'include' or 'replace' has been passed, the attribute is not there
         if args.quiet:
             lib_classes.GlobalSettings.quiet = True
-    elif hasattr(args, 'target'):
-        # we need hasattr - if neither 'include' or 'replace' has been passed, the attribute is not there
         if args.target == sys.stdout:
             lib_classes.GlobalSettings.quiet = True
 
