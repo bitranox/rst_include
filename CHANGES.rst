@@ -4,7 +4,7 @@ Changelog
 1.0.6
 -----
 
-2019-07-12: implement --inplace option, fix documentation
+2019-07-12: implement --inplace, --quiet options, extend documentation, implement multiline string replacement
 
 
 1.0.2

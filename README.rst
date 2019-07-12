@@ -71,6 +71,7 @@ rst_include does only work on python > 3.5.2
 - `Pull Request <https://github.com/bitranox/rst_include/blob/master/PULL_REQUEST_TEMPLATE.md>`_
 - `Code of Conduct <https://github.com/bitranox/rst_include/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
+- `Changelog`_
 
 -----------------------------------------------------------------
 
@@ -724,4 +725,32 @@ License
 -------
 
 This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/MIT_License>`_
+
+-----------------------------------------------------------------
+
+.. Changelog link comes from the included document !
+
+Changelog
+=========
+
+1.0.6
+-----
+
+2019-07-12: implement --inplace, --quiet options, extend documentation, implement multiline string replacement
+
+
+1.0.2
+-----
+
+2019-04-28: fix import errors
+
+1.0.1
+-----
+
+2019-04-28: add empty line at the end of the assembled documentation, to be able to add CHANGES.rst with setup.py
+
+1.0.0
+-----
+
+2019-04-19: Initial public release, PyPi Release
 
