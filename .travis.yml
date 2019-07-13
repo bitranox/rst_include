@@ -236,8 +236,8 @@ script:
     - if [[ "${check_build}" == "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer > /dev/null 2>&1 ; fi     # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
     - if [[ "${check_build}" == "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine > /dev/null 2>&1 ; fi
     - if [[ "${check_build}" == "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel > /dev/null 2>&1 ; fi
-    - if [[ "${check_build}" == "True" ]]; then ${lib_bash_banner} "Building Wheels" && ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel && ${lib_bash_banner} "Building Wheels OK" || ${lib_bash_banner_warning} "Building Wheels failed - but upload not requested" 1>&2 ; fi
-    - if [[ "${check_build}" == "True" ]]; then ${lib_bash_banner} "Checking PyPi Deployment" && ${CMDPREFIX} twine check dist/* && ${lib_bash_banner} "PyPi Deployment would be OK" || ${lib_bash_banner_warning} "PyPi Deployment would fail - but upload not requested" 1>&2 ; fi
+    - if [[ "${check_build}" == "True" ]]; then ${lib_bash_banner} "Building Wheels" && ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel || ${lib_bash_banner_warning} "Building Wheels failed" 1>&2 ; fi
+    - if [[ "${check_build}" == "True" ]]; then ${lib_bash_banner} "Testing PyPi Deployment" && ${CMDPREFIX} twine check dist/* && ${lib_bash_color} clr_bold clr_green "PyPi Deployment would be OK" || ${lib_bash_banner_warning} "PyPi Deployment would fail" 1>&2 ; fi
 
 after_success:
     - ${CMDPREFIX} coverage report
