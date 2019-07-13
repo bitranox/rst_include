@@ -9,6 +9,8 @@ env:
         - pip_command="pip"
         - python_command="python"
         - WINEDEBUG=fixme-all       # switch off wine fix me messages
+        # pypi_password for rst_include
+        - secure: "kunEN/xI7zqyo7II2hD6oMFTUQHkMH8w11vNk5QcrfLkTGCdsEvETigtIjs1pVtUz1SXqeHMDD8I8Ooz9pc1s91l2qCmIe4N05mN47Nsn4NN5lCFBiD2PM4hLrU1318d/s1a46SPRZXHEb4gvA89nwwJZwWmUfOVKdMjhEClAr5xa6jLNgT8CkFSSJjS6qxBVnNCVR7Dq0mMHuyX/KEKnltIqqHG+wCI9mI7eOPBxw2zDPYduAmqm3F+Y5xBUIyKhRc9lTYnqq3HecP2PFJ5tXenMFBUI1IrgTLADS1+a6o4bTn1ARE5p+2rsICndrEckr4se5gtMT2RsmI40aXykB4GtqMzvMXIW4TthFKPDfB4UNe1ZDqkhJYi8khuJqII1CjKt9R2VvIb2MpqtePPFC45Fw8gcIoOfrcl3ekGugnR5/soLlo/qLyO1DGhIY5kqzQ+T9EL7GL7s6TixAIzzw/UEfuh97fQxi1JgkAynHbhbzX9ac1YgZtyi/300gWJy0gca5ZyBGoGiypiCmAOCzYnv0TKD1TLeCviNellvbOrGIJ6THuEqPY5lw7Ex3RFax485IHTH1o8mD59EvsA1CUYEPkUWX+lvILHEa+hTBVbXrWTxLOLGWVP+84XtdEx0trDb/6ZfTPRtZ2XsHNNsW6O2rERcMiVdb++0X6TNFg="
 
 addons:
     apt:
@@ -237,12 +239,18 @@ after_success:
     - ${CMDPREFIX} coverage report
     - ${CMDPREFIX} codecov
 
-    # This works for sure - but might expose the secure password within the matrix,
-    # because windows builds need filter_secrets: false at the Moment (2019-04-12)
-    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install -U twine ; fi
-    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
-    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
-    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
+    # This works for sure
+    # create the secret :
+    # cd /<repositor>
+    # travis encrypt pypi_password=*****
+    # and put it under :
+    # env:
+    #   global:
+    #     -secure: *******
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install -U twine ; fi
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
 
 
 # the password needs to be encrypted pointing to ${deploy.password}
@@ -250,19 +258,19 @@ after_success:
 # password needs to be created from the project directory for every repository with ruby gem travis:   travis encrypt "*******" --add deploy.password --org
 # option --org for travis.org, --com for travis.com
 
-deploy:
-  provider: pypi
-  user: bitranox
-  # password set for rst_include
-  password:
-    secure: ru4v/F2y7BHISlQjKpQ+cNZN0qYij3VcUEQzzEoAP+/WUQvN9kSBMqhZ2UsPJCQW6nrkSOyMxB5q0KHIKabmNDPBpiEplIRP/XjkhhuIgO8N8Iqf9/YSgg1eBtnRpV42MgLx3WWPxBsUTLRtAQ2cgAnd47Gn84lx3FWFNASuO3J6YbBSIzEzLQ8coQSl7cN6OyuJ1spUWurnw2tA8mdJGEVuf2nF8sDv2dKj6ijf5jHjKEA4bolnVnYOy5BYUGDiwJAXFCfwLwXrwra/2QZENuC5dYrrzKXYMUERB/U+F5P43eL0iuiOx72JLr930sBxkd6LAuR20A0oSISwHkaddokF6yWxd/QikB3aSPvBKChlKp7Uki09YFypL7Gif/r9QF40SLNOl1Wadiz2p2hPxh6W/ozSa8Q/pR77iWlQH+MgO+gG5AzAdMPicV98EfA9yT1NiFIxnTk/pZo8s5Nn0Ydi/UlZKW6M0T1yBS3PWgaYuQiWDjx/QtCLJ+wddEAYNss9JJ6ygKSFsp9HX/ljl8r2t/3SqnOsKDvm3/MHIt+ZGXxWuW5CrdRk6HhVR+D1IlaEhWrPV0TufenIrZLVT7JaLuNHvxFnpDntHZ2r2SXITOtf7HwZWzdZ38b9u/Ku5MTS0n2v/M+iFEKdfmA+mwehzjeKmJx1OkR9AfYPnrM=
-  distributions: "sdist bdist_wheel"
-  on:
-    tags: true    # we release only on PyPi on tagged Releases (Release on Github)
-    # python: 3.6  # that would be the usual option, but we can not use it.
-    # we need this, because on projects with windows builds only, we can not build on windows, because of
-    # the filter_secure issue. So we build on WINE, but need somehow to address the matrix include on which to build
-    condition: ${deploy_on_pypi} = "True"
+# deploy:
+#   provider: pypi
+#   user: bitranox
+#   # password set for rst_include
+#   password:
+#     secure: ru4v/F2y7BHISlQjKpQ+cNZN0qYij3VcUEQzzEoAP+/WUQvN9kSBMqhZ2UsPJCQW6nrkSOyMxB5q0KHIKabmNDPBpiEplIRP/XjkhhuIgO8N8Iqf9/YSgg1eBtnRpV42MgLx3WWPxBsUTLRtAQ2cgAnd47Gn84lx3FWFNASuO3J6YbBSIzEzLQ8coQSl7cN6OyuJ1spUWurnw2tA8mdJGEVuf2nF8sDv2dKj6ijf5jHjKEA4bolnVnYOy5BYUGDiwJAXFCfwLwXrwra/2QZENuC5dYrrzKXYMUERB/U+F5P43eL0iuiOx72JLr930sBxkd6LAuR20A0oSISwHkaddokF6yWxd/QikB3aSPvBKChlKp7Uki09YFypL7Gif/r9QF40SLNOl1Wadiz2p2hPxh6W/ozSa8Q/pR77iWlQH+MgO+gG5AzAdMPicV98EfA9yT1NiFIxnTk/pZo8s5Nn0Ydi/UlZKW6M0T1yBS3PWgaYuQiWDjx/QtCLJ+wddEAYNss9JJ6ygKSFsp9HX/ljl8r2t/3SqnOsKDvm3/MHIt+ZGXxWuW5CrdRk6HhVR+D1IlaEhWrPV0TufenIrZLVT7JaLuNHvxFnpDntHZ2r2SXITOtf7HwZWzdZ38b9u/Ku5MTS0n2v/M+iFEKdfmA+mwehzjeKmJx1OkR9AfYPnrM=
+#   distributions: "sdist bdist_wheel"
+#   on:
+#     tags: true    # we release only on PyPi on tagged Releases (Release on Github)
+#     # python: 3.6  # that would be the usual option, but we can not use it.
+#     # we need this, because on projects with windows builds only, we can not build on windows, because of
+#     # the filter_secure issue. So we build on WINE, but need somehow to address the matrix include on which to build
+#     condition: ${deploy_on_pypi} = "True"
 
 
 notifications:

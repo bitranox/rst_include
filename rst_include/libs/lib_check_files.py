@@ -169,7 +169,8 @@ def log_and_raise_if_source_file_equals_target_file(source: str, target: str) ->
 
 def log_warning_if_target_file_exist(target: str) -> None:
     """
-    >>> log_warning_if_target_file_exist(target='README.rst')
+    >>> test_dir = lib_test.get_test_dir()
+    >>> log_warning_if_target_file_exist(target=test_dir + '/include1.py')
     >>> log_warning_if_target_file_exist(sys.stdout)
 
     """
