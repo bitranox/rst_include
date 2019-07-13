@@ -234,12 +234,18 @@ script:
     - if [[ "${mypy_static_typecheck}" == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME} --strict --no-warn-unused-ignores -v; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
     - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "Building Docs" && ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}; else ${lib_bash_banner_warning} "Building Docs disabled on this build" ;  fi
 
-
 after_success:
     - ${CMDPREFIX} coverage report
     - ${CMDPREFIX} codecov
 
-    # This works for sure
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ;      # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel && ${lib_bash_banner} "Build sucess" || ${lib_bash_banner_warning} "Build failing" ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} twine check dist/* && ${lib_bash_banner} "Build check for PyPi sucess" || ${lib_bash_banner_warning} "Build check for PyPi failing - but upload not requested" ; fi
+
+
+    # This works for sure - the Travis deploy is somehow buggy.
     # create the secret :
     # cd /<repositor>
     # travis encrypt pypi_password=*****
@@ -247,32 +253,12 @@ after_success:
     # env:
     #   global:
     #     -secure: *******
-    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ;      # to check if long_description (Readme) can be rendered, otherwise PyPy does not accept it
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ;      # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
     - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
     - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
     - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
     - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine check dist/* ; fi                       # check distribution before uploading it
     - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
-
-
-# the password needs to be encrypted pointing to ${deploy.password}
-# make a backup before adding secrets by travis gem, all comments in the yml files get lost !
-# password needs to be created from the project directory for every repository with ruby gem travis:   travis encrypt "*******" --add deploy.password --org
-# option --org for travis.org, --com for travis.com
-
-# deploy:
-#   provider: pypi
-#   user: bitranox
-#   # password set for rst_include
-#   password:
-#     secure: ru4v/F2y7BHISlQjKpQ+cNZN0qYij3VcUEQzzEoAP+/WUQvN9kSBMqhZ2UsPJCQW6nrkSOyMxB5q0KHIKabmNDPBpiEplIRP/XjkhhuIgO8N8Iqf9/YSgg1eBtnRpV42MgLx3WWPxBsUTLRtAQ2cgAnd47Gn84lx3FWFNASuO3J6YbBSIzEzLQ8coQSl7cN6OyuJ1spUWurnw2tA8mdJGEVuf2nF8sDv2dKj6ijf5jHjKEA4bolnVnYOy5BYUGDiwJAXFCfwLwXrwra/2QZENuC5dYrrzKXYMUERB/U+F5P43eL0iuiOx72JLr930sBxkd6LAuR20A0oSISwHkaddokF6yWxd/QikB3aSPvBKChlKp7Uki09YFypL7Gif/r9QF40SLNOl1Wadiz2p2hPxh6W/ozSa8Q/pR77iWlQH+MgO+gG5AzAdMPicV98EfA9yT1NiFIxnTk/pZo8s5Nn0Ydi/UlZKW6M0T1yBS3PWgaYuQiWDjx/QtCLJ+wddEAYNss9JJ6ygKSFsp9HX/ljl8r2t/3SqnOsKDvm3/MHIt+ZGXxWuW5CrdRk6HhVR+D1IlaEhWrPV0TufenIrZLVT7JaLuNHvxFnpDntHZ2r2SXITOtf7HwZWzdZ38b9u/Ku5MTS0n2v/M+iFEKdfmA+mwehzjeKmJx1OkR9AfYPnrM=
-#   distributions: "sdist bdist_wheel"
-#   on:
-#     tags: true    # we release only on PyPi on tagged Releases (Release on Github)
-#     # python: 3.6  # that would be the usual option, but we can not use it.
-#     # we need this, because on projects with windows builds only, we can not build on windows, because of
-#     # the filter_secure issue. So we build on WINE, but need somehow to address the matrix include on which to build
-#     condition: ${deploy_on_pypi} = "True"
 
 
 notifications:
