@@ -1,16 +1,7 @@
 import os
 
 try:
-    from rst_include.libs import lib_assemble_block
-    from rst_include.libs import lib_classes
-    from rst_include.libs.lib_classes import Block, SourceLine
-    from rst_include.libs import lib_get_include_options
-    from rst_include.libs import lib_include_file
-    from rst_include.libs import lib_path
-    from rst_include.libs import lib_test_compare_results
-except ImportError:  # pragma: no cover
-    # this is needed because of import errors under python 3.4 and 2.7
-    # we should be able to install
+    # for pytest
     from . import lib_assemble_block
     from . import lib_classes
     from .lib_classes import Block, SourceLine
@@ -18,6 +9,15 @@ except ImportError:  # pragma: no cover
     from . import lib_include_file
     from . import lib_path
     from . import lib_test_compare_results
+except ImportError:                                                 # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_assemble_block                 # type: ignore # pragma: no cover
+    from rst_include.libs import lib_classes                        # type: ignore # pragma: no cover
+    from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
+    from rst_include.libs import lib_get_include_options            # type: ignore # pragma: no cover
+    from rst_include.libs import lib_include_file                   # type: ignore # pragma: no cover
+    from rst_include.libs import lib_path                           # type: ignore # pragma: no cover
+    from rst_include.libs import lib_test_compare_results           # type: ignore # pragma: no cover
 
 
 def run_template_tests() -> None:

@@ -1,4 +1,4 @@
 :loop
 pytest
-mypy -p rst_include
+mypy %CD%
 goto loop

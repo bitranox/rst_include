@@ -1,17 +1,19 @@
 from typing import List
 
 try:
-    from rst_include.libs.lib_classes import Block
-    from rst_include.libs.lib_classes import SourceLine
-    from rst_include.libs import lib_classes
-    from rst_include.libs import lib_list
-    from rst_include.libs import lib_source_line
-except ImportError:     # pragma: no cover
+    # for pytest
     from .lib_classes import Block
     from .lib_classes import SourceLine
     from . import lib_classes
     from . import lib_list
     from . import lib_source_line
+except ImportError:                                             # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
+    from rst_include.libs.lib_classes import SourceLine         # type: ignore # pragma: no cover
+    from rst_include.libs import lib_classes                    # type: ignore # pragma: no cover
+    from rst_include.libs import lib_list                       # type: ignore # pragma: no cover
+    from rst_include.libs import lib_source_line                # type: ignore # pragma: no cover
 
 
 def is_include_block(block: Block) -> bool:

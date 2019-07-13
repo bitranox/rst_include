@@ -1,18 +1,19 @@
 import os
-import sys
 
 try:
-    from rst_include.libs import lib_classes
-    from rst_include.libs import lib_assemble_block
-    from rst_include.libs import lib_config_file
-    from rst_include.libs import lib_check_files
-    from rst_include.libs import lib_path
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_classes
     from . import lib_assemble_block
     from . import lib_config_file
     from . import lib_check_files
     from . import lib_path
+except ImportError:                                     # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_classes            # type: ignore # pragma: no cover
+    from rst_include.libs import lib_assemble_block     # type: ignore # pragma: no cover
+    from rst_include.libs import lib_config_file        # type: ignore # pragma: no cover
+    from rst_include.libs import lib_check_files        # type: ignore # pragma: no cover
+    from rst_include.libs import lib_path               # type: ignore # pragma: no cover
 
 
 def rst_str_replace(source: str, target: str, old: str, new: str, count: int = -1,

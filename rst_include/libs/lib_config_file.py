@@ -3,15 +3,17 @@ import os
 from types import ModuleType
 
 try:
-    from rst_include.libs import lib_classes
-    from rst_include.libs import lib_path
-    from rst_include.libs import lib_import_module
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_classes
     from . import lib_path
     from . import lib_import_module
     from . import lib_test
+except ImportError:                                       # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_classes              # type: ignore # pragma: no cover
+    from rst_include.libs import lib_path                 # type: ignore # pragma: no cover
+    from rst_include.libs import lib_import_module        # type: ignore # pragma: no cover
+    from rst_include.libs import lib_test                 # type: ignore # pragma: no cover
 
 
 def config_exists(config_file_name: str) -> bool:

@@ -3,17 +3,19 @@ import sys
 from typing import List
 
 try:
-    from rst_include.libs.lib_classes import Block
-    from rst_include.libs import lib_get_include_options
-    from rst_include.libs import lib_list
-    from rst_include.libs import lib_str
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from .lib_classes import Block
     from . import lib_get_include_options
     from . import lib_list
     from . import lib_str
     from . import lib_test
+except ImportError:                                             # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
+    from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
+    from rst_include.libs import lib_list                       # type: ignore # pragma: no cover
+    from rst_include.libs import lib_str                        # type: ignore # pragma: no cover
+    from rst_include.libs import lib_test                       # type: ignore # pragma: no cover
 
 
 def read_include_file(block: Block) -> List[str]:

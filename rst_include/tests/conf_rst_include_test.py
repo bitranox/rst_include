@@ -1,4 +1,10 @@
-from rst_include.libs import lib_classes
+try:
+    # for pytest working
+    import rst_include.libs.lib_classes as lib_classes
+except (ImportError, SystemError):                        # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    import lib_classes                                    # type: ignore # pragma: no cover
+
 
 # set config here
 rst_conf = lib_classes.RstConf()

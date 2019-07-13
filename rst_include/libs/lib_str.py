@@ -1,7 +1,9 @@
 try:
-    from rst_include.libs import lib_list
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_list
+except ImportError:                             # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_list       # type: ignore # pragma: no cover
 
 
 def strip_multiline_string(str_multiline: str) -> str:

@@ -6,9 +6,11 @@ from typing import List, Tuple
 
 # PROJECT
 try:
-    from rst_include.libs import lib_classes
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_classes
+except ImportError:                                 # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_classes        # type: ignore # pragma: no cover
 
 logger = logging.getLogger()
 
