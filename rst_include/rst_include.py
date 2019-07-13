@@ -1,9 +1,11 @@
+# STDLIB
 import argparse
 import errno
 import os
 import sys
 from typing import List
 
+# PROJECT
 try:
     from . import *
     from .libs import lib_log
@@ -11,8 +13,7 @@ try:
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
-# we need SystemError for pypy 3.5 here
-except (ImportError, SystemError):                   # type: ignore # pragma: no cover
+except ImportError:                                  # type: ignore # pragma: no cover
     from libs import lib_log                         # type: ignore # pragma: no cover
     from libs import lib_args                        # type: ignore # pragma: no cover
     from libs import lib_main                        # type: ignore # pragma: no cover
