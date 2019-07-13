@@ -3,9 +3,17 @@ import errno
 import logging
 import os
 import sys
-from rst_include import *
-from rst_include.libs import lib_log
 import subprocess
+
+if sys.version_info < (3, 6):
+    logging.basicConfig(level=logging.INFO)
+    main_logger = logging.getLogger('init')
+    main_logger.error('only Python Versions from 3.6 are supported')
+    sys.exit(1)
+else:
+    # Project Imports
+    from rst_include import *
+    from rst_include.libs import lib_log
 
 
 # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
