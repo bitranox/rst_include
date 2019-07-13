@@ -41,7 +41,7 @@ if os.path.exists(changes_filename):
 
 setup(
     name='rst_include',
-    python_requires='>3.5.2',
+    python_requires='>=3.6.0',
     version='1.0.8',
     description=description,
     long_description=long_description,
