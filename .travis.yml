@@ -238,11 +238,12 @@ after_success:
     - ${CMDPREFIX} coverage report
     - ${CMDPREFIX} codecov
 
-    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ;      # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
-    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
-    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
-    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel && ${lib_bash_banner} "Build sucess" || ${lib_bash_banner_warning} "Build failing" ; fi
-    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ ${deploy_on_pypi} != "True" ]]; then ${CMDPREFIX} twine check dist/* && ${lib_bash_banner} "Build check for PyPi sucess" || ${lib_bash_banner_warning} "Build check for PyPi failing - but upload not requested" ; fi
+    # only for non tagged builds if doctest is enabled, to check before we deploy on pypi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ -z ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ;      # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ -z ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ -z ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ -z ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel && ${lib_bash_banner} "Build sucess" || ${lib_bash_banner_warning} "Build failing" ; fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]] && [[ -z ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine check dist/* && ${lib_bash_banner} "Build check for PyPi sucess" || ${lib_bash_banner_warning} "Build check for PyPi failing - but upload not requested" ; fi
 
 
     # This works for sure - the Travis deploy is somehow buggy.

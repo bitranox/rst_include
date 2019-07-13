@@ -33,6 +33,12 @@ rst_include does only work on python > 3.6
 
 - `Installation and Upgrade`_
 - `Basic Usage`_
+    - `issue command`_
+    - `get help`_
+    - `replace include statements`_
+    - `replace include statements via configfile`_
+    - `multiline text replacement`_
+
 - Examples
     - `Example Build Script Python`_
     - `Example Build Script DOS Batch`_
@@ -61,12 +67,14 @@ Installation and Upgrade
 -----------------------------------------------------------------
 
 Basic Usage
------------
+===========
+
 
 since rst_include is registered as a console script command with Your current python interpreter, You have to use the command "rst_include" (not "rst_include.py")
 
 
-- issue command :
+issue command
+-------------
 
 .. code-block:: shell
 
@@ -84,7 +92,8 @@ since rst_include is registered as a console script command with Your current py
 
 
 
-- get help :
+get help
+--------
 
 .. code-block:: shell
 
@@ -112,7 +121,8 @@ since rst_include is registered as a console script command with Your current py
 .. include:: ./rst_include_help_replace_output.txt
         :code: shell
 
-- replace the include statements in source.rst and save it to target.rst via commandline parameters :
+replace include statements
+--------------------------
 
 .. code-block:: shell
 
@@ -133,7 +143,8 @@ since rst_include is registered as a console script command with Your current py
     $> type /project/docs/source.rst | rst_include include > /project/docs/target.rst
 
 
-- replace include statements on multiple files via config.py :
+replace include statements via configfile
+-----------------------------------------
 
 .. code-block:: shell
 
@@ -155,6 +166,9 @@ You might also specify the encoding for source and target files
 
 .. include:: ../conf_rst_inc_sample.py
     :code: python
+
+multiline text replacement
+--------------------------
 
 Additional You can easily replace (also multiline) text strings :
 
