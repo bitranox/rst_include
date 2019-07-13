@@ -6,7 +6,7 @@ class GlobalSettings(object):
 
 
 class RstFile(object):
-    def __init__(self, source: str, target: str, source_encoding: str = 'utf-8-sig', target_encoding: str = 'utf-8') -> None:
+    def __init__(self, source: str, target: str, source_encoding: str = 'utf-8-sig', target_encoding: str = 'utf-8'):
         self.source = source
         self.source_encoding = source_encoding
         self.target = target
@@ -14,8 +14,8 @@ class RstFile(object):
 
 
 class RstConf(object):
-    def __init__(self):
-        self.l_rst_files = []
+    def __init__(self) -> None:
+        self.l_rst_files: List[RstFile] = list()
 
 
 class SourceLine(object):

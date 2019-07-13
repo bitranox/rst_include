@@ -2,7 +2,7 @@ import os
 import platform
 
 
-def get_is_windows():
+def get_is_windows() -> bool:
     return platform.system().lower() == 'windows'
 
 

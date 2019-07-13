@@ -6,15 +6,17 @@ from typing import Any, List, Tuple
 
 # PROJECT
 try:
-    from rst_include.libs import lib_args
-    from rst_include.libs import lib_classes
-    from rst_include.libs.lib_classes import RstFile, SourceLine
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_args
     from . import lib_classes
     from .lib_classes import RstFile, SourceLine
     from . import lib_test
+except ImportError:                                                 # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_args                           # type: ignore # pragma: no cover
+    from rst_include.libs import lib_classes                        # type: ignore # pragma: no cover
+    from rst_include.libs.lib_classes import RstFile, SourceLine    # type: ignore # pragma: no cover
+    from rst_include.libs import lib_test                           # type: ignore # pragma: no cover
 
 logger = logging.getLogger()
 

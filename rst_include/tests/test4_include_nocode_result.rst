@@ -34,7 +34,7 @@ def my_include2_2():
 RESULT
 ======
 
-def my_include2_2():
+def my_include2_2() -> None:
     pass
 
     pass

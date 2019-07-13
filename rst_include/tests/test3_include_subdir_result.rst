@@ -40,7 +40,7 @@ RESULT
 .. code-block:: python
     :number-lines: 10
 
-    def my_include2_2():
+    def my_include2_2() -> None:
         pass
 
         pass

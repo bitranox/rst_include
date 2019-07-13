@@ -23,13 +23,13 @@ def read_include_file(block: Block) -> List[str]:
     >>> block = lib_test.get_test_block_ok()
     >>> lib_get_include_options.get_include_options(block)
     >>> content = read_include_file(block)
-    >>> assert content[0] == 'def my_include():'
+    >>> assert content[0] == 'def my_include() -> None:'
     >>> assert content[1] == '    pass'
     >>> content[2]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     IndexError: list index out of range
-    >>> assert block.include_file_lines == ['def my_include():', '    pass']
+    >>> assert block.include_file_lines == ['def my_include() -> None:', '    pass']
 
     >>> block.include_filename_absolut='non_existing_file'
     >>> content = read_include_file(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
@@ -64,7 +64,7 @@ def process_include_file_lines(block: Block) -> None:
     """
     >>> block = lib_test.read_include_file_2()
     >>> process_include_file_lines(block)
-    >>> assert block.include_file_sliced_content == 'def my_include2_2():\\n    pass\\n\\n    pass'
+    >>> assert block.include_file_sliced_content == 'def my_include2_2() -> None:\\n    pass\\n\\n    pass'
     """
     slice_include_file_lines(block)
     slice_include_file_markers(block)
@@ -76,7 +76,7 @@ def slice_include_file_lines(block: Block) -> None:
     >>> block.include_file_lines = ['\\n'] + block.include_file_lines   # add an empty line in front and end
     >>> slice_include_file_lines(block)
     >>> block.include_file_lines  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    ['def my_include2_1():', '    pass', '', ... 'def my_include2_3():', '    pass']
+    ['def my_include2_1() -> None:', '    pass', '', ... 'def my_include2_3() -> None:', '    pass']
     """
     block.include_file_lines = block.include_file_lines[block.include_file_start_line:block.include_file_end_line]
     block.include_file_lines = lib_list.strip_list_of_strings(block.include_file_lines)
@@ -88,7 +88,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block = lib_test.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> slice_include_file_markers(block)
-    >>> assert block.include_file_sliced_content == 'def my_include2_2():\\n    pass\\n\\n    pass'
+    >>> assert block.include_file_sliced_content == 'def my_include2_2() -> None:\\n    pass\\n\\n    pass'
 
     >>> # test start_after not found, start_line_ and end_line set
     >>> block = lib_test.read_include_file_2()
@@ -190,7 +190,7 @@ def slice_include_file_markers(block: Block) -> None:
     block.include_file_sliced_content = content
 
 
-def log_and_raise_if_start_after_not_found_in_string(content, block: Block) -> None:
+def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block) -> None:
     logger = logging.getLogger('slice_include_file_start_after')
     if block.include_file_start_after not in content:
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : start-after "{start_after}" not found'.format(
@@ -203,7 +203,7 @@ def log_and_raise_if_start_after_not_found_in_string(content, block: Block) -> N
         raise ValueError(s_error)
 
 
-def log_and_raise_if_end_before_not_found_in_string(content, block: Block) -> None:
+def log_and_raise_if_end_before_not_found_in_string(content: str, block: Block) -> None:
     logger = logging.getLogger('slice_include_file_end_before')
     if block.include_file_end_before not in content:
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : end-before "{end_before}" not found'.format(

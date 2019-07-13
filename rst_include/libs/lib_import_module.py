@@ -2,9 +2,11 @@ import sys
 from types import ModuleType
 
 try:
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_test
+except ImportError:                             # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_test       # type: ignore # pragma: no cover
 
 
 def get_module_from_file(module_name: str, path_to_module: str) -> ModuleType:

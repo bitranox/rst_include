@@ -1,17 +1,18 @@
 try:
-    import rst_include.tests.include1 as include1
-    import rst_include.tests.include2 as include2
-    import rst_include.tests.include3 as include3
-    import rst_include.tests.subdir.include_subdir as include_subdir
-except ImportError:  # pragma: no cover
-    # this we need for mypy, doctest
+    # for pytest
     from . import include1
     from . import include2
     from . import include3
     from .subdir import include_subdir
+except ImportError:                                                         # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    import rst_include.tests.include1 as include1                           # type: ignore # pragma: no cover
+    import rst_include.tests.include2 as include2                           # type: ignore # pragma: no cover
+    import rst_include.tests.include3 as include3                           # type: ignore # pragma: no cover
+    import rst_include.tests.subdir.include_subdir as include_subdir        # type: ignore # pragma: no cover
 
 
-def test():
+def test() -> None:
     """
     # test all python files You use in documentation - so the documentation is also tested !
     >>> include1.my_include()

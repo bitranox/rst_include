@@ -1,4 +1,4 @@
-def my_include():
+def my_include() -> None:
     # comment
     pass
     pass

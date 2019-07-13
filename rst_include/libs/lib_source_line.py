@@ -4,7 +4,7 @@ try:
     # for pytest
     from . import lib_classes
     from .lib_classes import Block, SourceLine
-except ImportError:                                                 # type: ignore # pragma: no cover
+except ImportError:                                                 # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs import lib_classes                        # type: ignore # pragma: no cover
     from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
@@ -57,7 +57,7 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: List[Sourc
     return blocks
 
 
-def append_non_empty_block(block: Block, blocks: List[Block]):
+def append_non_empty_block(block: Block, blocks: List[Block]) -> None:
     if block.l_source_lines:
         blocks.append(block)
 

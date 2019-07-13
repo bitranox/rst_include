@@ -142,7 +142,7 @@ def get_option_key_from_source_line(source_line: SourceLine) -> str:
     return key
 
 
-def log_and_raise_value_error_if_option_not_in_block(option, block):
+def log_and_raise_value_error_if_option_not_in_block(option: str, block: Block) -> None:
     if not is_option_in_block(option, block):
         logger = logging.getLogger('get_option_value')
         s_error = 'Error in File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
@@ -153,7 +153,7 @@ def log_and_raise_value_error_if_option_not_in_block(option, block):
         raise ValueError(s_error)
 
 
-def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, block: Block, ):
+def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, block: Block) -> None:
     if not value:
         logger = logging.getLogger('get_option_value')
         line_number = get_source_line_number_for_option(option, block)
@@ -165,7 +165,7 @@ def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, 
         raise ValueError(s_error)
 
 
-def log_and_raise_if_value_of_option_in_block_must_be_int_castable_but_is_not(value, option, block, value_must_be_int):
+def log_and_raise_if_value_of_option_in_block_must_be_int_castable_but_is_not(value: str, option: str, block: Block, value_must_be_int: bool) -> None:
     if value_must_be_int and not value.isdigit():
         logger = logging.getLogger('get_option_value')
         line_number = get_source_line_number_for_option(option, block)

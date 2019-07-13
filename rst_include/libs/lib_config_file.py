@@ -85,7 +85,7 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     return module
 
 
-def raise_config_import_error(conf_file_name: str, attribute: str):
+def raise_config_import_error(conf_file_name: str, attribute: str) -> None:
     logger = logging.getLogger('load_config_file')
     s_error = 'the config file "{conf_file_name}" has not the correct attribute "{attribute}"'.format(
         conf_file_name=conf_file_name, attribute=attribute)

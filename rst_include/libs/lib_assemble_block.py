@@ -110,7 +110,7 @@ def assemble_include_block(block: Block) -> str:
     >>> block.include_file_code = ''
     >>> lib_include_file.process_include_file_lines(block)
     >>> assemble_include_block(block)
-    'def my_include2_2():\\n    pass\\n\\n    pass'
+    'def my_include2_2() -> None:\\n    pass\\n\\n    pass'
     """
     block_header = get_block_header(block)
     intended_include_lines_content = get_intended_include_lines_content(block)
@@ -175,7 +175,7 @@ def get_intended_include_lines_content(block: Block) -> str:
     >>> lib_include_file.process_include_file_lines(block)
     >>> number_of_blanks_to_add = set_number_of_blanks_to_add(block)
     >>> get_intended_include_lines_content(block)
-    '    def my_include2_2():\\n        pass\\n\\n        pass'
+    '    def my_include2_2() -> None:\\n        pass\\n\\n        pass'
 
     >>> # test :code: ''
     >>> block = lib_test.get_test_block_include2_ok()
@@ -185,7 +185,7 @@ def get_intended_include_lines_content(block: Block) -> str:
     >>> block.include_file_code = ''
     >>> number_of_blanks_to_add = set_number_of_blanks_to_add(block)
     >>> get_intended_include_lines_content(block)
-    'def my_include2_2():\\n    pass\\n\\n    pass'
+    'def my_include2_2() -> None:\\n    pass\\n\\n    pass'
 
     """
     set_number_of_blanks_to_add(block)

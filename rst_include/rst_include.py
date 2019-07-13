@@ -1,6 +1,8 @@
+import argparse
 import errno
 import os
 import sys
+from typing import List
 
 try:
     from . import *
@@ -18,7 +20,7 @@ except (ImportError, SystemError):                   # type: ignore # pragma: no
     from libs import lib_test_compare_results        # type: ignore # pragma: no cover
 
 
-def handle_include_command(argparse_namespace, sys_argv):
+def handle_include_command(argparse_namespace: argparse.Namespace, sys_argv: List[str]) -> None:
     if lib_args.cmd_args_config_flag_given(sys_argv):
         lib_main.rst_inc_from_config(argparse_namespace.config)
     else:
@@ -29,7 +31,7 @@ def handle_include_command(argparse_namespace, sys_argv):
                          argparse_namespace.inplace)
 
 
-def main(sys_argv=sys.argv[1:]):
+def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     """
 
     >>> source_file = lib_test.get_test_dir() + '/../../docs/README_template.rst'

@@ -1,7 +1,7 @@
 try:
     # for pytest
     from . import lib_list
-except ImportError:                             # type: ignore # pragma: no cover
+except ImportError:                             # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs import lib_list       # type: ignore # pragma: no cover
 

@@ -3,17 +3,19 @@ import os
 from typing import List, Tuple, Union
 
 try:
-    from rst_include.libs.lib_classes import Block, SourceLine
-    from rst_include.libs import lib_block_options
-    from rst_include.libs import lib_source_line
-    from rst_include.libs import lib_path
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from .lib_classes import Block, SourceLine
     from . import lib_block_options
     from . import lib_source_line
     from . import lib_path
     from . import lib_test
+except ImportError:                                                 # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
+    from rst_include.libs import lib_block_options                  # type: ignore # pragma: no cover
+    from rst_include.libs import lib_source_line                    # type: ignore # pragma: no cover
+    from rst_include.libs import lib_path                           # type: ignore # pragma: no cover
+    from rst_include.libs import lib_test                           # type: ignore # pragma: no cover
 
 
 def get_include_options(block: Block) -> None:
@@ -56,7 +58,7 @@ def get_include_block_pass_through_options(block: Block) -> List[SourceLine]:
     return pass_through_options
 
 
-def append_if_pass_through_option(source_line: SourceLine, pass_through_options: List[SourceLine]):
+def append_if_pass_through_option(source_line: SourceLine, pass_through_options: List[SourceLine]) -> None:
     processed_option_keys = ['code', 'start-line', 'end-line', 'encoding', 'start-after', 'end-before']
     option_key = lib_block_options.get_option_key_from_source_line(source_line)
     if option_key not in processed_option_keys:

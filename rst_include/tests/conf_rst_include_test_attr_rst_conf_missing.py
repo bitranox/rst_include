@@ -1,4 +1,4 @@
-def test():
+def test() -> None:
     """
     >>> test()
     """

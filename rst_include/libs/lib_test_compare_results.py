@@ -3,13 +3,15 @@ from typing import List, Tuple
 logger = logging.getLogger('compare_results')
 
 try:
-    from rst_include.libs import lib_test
-except ImportError:  # pragma: no cover
+    # for pytest
     from . import lib_test
+except ImportError:                             # type: ignore # pragma: no cover
+    # for local doctest in pycharm
+    from rst_include.libs import lib_test       # type: ignore # pragma: no cover
 
 
 def compare_results_equal(expected_file: str, result_file: str,
-                          file_expected_encoding: str = 'utf-8-sig', file_result_encoding: str = 'utf-8-sig'):
+                          file_expected_encoding: str = 'utf-8-sig', file_result_encoding: str = 'utf-8-sig') -> bool:
     """
     >>> test_dir = lib_test.get_test_dir()
     >>> expected_file = test_dir + '/test_compare_file_original.txt'
@@ -66,14 +68,14 @@ def log_file_lengths_not_equal(expected_file: str, result_file: str, len_expecte
         len_result_lines=len_result_lines))
 
 
-def log_difference_expected_line(expected_file: str, line_number: int, expected_line: str):
+def log_difference_expected_line(expected_file: str, line_number: int, expected_line: str) -> None:
     logger.error('Difference, Expected File {expected_file}, Line {line_number}: "{expected_line}"'.format(
         expected_file=expected_file,
         line_number=line_number,
         expected_line=expected_line.replace('\n', '<ret>')))
 
 
-def log_difference_result_line(result_file: str, line_number: int, result_line: str):
+def log_difference_result_line(result_file: str, line_number: int, result_line: str) -> None:
     logger.error('Difference, Result   File {result_file}, Line {line_number}: "{result_line}"'.format(
         result_file=result_file,
         line_number=line_number,
