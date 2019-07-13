@@ -49,7 +49,7 @@ matrix:
 
     - os: linux
       language: python
-      python: '3.7.1'
+      python: '3.7'
 
     - os: linux
       language: python
@@ -62,7 +62,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE stable 32 Bit Python 3.7.3, Windows XP"
+      name: "WINE stable 32 Bit Python 3.7, Windows XP"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -73,7 +73,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE stable 64 Bit Python 3.7.3, Windows XP"
+      name: "WINE stable 64 Bit Python 3.7, Windows XP"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -83,7 +83,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE stable 32 Bit Python 3.7.3, Windows 10"
+      name: "WINE stable 32 Bit Python 3.7, Windows 10"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -94,7 +94,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE stable 64 Bit Python 3.7.3, Windows 10"
+      name: "WINE stable 64 Bit Python 3.7, Windows 10"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -104,7 +104,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE devel 32 Bit Python 3.7.3, Windows XP"
+      name: "WINE devel 32 Bit Python 3.7, Windows XP"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -115,7 +115,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE devel 64 Bit Python 3.7.3, Windows XP"
+      name: "WINE devel 64 Bit Python 3.7, Windows XP"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -125,7 +125,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE devel 32 Bit Python 3.7.3, Windows 10"
+      name: "WINE devel 32 Bit Python 3.7, Windows 10"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -136,7 +136,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE devel 64 Bit Python 3.7.3, Windows 10"
+      name: "WINE devel 64 Bit Python 3.7, Windows 10"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -146,7 +146,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE staging 32 Bit Python 3.7.3, Windows XP"
+      name: "WINE staging 32 Bit Python 3.7, Windows XP"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -157,7 +157,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE staging 64 Bit Python 3.7.3, Windows XP"
+      name: "WINE staging 64 Bit Python 3.7, Windows XP"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -167,7 +167,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE staging 32 Bit Python 3.7.3, Windows 10"
+      name: "WINE staging 32 Bit Python 3.7, Windows 10"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
@@ -178,7 +178,7 @@ matrix:
 
     - os: linux
       language: python
-      name: "WINE staging 64 Bit Python 3.7.3, Windows 10"
+      name: "WINE staging 64 Bit Python 3.7, Windows 10"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - CMDPREFIX="wine"
@@ -190,7 +190,8 @@ matrix:
       language: sh
       name: "osX Python 3.7"
       python: "3.7"
-      osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
+      # osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
+      osx_image: xcode11      # Python 3.7.2 running on macOS 10.14.3
       env:
         # on osx pip and python points to python 2.7 - therefore we have to use pip3 and python3 here
         - pip_command="pip3"
