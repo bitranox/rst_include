@@ -1,5 +1,5 @@
 __title__ = 'rst_include'
-__version__ = '1.0.7'
+__version__ = '1.0.8'
 __name__ = 'rst_include'
 
 import errno

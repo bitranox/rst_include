@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.8
+-----
+
+2019-07-13: strict mypy typechecking, drop python 3.5 support
+
+
 1.0.7
 -----
 

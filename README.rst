@@ -22,7 +22,7 @@ rst_include
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
-.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
+.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.6-brightgreen.svg
    :target: https://badge.fury.io/py/rst_include
    :alt: Python Version
 
@@ -47,7 +47,7 @@ This README was also created with rst_include, You might look at ./docs/README_t
 build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
 
 The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
-rst_include does only work on python > 3.5.2
+rst_include does only work on python > 3.6
 
 `100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
@@ -732,6 +732,12 @@ This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/M
 
 Changelog
 =========
+
+1.0.8
+-----
+
+2019-07-13: strict mypy typechecking, drop python 3.5 support
+
 
 1.0.7
 -----

@@ -24,7 +24,7 @@ This README was also created with rst_include, You might look at ./docs/README_t
 build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
 
 The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
-rst_include does only work on python > 3.5.2
+rst_include does only work on python > 3.6
 
 
 .. include:: ./tested_under.rst
