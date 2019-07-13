@@ -57,7 +57,6 @@ matrix:
 
     - os: linux
       language: python
-      # python: 'pypy3.5-6.0'
       python: 'pypy3'
 
     - os: linux
@@ -190,8 +189,7 @@ matrix:
       language: sh
       name: "osX Python 3.7"
       python: "3.7"
-      # osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
-      osx_image: xcode11      # Python 3.7.2 running on macOS 10.14.3
+      osx_image: xcode11
       env:
         # on osx pip and python points to python 2.7 - therefore we have to use pip3 and python3 here
         - pip_command="pip3"
@@ -231,7 +229,7 @@ install:
 script:
     - if [[ "${setup_py_found}" == "True" ]]; then ${lib_bash_banner} "running setup.py --install-option test" && ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; else ${lib_bash_banner_warning} "no setup.py found, no setup.py --install-option test" ; fi
     - if [[ "${setup_py_found}" == "True" ]]; then ${lib_bash_banner} "running pytest" && ${CMDPREFIX} ${python_command} -m pytest --pep8 --cov ; else ${lib_bash_banner_warning} "no setup.py found, no pytest" ; fi
-    - if [[ "${mypy_static_typecheck}" == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME} --strict --no-warn-unused-ignores; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
+    - if [[ "${mypy_static_typecheck}" == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME} --strict --no-warn-unused-ignores -v; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
     - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "Building Docs" && ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}; else ${lib_bash_banner_warning} "Building Docs disabled on this build" ;  fi
 
 
