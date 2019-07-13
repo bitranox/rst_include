@@ -56,6 +56,7 @@ def load_config_file(conf_file_name: str) -> ModuleType:
     ValueError: the config file ".../conf_rst_include_test_attr_l_rst_files_missing.py" has not the correct attribute "l_rst_files"
 
     >>> # default config File not found
+    >>> lib_classes.GlobalSettings.quiet=False
     >>> module = load_config_file('')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
