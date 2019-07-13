@@ -33,7 +33,6 @@ def handle_include_command(argparse_namespace: argparse.Namespace, sys_argv: Lis
 
 def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     """
-
     >>> source_file = lib_test.get_test_dir() + '/../../docs/README_template.rst'
     >>> target_file = lib_test.get_test_dir() + '/../../docs/README_template_included.rst'
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
