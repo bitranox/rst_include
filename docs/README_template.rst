@@ -1,7 +1,7 @@
 rst_include
 ===========
 
-.. include:: ./badges_without_jupyter.rst
+.. include:: ./badges_project.rst
 
 since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
 
