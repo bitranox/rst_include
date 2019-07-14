@@ -4,7 +4,7 @@ set ERR_TXT_PYTEST=[91m ************************************** ERROR in PYTEST 
 set sleeptime_on_error=3
 
 :loop
-    pytest
+    pytest --pep8
     if  %errorlevel% gtr 0 (
         echo %ERR_TXT_PYTEST%
         call:function_beep
