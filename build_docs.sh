@@ -5,6 +5,7 @@ codeclimate_link_hash="ff3f414903627e5cfc35"
 # TRAVIS_TAG
 
 function include_dependencies {
+    # shellcheck disable=SC2164
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     chmod +x "${my_dir}"/lib_bash/*.sh
     source "${my_dir}/lib_bash/lib_color.sh"
