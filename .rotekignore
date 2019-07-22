@@ -106,11 +106,11 @@ ENV/
 
 # rotek specific
 docs/
+.docs/
 lib_bash/
 !*.py
 
 build_docs.py
 conftest.py
-conf_rst_inc_sample.py
 
 **/tests/
