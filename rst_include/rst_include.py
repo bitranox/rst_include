@@ -21,17 +21,6 @@ except ImportError:                                  # type: ignore # pragma: no
     from libs import lib_test_compare_results        # type: ignore # pragma: no cover
 
 
-def handle_include_command(argparse_namespace: argparse.Namespace, sys_argv: List[str]) -> None:
-    if lib_args.cmd_args_config_flag_given(sys_argv):
-        lib_main.rst_inc_from_config(argparse_namespace.config)
-    else:
-        lib_main.rst_inc(argparse_namespace.source,
-                         argparse_namespace.target,
-                         argparse_namespace.source_encoding,
-                         argparse_namespace.target_encoding,
-                         argparse_namespace.inplace)
-
-
 def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     """
     >>> source_file = lib_test.get_test_dir() + '/../../docs/README_template.rst'
@@ -88,12 +77,18 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
         lib_log.setup_logger()
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
-        if lib_args.is_replace_command(argparse_namespace):
+        if argparse_namespace.which_parser == 'parser_replace':
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
                                      argparse_namespace.source_encoding, argparse_namespace.target_encoding, argparse_namespace.inplace)
-        elif lib_args.is_include_command(argparse_namespace):
-            handle_include_command(argparse_namespace, sys_argv)
+        elif argparse_namespace.which_parser == 'parser_include' and argparse_namespace.config:
+                lib_main.rst_inc_from_config(argparse_namespace.config)
+        elif argparse_namespace.which_parser == 'parser_include' and not argparse_namespace.config:
+                lib_main.rst_inc(argparse_namespace.source,
+                                 argparse_namespace.target,
+                                 argparse_namespace.source_encoding,
+                                 argparse_namespace.target_encoding,
+                                 argparse_namespace.inplace)
         else:
             parser.print_help()
 

@@ -43,6 +43,7 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
         epilog='check the documentation on github',
         prog='rst_include',
         add_help=True)
+    parser.set_defaults(which_parser='all')
 
     subparsers = parser.add_subparsers()
 
@@ -56,6 +57,7 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
 
     parser_include.add_argument('-c', '--config', metavar='configfile.py', nargs='?',
                                 help='If no filename is passed, the default conf_rst_inc.py is searched in the current directory')
+    parser_include.set_defaults(which_parser='parser_include')
 
     parser_replace = subparsers.add_parser('replace', help='string replace')
     parser_replace.add_argument('-s', '--source', nargs='?', metavar='source', default=sys.stdin, help='default: stdin')
@@ -67,6 +69,7 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser_replace.add_argument('old', type=str, help='old')
     parser_replace.add_argument('new', type=str, help='new')
     parser_replace.add_argument('count', type=int, nargs='?', help='count', default=-1)
+    parser_replace.set_defaults(which_parser='parser_replace')
 
     args = parser.parse_args(cmd_args)
 
@@ -78,47 +81,3 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
             lib_classes.GlobalSettings.quiet = True
 
     return args, parser
-
-
-def cmd_args_config_flag_given(cmd_args: List[str]) -> bool:
-    """
-    >>> assert cmd_args_config_flag_given(['']) == False
-    >>> assert cmd_args_config_flag_given(['-c']) == True
-    >>> assert cmd_args_config_flag_given(['--config']) == True
-    """
-    if '-c' in cmd_args or '--config' in cmd_args:
-        return True
-    else:
-        return False
-
-
-def is_replace_command(args: argparse.Namespace) -> bool:
-    """
-    >>> args = argparse.Namespace()
-    >>> args.old = ''
-    >>> is_replace_command(args)
-    True
-    >>> del args.old
-    >>> is_replace_command(args)
-    False
-    """
-    if 'old' in args:
-        return True
-    else:
-        return False
-
-
-def is_include_command(args: argparse.Namespace) -> bool:
-    """
-    >>> args = argparse.Namespace()
-    >>> args.config = ''
-    >>> is_include_command(args)
-    True
-    >>> del args.config
-    >>> is_include_command(args)
-    False
-    """
-    if 'config' in args:
-        return True
-    else:
-        return False
