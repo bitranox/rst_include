@@ -25,8 +25,16 @@ def rst_str_replace(source: str, target: str, old: str, new: str, count: int = -
 
 
 def rst_inc_from_config(config_file_path: str) -> None:
+
     save_path = lib_path.get_current_dir()
+
     try:
+        if not config_file_path:
+            config_file_path = lib_path.get_current_dir() + '/conf_rst_inc.py'
+
+        if not os.path.isfile(config_file_path):
+            raise ValueError('can not find "{config_file_path}"'.format(config_file_path=config_file_path))
+
         lib_path.chdir_to_path_of_file(config_file_path)
         config_file = lib_config_file.load_config_file(config_file_path)
         rst_conf = getattr(config_file, 'rst_conf')

@@ -1,9 +1,10 @@
 try:
-    # for pytest
+    # for pytest working
     import rst_include.libs.lib_classes as lib_classes
-except (ImportError, SystemError):              # type: ignore # pragma: no cover
+except (ImportError, SystemError):                        # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    import lib_classes                          # type: ignore # pragma: no cover
+    import lib_classes                                    # type: ignore # pragma: no cover
+
 
 # set config here
 rst_conf = lib_classes.RstConf()
@@ -13,7 +14,8 @@ rst_conf.l_rst_files = [lib_classes.RstFile(source='test1_no_includes_template.r
                                             # default = utf-8-sig because it can read utf-8 and utf-8-sig
                                             source_encoding='utf-8-sig',
                                             # default = utf-8
-                                            target_encoding='utf-8'),
+                                            target_encoding='utf-8'
+                                            ),
                         lib_classes.RstFile(source='test2_include_samedir_template.rst',
                                             target='test2_include_samedir_result.rst'),
                         lib_classes.RstFile(source='test3_include_subdir_template.rst',

@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 try:
     # for pytest
@@ -185,18 +186,20 @@ def get_test_block_end_before_invalid() -> Block:
 
 def get_test_dir() -> str:
     """
-    >>> test_dir = get_test_dir()
-    >>> assert test_dir.split('rst_include')[-1] == '/tests'
+    >>> assert get_test_dir()
 
     """
-    test_dir = get_rst_include_dir() + '/rst_include/tests'
+    test_dir = str(get_rst_include_dir() / 'rst_include/tests')
     return test_dir
 
 
-def get_rst_include_dir() -> str:
-    rst_include_dir = lib_path.get_current_dir().split('rst_include', 1)[0]
-    rst_include_dir = os.path.join(rst_include_dir, 'rst_include')
-    rst_include_dir = lib_path.strip_and_replace_backslashes(rst_include_dir)
+def get_rst_include_dir() -> pathlib.Path:
+    """
+    >>> assert get_rst_include_dir()
+
+    """
+
+    rst_include_dir = pathlib.Path(__file__).absolute().parent.parent.parent
     return rst_include_dir
 
 

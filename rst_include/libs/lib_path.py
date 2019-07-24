@@ -127,8 +127,7 @@ def get_absolute_path(path: str) -> str:
 
 def get_absolute_dirname(path: str) -> str:
     """
-    >>> get_absolute_dirname('./test.py')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    '...rst_include...'
+    >>> assert get_absolute_dirname('./test.py')
     """
     absolute_filename = get_absolute_path(path)
     absolute_dirname = os.path.dirname(absolute_filename)
