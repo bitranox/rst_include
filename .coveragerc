@@ -1,5 +1,6 @@
 [run]
-source = rst_include
+source  = rst_include
+include = rst_include/*
 
 [report]
 exclude_lines=
