@@ -44,6 +44,7 @@ if os.path.exists(readme_filename):
     readme_content = codecs.open(readme_filename, encoding='utf-8').read()
     long_description = readme_content
 
+install_requirements_when_using_setup_py()
 
 setup(name='rst_include',
       python_requires='>=3.6.0',
