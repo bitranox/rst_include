@@ -1,9 +1,9 @@
 """Setuptools entry point."""
 import codecs
 import os
+import pathlib
 import subprocess
 import sys
-from rst_include import version
 
 try:
     from setuptools import setup
@@ -23,6 +23,12 @@ def install_requirements_when_using_setup_py():
 
     if proc.returncode != 0:
         raise RuntimeError('Error installing requirements_setup.txt')
+
+
+def get_version(dist_directory: str) -> str:
+    with open(pathlib.Path(__file__).parent / '{dist_directory}/version.txt'.format(dist_directory=dist_directory), mode='r') as version_file:
+        version = version_file.readline()
+    return version
 
 
 CLASSIFIERS = [
@@ -49,7 +55,7 @@ install_requirements_when_using_setup_py()
 
 setup(name='rst_include',
       python_requires='>=3.6.0',
-      version=version.version,
+      version=get_version('rst_include'),
       description=description,
       long_description=long_description,
       long_description_content_type='text/x-rst',

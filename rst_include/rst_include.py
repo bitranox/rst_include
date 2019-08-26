@@ -2,6 +2,7 @@
 import argparse
 import errno
 import os
+import pathlib
 import sys
 from typing import List
 
@@ -11,13 +12,11 @@ import lib_log_utils
 # PROJECT
 try:
     from . import *
-    from . import version
     from .libs import lib_args
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
 except ImportError:                                  # type: ignore # pragma: no cover
-    import version                                   # type: ignore # pragma: no cover
     from libs import lib_args                        # type: ignore # pragma: no cover
     from libs import lib_main                        # type: ignore # pragma: no cover
     from libs import lib_test                        # type: ignore # pragma: no cover
@@ -74,7 +73,9 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
         if argparse_namespace.version:
-            print('Version {version}'.format(version=version.version))
+            with open(pathlib.Path(__file__).parent / 'version.txt', mode='r') as version_file:
+                version = version_file.readline()
+            print('Version {version}'.format(version=version))
         elif argparse_namespace.which_parser == 'parser_replace':
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
