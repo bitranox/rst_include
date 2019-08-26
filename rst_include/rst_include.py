@@ -24,11 +24,13 @@ except ImportError:                                  # type: ignore # pragma: no
 
 def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     """
+    >>> import pathlib
     >>> source_file = lib_test.get_test_dir() + '/../../.docs/README_template.rst'
     >>> target_file = lib_test.get_test_dir() + '/../../.docs/README_template_doctest_included.rst'
+    >>> if pathlib.Path(target_file).exists(): pathlib.Path(target_file).unlink()
+    >>> main(['include', '-s', source_file, '-t', target_file])
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    [...] ...
-
+    [...] WARNING : RST File ... exists and will be overwritten
     >>> lib_test.run_template_tests()
     >>> lib_test.run_template_tests_not_supported()
 
