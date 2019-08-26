@@ -102,3 +102,5 @@ ENV/
 
 # pytest cache
 .pytest_cache/
+
+./.docs/README_template_doctest_included.rst
