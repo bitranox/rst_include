@@ -1,5 +1,9 @@
+# STDLIB
 import os
 import pathlib
+
+# OWN
+import lib_path
 
 try:
     # for pytest
@@ -8,7 +12,6 @@ try:
     from .lib_classes import Block, SourceLine
     from . import lib_get_include_options
     from . import lib_include_file
-    from . import lib_path
     from . import lib_test_compare_results
 except ImportError:                                                 # type: ignore # pragma: no cover
     # for local doctest in pycharm
@@ -17,7 +20,6 @@ except ImportError:                                                 # type: igno
     from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
     from rst_include.libs import lib_get_include_options            # type: ignore # pragma: no cover
     from rst_include.libs import lib_include_file                   # type: ignore # pragma: no cover
-    from rst_include.libs import lib_path                           # type: ignore # pragma: no cover
     from rst_include.libs import lib_test_compare_results           # type: ignore # pragma: no cover
 
 

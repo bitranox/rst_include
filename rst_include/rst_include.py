@@ -5,16 +5,17 @@ import os
 import sys
 from typing import List
 
+# OWN
+import lib_log_utils
+
 # PROJECT
 try:
     from . import *
-    from .libs import lib_log
     from .libs import lib_args
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
 except ImportError:                                  # type: ignore # pragma: no cover
-    from libs import lib_log                         # type: ignore # pragma: no cover
     from libs import lib_args                        # type: ignore # pragma: no cover
     from libs import lib_main                        # type: ignore # pragma: no cover
     from libs import lib_test                        # type: ignore # pragma: no cover
@@ -23,9 +24,10 @@ except ImportError:                                  # type: ignore # pragma: no
 
 def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     """
-    >>> source_file = lib_test.get_test_dir() + '/../../docs/README_template.rst'
-    >>> target_file = lib_test.get_test_dir() + '/../../docs/README_template_included.rst'
+    >>> source_file = lib_test.get_test_dir() + '/../../.docs/README_template.rst'
+    >>> target_file = lib_test.get_test_dir() + '/../../.docs/README_template_doctest_included.rst'
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    [...] ...
 
     >>> lib_test.run_template_tests()
     >>> lib_test.run_template_tests_not_supported()
@@ -55,42 +57,21 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
 
-    >>> # test load config file
-    >>> lib_test.remove_file_silent(target_file)
-    >>> config_file = lib_test.get_test_dir() + '/conf_rst_include_test.py'
-    >>> main(['include', '-c', config_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
-
-
-    >>> # test default config file from current directory # todo that fails in doctest and pytest
-    >>> # save_dir = os.path.abspath(os.curdir)
-    >>> # test_dir = lib_test.get_test_dir()
-    >>> # os.chdir(test_dir)
-    >>> # lib_test.remove_file_silent(target_file)
-    >>> # main(['include', '-c'])
-    >>> # assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
-    >>> # os.chdir(save_dir)
-
-
-
     """
     try:
-
-        lib_log.setup_logger()
+        lib_log_utils.setup_console_logger()
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
         if argparse_namespace.which_parser == 'parser_replace':
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
                                      argparse_namespace.source_encoding, argparse_namespace.target_encoding, argparse_namespace.inplace)
-        elif argparse_namespace.which_parser == 'parser_include' and argparse_namespace.config:
-                lib_main.rst_inc_from_config(argparse_namespace.config)
-        elif argparse_namespace.which_parser == 'parser_include' and not argparse_namespace.config:
-                lib_main.rst_inc(argparse_namespace.source,
-                                 argparse_namespace.target,
-                                 argparse_namespace.source_encoding,
-                                 argparse_namespace.target_encoding,
-                                 argparse_namespace.inplace)
+        elif argparse_namespace.which_parser == 'parser_include':
+            lib_main.rst_inc(argparse_namespace.source,
+                             argparse_namespace.target,
+                             argparse_namespace.source_encoding,
+                             argparse_namespace.target_encoding,
+                             argparse_namespace.inplace)
         else:
             parser.print_help()
 

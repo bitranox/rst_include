@@ -1,15 +1,29 @@
-# ignore for pytest collection
-collect_ignore = ['build_docs.py', 'rst_include/__main__.py']
+import platform
+import sys
 
-"""
-collect_ignore = ['build_docs.py',
-                  'conf_rst_inc_sample.py',
-                  'rst_include/tests/conf_rst_inc.py',
-                  'rst_include/tests/conf_rst_include_test.py',
-                  'rst_include/tests/conf_rst_include_test_attr_l_rst_files_missing.py',
-                  'rst_include/rst_inc.py'
-                  ]
+collect_ignore = ['build_docs.py', './rst_include/__main__.py']
 
-if sys.version_info < (3, 5):
-    collect_ignore.append("something")
-"""
+
+def pytest_cmdline_preparse(args):
+    """
+    # run tests on multiple processes if pytest-xdist plugin is available
+    # unfortunately it does not work with codecov
+    import sys
+    if "xdist" in sys.modules:  # pytest-xdist plugin
+        import multiprocessing
+
+        num = int(max(multiprocessing.cpu_count() / 2, 1))
+        args[:] = ["-n", str(num)] + args
+    """
+
+    # add mypy option if not pypy - so mypy will be called with setup.py install test
+    # add mypy only on 3.x versions
+    # mypy does not find some functions on python 3.6
+    if platform.python_implementation() != "PyPy" and sys.version_info >= (3, 5) and sys.version_info != (3, 6):
+        args[:] = ["--mypy"] + args
+
+    # for python 3.x use --codestyle, for python 2.7 use --pep8
+    if sys.version_info <= (3, 5):
+        args[:] = ["--pep8"] + args
+    else:
+        args[:] = ["--codestyle"] + args

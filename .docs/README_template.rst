@@ -36,7 +36,6 @@ rst_include does only work on python > 3.6
     - `issue command`_
     - `get help`_
     - `replace include statements`_
-    - `replace include statements via configfile`_
     - `multiline text replacement`_
 
 - Examples
@@ -76,7 +75,7 @@ since rst_include is registered as a console script command with Your current py
 issue command
 -------------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # issue command on shell or windows commandline
     $> rst_include [OPTIONS]
@@ -95,36 +94,36 @@ issue command
 get help
 --------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline
     $> rst_include -h
 
 
 .. include:: ./rst_include_help_output.txt
-        :code: shell
+        :code: bash
 
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline for include
     $> rst_include include -h
 
 .. include:: ./rst_include_help_include_output.txt
-        :code: shell
+        :code: bash
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline for string replace
     $> rst_include replace -h
 
 .. include:: ./rst_include_help_replace_output.txt
-        :code: shell
+        :code: bash
 
 replace include statements
 --------------------------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # replace the include statements on shell or windows commandline
     # path can be relative or absolute path
@@ -143,36 +142,12 @@ replace include statements
     $> type /project/docs/source.rst | rst_include include > /project/docs/target.rst
 
 
-replace include statements via configfile
------------------------------------------
-
-.. code-block:: shell
-
-    # replace the include statements on shell or windows commandline
-    # path to the config file can be absolute or relative path
-    # option -c or --config :
-
-    # will try to load the default conf_rst_inc.py from the current directory
-    $> rst_include include -c
-
-    # will load another config file another directory
-    $> rst_include include -c ./conf_this_project.py
-
-Structure of the configuration file:
-
-the files are processed in the given order, by that way You can even realize nested .. include:: blocks.
-
-You might also specify the encoding for source and target files
-
-.. include:: ../conf_rst_inc_sample.py
-    :code: python
-
 multiline text replacement
 --------------------------
 
 Additional You can easily replace (also multiline) text strings :
 
-.. code-block:: shell
+.. code-block:: bash
 
     # replace text strings easily
     # examples :
@@ -186,7 +161,7 @@ Additional You can easily replace (also multiline) text strings :
 
 piping under Linux:
 
-.. code-block:: shell
+.. code-block:: bash
 
     # piping examples
     $> rst_include include -s ./source.rst | rst_include replace -t ./target.rst "{template_string}" "new content"
@@ -216,7 +191,7 @@ Example Build Script Shellscript
 ================================
 
 .. include:: ../build_docs.sh
-    :code: shell
+    :code: bash
 
 -----------------------------------------------------------------
 
@@ -281,7 +256,7 @@ Requirements
 following modules will be automatically installed :
 
 .. include:: ../requirements.txt
-        :code: shell
+        :code: bash
 
 -----------------------------------------------------------------
 

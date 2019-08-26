@@ -58,7 +58,6 @@ rst_include does only work on python > 3.6
     - `issue command`_
     - `get help`_
     - `replace include statements`_
-    - `replace include statements via configfile`_
     - `multiline text replacement`_
 
 - Examples
@@ -151,7 +150,7 @@ since rst_include is registered as a console script command with Your current py
 issue command
 -------------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # issue command on shell or windows commandline
     $> rst_include [OPTIONS]
@@ -170,12 +169,12 @@ issue command
 get help
 --------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline
     $> rst_include -h
 
-.. code-block:: shell
+.. code-block:: bash
 
     usage: rst_include [-h] {include,replace} ...
 
@@ -191,16 +190,16 @@ get help
 
     check the documentation on github
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline for include
     $> rst_include include -h
 
-.. code-block:: shell
+.. code-block:: bash
 
     usage: rst_include include [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-q] [-c [configfile.py]]
+                               [-i] [-q]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -214,16 +213,13 @@ get help
                             default: utf-8
       -i, --inplace         inplace - target file = sourcefile
       -q, --quiet           quiet
-      -c [configfile.py], --config [configfile.py]
-                            If no filename is passed, the default conf_rst_inc.py
-                            is searched in the current directory
 
-.. code-block:: shell
+.. code-block:: bash
 
     # get help on shell or windows commandline for string replace
     $> rst_include replace -h
 
-.. code-block:: shell
+.. code-block:: bash
 
     usage: rst_include replace [-h] [-s [source]] [-t [target]]
                                [-se [source encoding]] [-te [target encoding]]
@@ -251,7 +247,7 @@ get help
 replace include statements
 --------------------------
 
-.. code-block:: shell
+.. code-block:: bash
 
     # replace the include statements on shell or windows commandline
     # path can be relative or absolute path
@@ -270,58 +266,12 @@ replace include statements
     $> type /project/docs/source.rst | rst_include include > /project/docs/target.rst
 
 
-replace include statements via configfile
------------------------------------------
-
-.. code-block:: shell
-
-    # replace the include statements on shell or windows commandline
-    # path to the config file can be absolute or relative path
-    # option -c or --config :
-
-    # will try to load the default conf_rst_inc.py from the current directory
-    $> rst_include include -c
-
-    # will load another config file another directory
-    $> rst_include include -c ./conf_this_project.py
-
-Structure of the configuration file:
-
-the files are processed in the given order, by that way You can even realize nested .. include:: blocks.
-
-You might also specify the encoding for source and target files
-
-.. code-block:: python
-
-    from rst_include import *
-
-    # set config here
-    rst_conf = RstConf()
-
-    # paths absolute, or relative to the location of the config file
-    # the notation for relative files is like on windows or linux - not like in python.
-    # so You might use ../../some/directory/some_document.rst to go two levels back.
-    # avoid absolute paths since You never know where the program will run.
-    rst_conf.l_rst_files = [RstFile(source='./rst_include/tests/test1_no_includes_template.rst',
-                                    target='./rst_include/tests/test1_no_includes_result.rst',
-                                    # default = utf-8-sig because it can read utf-8 and utf-8-sig
-                                    source_encoding='utf-8-sig',
-                                    # default = utf-8
-                                    target_encoding='utf-8'
-                                    ),
-                            RstFile(source='./rst_include/tests/test2_include_samedir_template.rst',
-                                    target='./rst_include/tests/test2_include_samedir_result.rst'),
-                            RstFile(source='./rst_include/tests/test3_include_subdir_template.rst',
-                                    target='./rst_include/tests/test3_include_subdir_result.rst'),
-                            RstFile(source='./rst_include/tests/test4_include_nocode_template.rst',
-                                    target='./rst_include/tests/test4_include_nocode_result.rst')]
-
 multiline text replacement
 --------------------------
 
 Additional You can easily replace (also multiline) text strings :
 
-.. code-block:: shell
+.. code-block:: bash
 
     # replace text strings easily
     # examples :
@@ -335,7 +285,7 @@ Additional You can easily replace (also multiline) text strings :
 
 piping under Linux:
 
-.. code-block:: shell
+.. code-block:: bash
 
     # piping examples
     $> rst_include include -s ./source.rst | rst_include replace -t ./target.rst "{template_string}" "new content"
@@ -353,6 +303,7 @@ Example Build Script Python
 
 .. code-block:: python
 
+    # STDLIB
     import argparse
     import errno
     import logging
@@ -360,15 +311,17 @@ Example Build Script Python
     import sys
     import subprocess
 
+    # OWN
+    import lib_log_utils
+
     if sys.version_info < (3, 6):
-        logging.basicConfig(level=logging.INFO)
+        lib_log_utils.setup_console_logger()
         main_logger = logging.getLogger('init')
         main_logger.error('only Python Versions from 3.6 are supported')
         sys.exit(1)
     else:
-        # Project Imports
+        # OWN
         from rst_include import *
-        from rst_include.libs import lib_log
 
 
     # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
@@ -379,9 +332,12 @@ Example Build Script Python
         # PROJECT SPECIFIC
         logger = logging.getLogger('project_specific')
         logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./.docs/rst_include_help_output.txt'.
+                       format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./.docs/rst_include_help_include_output.txt'.
+                       format(sys_executable=sys.executable), shell=True, check=True)
+        subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./.docs/rst_include_help_replace_output.txt'.
+                       format(sys_executable=sys.executable), shell=True, check=True)
 
 
     def parse_args(cmd_args=sys.argv[1:]):
@@ -413,7 +369,7 @@ Example Build Script Python
         """
 
         logger.info('include the include blocks')
-        rst_inc(source='./docs/README_template.rst',
+        rst_inc(source='./.docs/README_template.rst',
                 target='./README.rst')
 
         # please note that the replace syntax is not shown correctly in the README.rst,
@@ -448,7 +404,7 @@ Example Build Script Python
 
 
     if __name__ == '__main__':
-        lib_log.setup_logger()
+        lib_log_utils.setup_console_logger()
         main_logger = logging.getLogger('main')
         try:
             _args, _parser = parse_args()
@@ -495,12 +451,12 @@ Example Build Script DOS Batch
     REM avoid absolute paths since You never know where the program will run.
 
     echo 'create the sample help outputs'
-    rst_include -h > ./docs/rst_include_help_output.txt
-    rst_include include -h > ./docs/rst_include_help_include_output.txt
-    rst_include replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_include -h > ./.docs/rst_include_help_output.txt
+    rst_include include -h > ./.docs/rst_include_help_include_output.txt
+    rst_include replace -h > ./.docs/rst_include_help_replace_output.txt
 
     echo "import the include blocks"
-    rst_include include -s ./docs/README_template.rst -t ./README.rst
+    rst_include include -s ./.docs/README_template.rst -t ./README.rst
 
     REM please note that the replace syntax is not shown correctly in the README.rst,
     REM because it gets replaced itself by the build_docs.py
@@ -508,35 +464,72 @@ Example Build Script DOS Batch
     REM check out the build_docs.cmd for the correct syntax !
 
     echo "replace repository_slug"
-    rst_include --inplace replace -s ./docs/README_template.rst bitranox/rst_include %repository_slug%
+    rst_include --inplace replace -s ./.docs/README_template.rst bitranox/rst_include %repository_slug%
     echo "replace repository"
-    rst_include --inplace replace -s ./docs/README_template.rst rst_include %repository%
+    rst_include --inplace replace -s ./.docs/README_template.rst rst_include %repository%
     echo "replace repository_dashed"
-    rst_include --inplace replace -s ./docs/README_template.rst rst-include %repository_dashed%
+    rst_include --inplace replace -s ./.docs/README_template.rst rst-include %repository_dashed%
     echo "replace codeclimate_link_hash"
-    rst_include --inplace replace -s ./docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
+    rst_include --inplace replace -s ./.docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
 
     echo 'finished'
 
 Example Build Script Shellscript
 ================================
 
-.. code-block:: shell
+.. code-block:: bash
 
     #!/bin/bash
+
+    sudo_askpass="$(command -v ssh-askpass)"
+    export SUDO_ASKPASS="${sudo_askpass}"
+    export NO_AT_BRIDGE=1  # get rid of (ssh-askpass:25930): dbind-WARNING **: 18:46:12.019: Couldn't register with accessibility bus: Did not receive a reply.
+
+
+    function set_lib_bash_permissions {
+        local user
+        user="$(printenv USER)"
+        $(command -v sudo 2>/dev/null) chmod -R 0755 "/usr/local/lib_bash"
+        $(command -v sudo 2>/dev/null) chmod -R +x /usr/local/lib_bash/*.sh
+        $(command -v sudo 2>/dev/null) chown -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chown -R "${user}" /usr/local/lib_bash || echo "giving up set owner" # there is no user root on travis
+        $(command -v sudo 2>/dev/null) chgrp -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chgrp -R "${user}" /usr/local/lib_bash || echo "giving up set group" # there is no user root on travis
+    }
+
+
+    function install_lib_bash {
+        echo "installing lib_bash"
+        $(command -v sudo 2>/dev/null) rm -fR /usr/local/lib_bash
+        $(command -v sudo 2>/dev/null) git clone https://github.com/bitranox/lib_bash.git /usr/local/lib_bash > /dev/null 2>&1
+        set_lib_bash_permissions
+    }
+
+
+
+    function install_or_update_lib_bash {
+        if [[ -f "/usr/local/lib_bash/install_or_update.sh" ]]; then
+            # file exists - so update
+            $(command -v sudo 2>/dev/null) /usr/local/lib_bash/install_or_update.sh
+        else
+            install_lib_bash
+        fi
+    }
+
+    install_or_update_lib_bash
+
+
+    function include_dependencies {
+        source /usr/local/lib_bash/lib_color.sh
+        source /usr/local/lib_bash/lib_retry.sh
+        source /usr/local/lib_bash/lib_helpers.sh
+    }
+
+    include_dependencies
+
 
     ### CONSTANTS
     codeclimate_link_hash="ff3f414903627e5cfc35"
     # TRAVIS_TAG
 
-    function include_dependencies {
-        # shellcheck disable=SC2164
-        local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-        chmod +x "${my_dir}"/lib_bash/*.sh
-        source "${my_dir}/lib_bash/lib_color.sh"
-    }
-
-    include_dependencies  # we need to do that via a function to have local scope of my_dir
 
     function check_repository_name {
         if [[ -z ${TRAVIS_REPO_SLUG} ]]
@@ -554,12 +547,12 @@ Example Build Script Shellscript
     repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
 
     clr_green "create the sample help outputs"
-    rst_include -h > ./docs/rst_include_help_output.txt
-    rst_include include -h > ./docs/rst_include_help_include_output.txt
-    rst_include replace -h > ./docs/rst_include_help_replace_output.txt
+    rst_include -h > ./.docs/rst_include_help_output.txt
+    rst_include include -h > ./.docs/rst_include_help_include_output.txt
+    rst_include replace -h > ./.docs/rst_include_help_replace_output.txt
 
     clr_green "import the include blocks"
-    rst_include include -s ./docs/README_template.rst -t ./docs/README_template_included.rst
+    rst_include include -s ./.docs/README_template.rst -t ./README.rst
 
     clr_green "replace repository strings"
 
@@ -569,15 +562,12 @@ Example Build Script Shellscript
     # check out the build_docs.sh for the correct syntax !
 
     # example for piping
-    cat ./docs/README_template_included.rst \
-        | rst_include replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
-        | rst_include replace "rst_include" "$rst_include" \
-        | rst_include replace "rst-include" "$rst-include" \
-        | rst_include replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
+    cat ./README.rst \
+        | rst_include --inplace replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
+        | rst_include --inplace replace "rst_include" "$rst_include" \
+        | rst_include --inplace replace "rst-include" "$rst-include" \
+        | rst_include --inplace replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
          > ./README.rst
-
-    clr_green "cleanup"
-    rm ./docs/README_template_included.rst
 
     clr_green "done"
     clr_green "******************************************************************************************************************"
@@ -722,10 +712,11 @@ Requirements
 
 following modules will be automatically installed :
 
-.. code-block:: shell
+.. code-block:: bash
 
-    pytest  # see : https://github.com/pytest-dev/pytest
-    typing  # see : https://pypi.org/project/typing/
+    git+https://githib.com/bitranox/lib_list.git
+    git+https://githib.com/bitranox/lib_log.git
+    git+https://githib.com/bitranox/lib_path.git
 
 -----------------------------------------------------------------
 

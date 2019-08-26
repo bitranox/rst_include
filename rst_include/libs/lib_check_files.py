@@ -82,24 +82,30 @@ def check_and_return_source_and_target(source: str, target: str, in_place: bool)
     >>> test_dir = lib_test.get_test_dir()
     >>> source, target = check_and_return_source_and_target(sys.stdin, sys.stdout, in_place=False)
 
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = '', in_place=True)
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
+                                                            target = '', \
+                                                            in_place=True)
     >>> assert source == target
 
-    >>> source, target = check_and_return_source_and_target(source = sys.stdin, target = '', in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> source, target = check_and_return_source_and_target(source = sys.stdin, \
+                                                            target = '', \
+                                                            in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     SyntaxError: You need to specify the input file if You use option --inplace
 
 
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = test_dir + '/include1.py', in_place=True)
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
+                                                            target = test_dir + '/include1.py', \
+                                                            in_place=True)
     >>> assert source == target
 
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', target = test_dir + '/include2.py', in_place=True) # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
+                                                            target = test_dir + '/include2.py', \
+                                                            in_place=True) # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     SyntaxError: You dont have to use option --inplace and specify a target file different to the input file
-
-
 
     """
     log_and_raise_if_source_file_not_ok(source)

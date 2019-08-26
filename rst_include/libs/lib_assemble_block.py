@@ -1,4 +1,9 @@
+# STDLIB
 from typing import List
+
+# OWN
+import lib_list
+
 
 try:
     # for pytest
@@ -8,7 +13,6 @@ try:
     from . import lib_check_files
     from . import lib_get_include_options
     from . import lib_include_file
-    from . import lib_list
     from . import lib_source_line
     from . import lib_str
     from . import lib_test
@@ -22,7 +26,6 @@ except ImportError:                                             # type: ignore #
     from rst_include.libs import lib_check_files                # type: ignore # pragma: no cover
     from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
     from rst_include.libs import lib_include_file               # type: ignore # pragma: no cover
-    from rst_include.libs import lib_list                       # type: ignore # pragma: no cover
     from rst_include.libs import lib_source_line                # type: ignore # pragma: no cover
     from rst_include.libs import lib_str                        # type: ignore # pragma: no cover
     from rst_include.libs import lib_test                       # type: ignore # pragma: no cover
@@ -86,7 +89,7 @@ def assemble_additional_content(block: Block) -> str:
 
     """
     l_content = [source_line.content.rstrip() for source_line in block.additional_content]
-    l_content = lib_list.strip_list_of_strings(l_content)
+    l_content = lib_list.ls_strip_list(l_content)
     content = '\n'.join(l_content)
     # save memory
     del block.additional_content

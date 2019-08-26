@@ -54,9 +54,6 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
     parser_include.add_argument('-te', '--target_encoding', metavar='target encoding', nargs='?', default='utf-8', help='default: utf-8')
     parser_include.add_argument('-i', '--inplace', help='inplace - target file = sourcefile', action="store_true")
     parser_include.add_argument('-q', '--quiet', help='quiet', action="store_true")
-
-    parser_include.add_argument('-c', '--config', metavar='config', nargs='?',
-                                help='If no filename is passed, the default conf_rst_inc.py is searched in the current directory')
     parser_include.set_defaults(which_parser='parser_include')
 
     parser_replace = subparsers.add_parser('replace', help='string replace')

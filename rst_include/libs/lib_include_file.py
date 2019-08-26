@@ -1,19 +1,21 @@
+# STDLIB
 import logging
 import sys
 from typing import List
+
+# OWN
+import lib_list
 
 try:
     # for pytest
     from .lib_classes import Block
     from . import lib_get_include_options
-    from . import lib_list
     from . import lib_str
     from . import lib_test
 except ImportError:                                             # type: ignore # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
     from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
-    from rst_include.libs import lib_list                       # type: ignore # pragma: no cover
     from rst_include.libs import lib_str                        # type: ignore # pragma: no cover
     from rst_include.libs import lib_test                       # type: ignore # pragma: no cover
 
@@ -46,7 +48,7 @@ def read_include_file(block: Block) -> List[str]:
         with open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
             include_file_lines = include_file.readlines()
             include_file_lines = [line.rstrip() for line in include_file_lines]
-            include_file_lines = lib_list.strip_list_of_strings(include_file_lines)
+            include_file_lines = lib_list.ls_strip_list(include_file_lines)
             block.include_file_lines = include_file_lines
         return include_file_lines
 
@@ -79,7 +81,7 @@ def slice_include_file_lines(block: Block) -> None:
     ['def my_include2_1() -> None:', '    pass', '', ... 'def my_include2_3() -> None:', '    pass']
     """
     block.include_file_lines = block.include_file_lines[block.include_file_start_line:block.include_file_end_line]
-    block.include_file_lines = lib_list.strip_list_of_strings(block.include_file_lines)
+    block.include_file_lines = lib_list.ls_strip_list(block.include_file_lines)
 
 
 def slice_include_file_markers(block: Block) -> None:
@@ -97,7 +99,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found between start_line: 6 and end_line: 25
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
 
     >>> # test start_after not found, start_line NOT set, end_line set
     >>> block = lib_test.read_include_file_2()
@@ -107,7 +109,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found before end-line: 25
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
 
     >>> # test start_after not found, start_line set, end_line NOT set
     >>> block = lib_test.read_include_file_2()
@@ -117,7 +119,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found after start-line: 6
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
 
     >>> # test start_after not found, start_line NOT set, end_line NOT set
     >>> block = lib_test.read_include_file_2()
@@ -137,7 +139,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found between start_line: 6 and end_line: 25 after start-after: # start-marker
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
 
 
     >>> # test end_before not found, start_line NOT set, end_line set
@@ -148,7 +150,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found before end-line: 25 after start-after: # start-marker
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
 
 
     >>> # test end_before not found, start_line set, end_line NOT set
@@ -159,7 +161,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found after start-line: 6 after start-after: # start-marker
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
 
 
     >>> # test end_before not found, start_line NOT set, end_line NOT set
@@ -171,7 +173,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found after start-after: # start-marker
+    ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
 
     """
     content = '\n'.join(block.include_file_lines)

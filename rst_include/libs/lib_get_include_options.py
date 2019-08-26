@@ -1,20 +1,22 @@
+# STDLIB
 import logging
 import os
 from typing import List, Tuple, Union
+
+# OWN
+import lib_path
 
 try:
     # for pytest
     from .lib_classes import Block, SourceLine
     from . import lib_block_options
     from . import lib_source_line
-    from . import lib_path
     from . import lib_test
 except ImportError:                                                 # type: ignore # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
     from rst_include.libs import lib_block_options                  # type: ignore # pragma: no cover
     from rst_include.libs import lib_source_line                    # type: ignore # pragma: no cover
-    from rst_include.libs import lib_path                           # type: ignore # pragma: no cover
     from rst_include.libs import lib_test                           # type: ignore # pragma: no cover
 
 

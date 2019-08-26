@@ -5,7 +5,7 @@ sudo: true
 
 env:
     global:
-        - github_master="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+        - github_master="git+https://github.com/${TRAVIS_REPO_SLUG}.git"
         - pip_command="pip"
         - python_command="python"
         - WINEDEBUG=fixme-all       # switch off wine fix me messages
@@ -61,6 +61,10 @@ matrix:
     - os: linux
       language: python
       python: '3.7-dev'
+
+    - os: linux
+      language: python
+      python: '3.8-dev'
 
     - os: linux
       language: python
@@ -223,30 +227,26 @@ install:
     - ${lib_bash_banner} "upgrading pip"
 
     - ${CMDPREFIX} ${python_command} -m pip install --upgrade pip
-    - if [[ ${mypy_static_typecheck} == "True" ]]; then ${lib_bash_banner} "install mypy" && ${CMDPREFIX} ${pip_command} install git+https://github.com/python/mypy.git; fi
     - if [[ ${build_docs} == "True" ]]; then ${lib_bash_banner} "install rst_include (Building Docs)" && ${CMDPREFIX} ${pip_command} install rst_include; fi
-    - ${lib_bash_banner} "install codecov" && ${CMDPREFIX} ${pip_command} install codecov
-    - ${lib_bash_banner} "install pytest" && ${CMDPREFIX} ${pip_command} install pytest git+https://github.com/PyCQA/pycodestyle.git git+https://github.com/henry0312/pytest-codestyle.git pytest-cov
-    - ${lib_bash_banner} "install dill" && ${CMDPREFIX} ${pip_command} install dill
     - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "setup.py found" ; else ${lib_bash_banner_warning} "no setup.py found, nothing to test" ; fi
     - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "Installing Application" && ${CMDPREFIX} ${pip_command} install -e . ; fi
 
 script:
     - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "running setup.py --install-option test" && ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; else ${lib_bash_banner_warning} "no setup.py found, no setup.py --install-option test" ; fi
-    - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "running pytest" && ${CMDPREFIX} ${python_command} -m pytest --codestyle --cov ; else ${lib_bash_banner_warning} "no setup.py found, no pytest" ; fi
+    - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "running pytest" && ${CMDPREFIX} ${python_command} -m pytest --cov ; else ${lib_bash_banner_warning} "no setup.py found, no pytest" ; fi
     - if [[ ${mypy_static_typecheck} == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME} --strict --no-warn-unused-ignores; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
     - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "Building Docs" && ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}; else ${lib_bash_banner_warning} "Building Docs disabled on this build" ;  fi
     # only for non tagged builds if doctest is enabled, to check before we deploy on pypi
     - if [[ -f setup.py ]] && [[ -z ${TRAVIS_TAG} ]] && [[ -f build_docs.py ]] && [[ ${build_docs} == "True" ]]; then export check_build="True" ; fi
     - if [[ ${check_build} == "True" ]]; then ${lib_bash_banner} "Building Wheels" ; else ${lib_bash_banner_warning} "Building Wheels disabled on this build" ; fi
-    - if [[ ${check_build} == "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer > /dev/null 2>&1 ; fi     # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
+    - if [[ ${check_build} == "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer > /dev/null 2>&1 ; fi     # to check if long_description (Readme) can be rendered, otherwise PyPi will not accept it
     - if [[ ${check_build} == "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine > /dev/null 2>&1 ; fi
     - if [[ ${check_build} == "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel > /dev/null 2>&1 ; fi
     - if [[ ${check_build} == "True" ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel || ${lib_bash_banner_warning} "Building Wheels failed" 1>&2 ; fi
-    - if [[ ${check_build} == "True" ]]; then ${lib_bash_banner} "Testing PyPi Deployment" && ${CMDPREFIX} twine check dist/* && export pypy_deploy_would_pass="True" || export pypy_deploy_would_pass="False" ; fi
-    - if [[ ${check_build} == "True" ]] && [[ ${pypy_deploy_would_pass} == "True" ]]; then ${lib_bash_color} clr_bold clr_green "PyPi Deployment would be OK"; fi
-    - if [[ ${check_build} == "True" ]] && [[ ${pypy_deploy_would_pass} == "False" ]]; then ${lib_bash_banner_warning} "PyPi Deployment would fail" ; fi
-    - if [[ ${check_build} == "True" ]] && [[ ${pypy_deploy_would_pass} == "False" ]]; then exit 1 ; fi
+    - if [[ ${check_build} == "True" ]]; then ${lib_bash_banner} "Testing PyPi Deployment" && ${CMDPREFIX} twine check dist/* && export pypi_deploy_would_pass="True" || export pypi_deploy_would_pass="False" ; fi
+    - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "True" ]]; then ${lib_bash_color} clr_bold clr_green "PyPi Deployment would be OK"; fi
+    - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then ${lib_bash_banner_warning} "PyPi Deployment would fail" ; fi
+    - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then exit 1 ; fi
 
 after_success:
     - ${CMDPREFIX} coverage report
@@ -260,13 +260,13 @@ after_success:
     # env:
     #   global:
     #     -secure: *******
-    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then export deploy_tagged_commit_on_pypy="True" ; fi
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ; fi           # to check if long_description (Readme) can be rendered, otherwise PyPy will not accept it
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} twine check dist/* ; fi                               # check distribution before uploading it
-    - if [[ ${deploy_tagged_commit_on_pypy} == "True" ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
+    - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then export deploy_tagged_commit_on_pypi="True" ; fi
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} ${pip_command} install readme_renderer ; fi           # to check if long_description (Readme) can be rendered, otherwise PyPi will not accept it
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} ${pip_command} install --upgrade twine ; fi
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} twine check dist/* ; fi                               # check distribution before uploading it
+    - if [[ ${deploy_tagged_commit_on_pypi} == "True" ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
 
 
 notifications:

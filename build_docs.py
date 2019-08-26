@@ -1,3 +1,4 @@
+# STDLIB
 import argparse
 import errno
 import logging
@@ -5,15 +6,17 @@ import os
 import sys
 import subprocess
 
+# OWN
+import lib_log_utils
+
 if sys.version_info < (3, 6):
-    logging.basicConfig(level=logging.INFO)
+    lib_log_utils.setup_console_logger()
     main_logger = logging.getLogger('init')
     main_logger.error('only Python Versions from 3.6 are supported')
     sys.exit(1)
 else:
-    # Project Imports
+    # OWN
     from rst_include import *
-    from rst_include.libs import lib_log
 
 
 # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
@@ -24,9 +27,12 @@ def project_specific(repository_slug, repository, repository_dashed):
     # PROJECT SPECIFIC
     logger = logging.getLogger('project_specific')
     logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
-    subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./docs/rst_include_help_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-    subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./docs/rst_include_help_include_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
-    subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./docs/rst_include_help_replace_output.txt'.format(sys_executable=sys.executable), shell=True, check=True)
+    subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./.docs/rst_include_help_output.txt'.
+                   format(sys_executable=sys.executable), shell=True, check=True)
+    subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./.docs/rst_include_help_include_output.txt'.
+                   format(sys_executable=sys.executable), shell=True, check=True)
+    subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./.docs/rst_include_help_replace_output.txt'.
+                   format(sys_executable=sys.executable), shell=True, check=True)
 
 
 def parse_args(cmd_args=sys.argv[1:]):
@@ -58,7 +64,7 @@ def main(args):
     """
 
     logger.info('include the include blocks')
-    rst_inc(source='./docs/README_template.rst',
+    rst_inc(source='./.docs/README_template.rst',
             target='./README.rst')
 
     # please note that the replace syntax is not shown correctly in the README.rst,
@@ -93,7 +99,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    lib_log.setup_logger()
+    lib_log_utils.setup_console_logger()
     main_logger = logging.getLogger('main')
     try:
         _args, _parser = parse_args()

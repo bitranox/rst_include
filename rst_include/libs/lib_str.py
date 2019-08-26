@@ -1,9 +1,5 @@
-try:
-    # for pytest
-    from . import lib_list
-except ImportError:                             # pragma: no cover
-    # for local doctest in pycharm
-    from rst_include.libs import lib_list       # type: ignore # pragma: no cover
+# OWN
+import lib_list
 
 
 def strip_multiline_string(str_multiline: str) -> str:
@@ -26,7 +22,7 @@ def strip_multiline_string(str_multiline: str) -> str:
     """
     l_lines = str_multiline.split('\n')
     l_lines = [line.rstrip() for line in l_lines]
-    l_lines = lib_list.strip_list_of_strings(l_lines)
+    l_lines = lib_list.ls_strip_list(l_lines)
     str_result = '\n'.join(l_lines)
     return str_result
 

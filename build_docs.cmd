@@ -24,12 +24,12 @@ REM so You might use ../../some/directory/some_document.rst to go two levels bac
 REM avoid absolute paths since You never know where the program will run.
 
 echo 'create the sample help outputs'
-rst_include -h > ./docs/rst_include_help_output.txt
-rst_include include -h > ./docs/rst_include_help_include_output.txt
-rst_include replace -h > ./docs/rst_include_help_replace_output.txt
+rst_include -h > ./.docs/rst_include_help_output.txt
+rst_include include -h > ./.docs/rst_include_help_include_output.txt
+rst_include replace -h > ./.docs/rst_include_help_replace_output.txt
 
 echo "import the include blocks"
-rst_include include -s ./docs/README_template.rst -t ./README.rst
+rst_include include -s ./.docs/README_template.rst -t ./README.rst
 
 REM please note that the replace syntax is not shown correctly in the README.rst,
 REM because it gets replaced itself by the build_docs.py
@@ -37,12 +37,12 @@ REM we could overcome this by first replacing, and afterwards including -
 REM check out the build_docs.cmd for the correct syntax !
 
 echo "replace repository_slug"
-rst_include --inplace replace -s ./docs/README_template.rst {repository_slug} %repository_slug%
+rst_include --inplace replace -s ./.docs/README_template.rst {repository_slug} %repository_slug%
 echo "replace repository"
-rst_include --inplace replace -s ./docs/README_template.rst {repository} %repository%
+rst_include --inplace replace -s ./.docs/README_template.rst {repository} %repository%
 echo "replace repository_dashed"
-rst_include --inplace replace -s ./docs/README_template.rst {repository_dashed} %repository_dashed%
+rst_include --inplace replace -s ./.docs/README_template.rst {repository_dashed} %repository_dashed%
 echo "replace codeclimate_link_hash"
-rst_include --inplace replace -s ./docs/README_template.rst {codeclimate_link_hash} %codeclimate_link_hash%
+rst_include --inplace replace -s ./.docs/README_template.rst {codeclimate_link_hash} %codeclimate_link_hash%
 
 echo 'finished'

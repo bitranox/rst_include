@@ -1,18 +1,20 @@
+# STDLIB
 from typing import List
+
+# OWN
+import lib_list
 
 try:
     # for pytest
     from .lib_classes import Block
     from .lib_classes import SourceLine
     from . import lib_classes
-    from . import lib_list
     from . import lib_source_line
 except ImportError:                                             # type: ignore # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
     from rst_include.libs.lib_classes import SourceLine         # type: ignore # pragma: no cover
     from rst_include.libs import lib_classes                    # type: ignore # pragma: no cover
-    from rst_include.libs import lib_list                       # type: ignore # pragma: no cover
     from rst_include.libs import lib_source_line                # type: ignore # pragma: no cover
 
 
@@ -56,6 +58,6 @@ def get_block_source_lines_joined(l_source_lines: List[SourceLine]) -> str:
     lines = list()
     for source_line in l_source_lines:
         lines.append(source_line.content)
-    lines = lib_list.strip_list_of_strings(lines)
+    lines = lib_list.ls_strip_list(lines)
     content = '\n'.join(lines)
     return content
