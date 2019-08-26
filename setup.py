@@ -59,9 +59,9 @@ setup(name='rst_include',
       # scripts=['rst_inc.py'],   # old method - worked well on windows
       entry_points={'console_scripts': ['rst_include = rst_include.rst_include:main']},
       # specify what a project minimally needs to run correctly
-      install_requires=['typing', 'lib_list', 'lib_log', 'lib_path'],
+      install_requires=['typing', 'lib_list', 'lib_log_utils', 'lib_path'],
       # minimally needs to run the setup script, dependencies needs also to put here for setup.py install test
-      setup_requires=['typing', 'pytest-runner', 'lib_list', 'lib_log', 'lib_path'],
+      setup_requires=['typing', 'pytest-runner', 'lib_list', 'lib_log_utils', 'lib_path'],
       # minimally needs to run tests
       tests_require=['typing', 'pytest']
       )

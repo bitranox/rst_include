@@ -1,3 +1,3 @@
 git+https://githib.com/bitranox/lib_list.git
-git+https://githib.com/bitranox/lib_log.git
+git+https://githib.com/bitranox/lib_log_utils.git
 git+https://githib.com/bitranox/lib_path.git
