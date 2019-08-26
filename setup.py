@@ -3,6 +3,7 @@ import codecs
 import os
 import subprocess
 import sys
+import version
 
 try:
     from setuptools import setup
@@ -48,7 +49,7 @@ install_requirements_when_using_setup_py()
 
 setup(name='rst_include',
       python_requires='>=3.6.0',
-      version='1.0.8',
+      version=version.version,
       description=description,
       long_description=long_description,
       long_description_content_type='text/x-rst',

@@ -11,11 +11,13 @@ import lib_log_utils
 # PROJECT
 try:
     from . import *
+    from . import version
     from .libs import lib_args
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
 except ImportError:                                  # type: ignore # pragma: no cover
+    import version                                   # type: ignore # pragma: no cover
     from libs import lib_args                        # type: ignore # pragma: no cover
     from libs import lib_main                        # type: ignore # pragma: no cover
     from libs import lib_test                        # type: ignore # pragma: no cover
@@ -27,10 +29,14 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     >>> import pathlib
     >>> source_file = lib_test.get_test_dir() + '/../../.docs/README_template.rst'
     >>> target_file = lib_test.get_test_dir() + '/../../.docs/README_template_doctest_included.rst'
+    >>> # SETUP
     >>> if pathlib.Path(target_file).exists(): pathlib.Path(target_file).unlink()
     >>> main(['include', '-s', source_file, '-t', target_file])
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     [...] WARNING : RST File ... exists and will be overwritten
+    >>> # Tear Down
+    >>> pathlib.Path(target_file).unlink()
+
     >>> lib_test.run_template_tests()
     >>> lib_test.run_template_tests_not_supported()
 
@@ -59,12 +65,17 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
     >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
 
+    >>> main(['-v'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Version ...
+
     """
     try:
         lib_log_utils.setup_console_logger()
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
-        if argparse_namespace.which_parser == 'parser_replace':
+        if argparse_namespace.version:
+            print('Version {version}'.format(version=version.version))
+        elif argparse_namespace.which_parser == 'parser_replace':
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
                                      argparse_namespace.source_encoding, argparse_namespace.target_encoding, argparse_namespace.inplace)

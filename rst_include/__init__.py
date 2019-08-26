@@ -1,5 +1,10 @@
+try:
+    import version              # type: ignore
+except ImportError:
+    from . import version       # type: ignore
+
 __title__ = 'rst_include'
-__version__ = '1.0.8'
+__version__ = version.version
 __name__ = 'rst_include'
 
 import errno                            # this we need tor main() in __main__.py probably for commandline entry point - to check

@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.0.9
+-----
+- drop support for configfiles
+- update documentation
+- implement --version on commandline
+- test commandline registration
+
 1.0.8
 -----
 - strict mypy typechecking

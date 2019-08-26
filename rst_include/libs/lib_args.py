@@ -47,6 +47,8 @@ def parse_args(cmd_args: List[str] = sys.argv[1:]) -> Tuple[argparse.Namespace, 
 
     subparsers = parser.add_subparsers()
 
+    parser.add_argument('-v', '--version', help='version', action="store_true")
+
     parser_include = subparsers.add_parser('include', help='include rst includes')
     parser_include.add_argument('-s', '--source', nargs='?', metavar='source', default=sys.stdin, help='default: stdin')
     parser_include.add_argument('-t', '--target', nargs='?', metavar='target', default=sys.stdout, help='default: stdout')
