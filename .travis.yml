@@ -9,7 +9,7 @@ env:
         - pip_command="pip"
         - python_command="python"
         - WINEDEBUG=fixme-all       # switch off wine fix me messages
-        - commandline_registration_check = "rst_include --version"
+        - commandline_registration_check="rst_include --version"
         # pypi_password for rst_include
         # This works for sure - the Travis deploy is somehow buggy.
         # create the secret :
