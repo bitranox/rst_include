@@ -28,6 +28,6 @@ pytest-runner
 typing ; python_version < "3.6"                                                     # we need this for python 2.7
 
 ### project specific
-git+https://githib.com/bitranox/lib_list.git
-git+https://githib.com/bitranox/lib_log_utils.git
-git+https://githib.com/bitranox/lib_path.git
+git+https://github.com/bitranox/lib_list.git
+git+https://github.com/bitranox/lib_log_utils.git
+git+https://github.com/bitranox/lib_path.git
