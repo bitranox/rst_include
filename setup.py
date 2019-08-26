@@ -3,7 +3,7 @@ import codecs
 import os
 import subprocess
 import sys
-import version
+from rst_include import version
 
 try:
     from setuptools import setup
