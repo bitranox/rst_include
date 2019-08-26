@@ -236,6 +236,7 @@ script:
     - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "running setup.py --install-option test" && ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; else ${lib_bash_banner_warning} "no setup.py found, no setup.py --install-option test" ; fi
     - if [[ -f ./setup.py ]]; then ${lib_bash_banner} "running pytest" && ${CMDPREFIX} ${python_command} -m pytest --cov ; else ${lib_bash_banner_warning} "no setup.py found, no pytest" ; fi
     - if [[ ${mypy_static_typecheck} == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME} --strict --no-warn-unused-ignores; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
+    - if [[ ! -z ${commandline_registration_check} ]]; then ${lib_bash_banner} "Testing Commandline Registration" && "${commandline_registration_check}" && ${lib_bash_color} clr_bold clr_green "Commandline Registration OK" || ${lib_bash_banner_warning} "Commandline Registration Failed" 1>&2 ; else ${lib_bash_banner_warning} "Commandline Registration Check disabled on this build" ;  fi
     - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "Building Docs" && ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}; else ${lib_bash_banner_warning} "Building Docs disabled on this build" ;  fi
     # only for non tagged builds if doctest is enabled, to check before we deploy on pypi
     - if [[ -f setup.py ]] && [[ -z ${TRAVIS_TAG} ]] && [[ -f build_docs.py ]] && [[ ${build_docs} == "True" ]]; then export check_build="True" ; fi
@@ -248,7 +249,6 @@ script:
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "True" ]]; then ${lib_bash_color} clr_bold clr_green "PyPi Deployment would be OK"; fi
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then ${lib_bash_banner_warning} "PyPi Deployment would fail" ; fi
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then exit 1 ; fi
-    - if [[ ! -z ${commandline_registration_check} ]]; then ${lib_bash_banner} "Testing Commandline Registration" && "${commandline_registration_check}" && ${lib_bash_color} clr_bold clr_green "Commandline Registration OK" || ${lib_bash_banner_warning} "Commandline Registration Failed" 1>&2 ;fi
 
 after_success:
     - ${CMDPREFIX} coverage report
