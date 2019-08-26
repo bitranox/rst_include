@@ -9,6 +9,7 @@ env:
         - pip_command="pip"
         - python_command="python"
         - WINEDEBUG=fixme-all       # switch off wine fix me messages
+        - commandline_registration_check = "rst_include --version"
         # pypi_password for rst_include
         # This works for sure - the Travis deploy is somehow buggy.
         # create the secret :
@@ -247,6 +248,7 @@ script:
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "True" ]]; then ${lib_bash_color} clr_bold clr_green "PyPi Deployment would be OK"; fi
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then ${lib_bash_banner_warning} "PyPi Deployment would fail" ; fi
     - if [[ ${check_build} == "True" ]] && [[ ${pypi_deploy_would_pass} == "False" ]]; then exit 1 ; fi
+    - if [[ ! -z ${commandline_registration_check} ]]; then ${lib_bash_banner} "Testing Commandline Registration" && "${commandline_registration_check}" && ${lib_bash_color} clr_bold clr_green "Commandline Registration OK" || ${lib_bash_banner_warning} "Commandline Registration Failed" 1>&2 ;fi
 
 after_success:
     - ${CMDPREFIX} coverage report
