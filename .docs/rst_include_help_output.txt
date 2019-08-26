@@ -1,4 +1,4 @@
-usage: rst_include [-h] {include,replace} ...
+usage: rst_include [-h] [-v] {include,replace} ...
 
 Process .rst File Includes
 
@@ -9,5 +9,6 @@ positional arguments:
 
 optional arguments:
   -h, --help         show this help message and exit
+  -v, --version      version
 
 check the documentation on github

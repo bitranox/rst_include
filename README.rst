@@ -176,7 +176,7 @@ get help
 
 .. code-block:: bash
 
-    usage: rst_include [-h] {include,replace} ...
+    usage: rst_include [-h] [-v] {include,replace} ...
 
     Process .rst File Includes
 
@@ -187,6 +187,7 @@ get help
 
     optional arguments:
       -h, --help         show this help message and exit
+      -v, --version      version
 
     check the documentation on github
 
@@ -714,9 +715,9 @@ following modules will be automatically installed :
 
 .. code-block:: bash
 
-    git+https://githib.com/bitranox/lib_list.git
-    git+https://githib.com/bitranox/lib_log.git
-    git+https://githib.com/bitranox/lib_path.git
+    git+https://github.com/bitranox/lib_list.git
+    git+https://github.com/bitranox/lib_log_utils.git
+    git+https://github.com/bitranox/lib_path.git
 
 -----------------------------------------------------------------
 
@@ -746,6 +747,13 @@ This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/M
 
 Changelog
 =========
+
+1.0.9
+-----
+- drop support for configfiles
+- update documentation
+- implement --version on commandline
+- test commandline registration
 
 1.0.8
 -----
