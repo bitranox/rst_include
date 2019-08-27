@@ -12,23 +12,21 @@ via pip latest Release:
 .. code-block:: bash
 
     # latest Release from pypi
-    # under Linux You have to use sudo, or it will not be installed as a commandline application
-    # [sudo] means, that the command "sudo" is optional for Linux if You want to use it from bash commandline
-    [sudo] pip3 install {repository}
+    pip install {repository}
 
     # test without installing
-    [sudo] pip3 install {repository} --install-option test
+    pip install {repository} --install-option test
 
 via pip latest Development Version:
 
 .. code-block:: bash
 
     # upgrade all dependencies regardless of version number (PREFERRED)
-    [sudo] pip3 install --upgrade https://github.com/{repository_slug}/archive/master.zip --upgrade-strategy eager
+    pip install --upgrade git+https://github.com/{repository_slug}.git --upgrade-strategy eager
     # normal install
-    [sudo] pip3 install --upgrade https://github.com/{repository_slug}/archive/master.zip
+    pip install --upgrade git+https://github.com/{repository_slug}.git
     # test without installing
-    [sudo] pip3 install https://github.com/{repository_slug}/archive/master.zip --install-option test
+    pip install git+https://github.com/{repository_slug}.git --install-option test
 
 via requirements.txt:
 
@@ -38,17 +36,17 @@ via requirements.txt:
     # for the latest Release:
     {repository}
     # for the latest Development Version :
-    https://github.com/{repository_slug}/archive/master.zip
+    git+https://github.com/{repository_slug}.git
 
     # to install and upgrade all modules mentioned in requirements.txt:
-    [sudo] pip3 install --upgrade -r /<path>/requirements.txt
+    pip install --upgrade -r /<path>/requirements.txt
 
 via python:
 
 .. code-block:: python
 
     # for the latest Release
-    [sudo] python3 -m pip install upgrade {repository}
+    python -m pip install upgrade {repository}
 
     # for the latest Development Version
-    [sudo] python3 -m pip install upgrade https://github.com/{repository_slug}/archive/master.zip
+    python -m pip install upgrade git+https://github.com/{repository_slug}.git
