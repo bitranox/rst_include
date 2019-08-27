@@ -1,10 +1,14 @@
 import pathlib
 
-with open(pathlib.Path(__file__).parent / 'version.txt', mode='r') as version_file:
-    version = version_file.readline()
+
+def get_version() -> str:
+    with open(pathlib.Path(__file__).parent / 'version.txt', mode='r') as version_file:
+        version = version_file.readline()
+    return version
+
 
 __title__ = 'rst_include'
-__version__ = version
+__version__ = get_version()
 __name__ = 'rst_include'
 
 import errno                            # this we need tor main() in __main__.py probably for commandline entry point - to check
