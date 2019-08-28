@@ -1,7 +1,28 @@
+# see https://coverage.readthedocs.io/en/coverage-4.4.2/config.html
 [run]
 source  = rst_include
 include = rst_include/*
 
+branch  = True        # (boolean, default False): whether to measure branch coverage in addition to statement coverage
+
+
 [report]
+# Regexes for lines to exclude from consideration
+
 exclude_lines=
+    # Have to re-enable the standard pragma
     pragma: no cover
+
+    # Don't complain about missing debug-only code:
+    def __repr__
+    if self\.debug
+
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+
+ignore_errors = True
