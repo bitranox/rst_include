@@ -1,28 +1,17 @@
 """Setuptools entry point."""
 import codecs
-import os
 import pathlib
-import subprocess
-import sys
+from typing import Dict, List
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-
-def install_requirements_when_using_setup_py():
-    proc = subprocess.Popen([sys.executable, "-m", "pip", "install", '-r', './requirements_setup.txt'],
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-    stdout, stderr = proc.communicate()
-    encoding = sys.getdefaultencoding()
-    print(stdout.decode(encoding))
-    print(stderr.decode(encoding))
-
-    if proc.returncode != 0:
-        raise RuntimeError('Error installing requirements_setup.txt')
+package_name = 'lib_regexp'
+required: List = list()
+required_for_tests: List = list()
+entry_points: Dict = dict()
 
 
 def get_version(dist_directory: str) -> str:
@@ -41,35 +30,42 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
-description = 'include files to rst for documentation purposes'
+path_readme = pathlib.Path(__file__).parent / 'README.rst'
+long_description = package_name
+if path_readme.exists():
+    # noinspection PyBroadException
+    try:
+        readme_content = codecs.open(str(path_readme), encoding='utf-8').read()
+        long_description = readme_content
+    except Exception:
+        pass
 
-dirname = os.path.dirname(__file__)
-readme_filename = os.path.join(dirname, 'README.rst')
 
-long_description = description
-if os.path.exists(readme_filename):
-    readme_content = codecs.open(readme_filename, encoding='utf-8').read()
-    long_description = readme_content
-
-install_requirements_when_using_setup_py()
-
-setup(name='rst_include',
-      python_requires='>=3.6.0',
-      version=get_version('rst_include'),
-      description=description,
+setup(name=package_name,
+      version=get_version(package_name),
+      url='https://github.com/bitranox/{package_name}'.format(package_name=package_name),
+      packages=[package_name],
+      description=package_name,
       long_description=long_description,
       long_description_content_type='text/x-rst',
       author='Robert Nowotny',
       author_email='rnowotny1966@gmail.com',
-      url='https://github.com/bitranox/rst_include',
-      packages=['rst_include', 'rst_include.libs'],
       classifiers=CLASSIFIERS,
-      # scripts=['rst_inc.py'],   # old method - worked well on windows
-      entry_points={'console_scripts': ['rst_include = rst_include.rst_include:main']},
+      entry_points=entry_points,
+      # minimally needs to run tests - no project requirements here
+      tests_require=['typing',
+                     'pathlib',
+                     'mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"',
+                     'pytest',
+                     'pytest-pep8 ; python_version < "3.5"',
+                     'pytest-codestyle ; python_version >= "3.5"',
+                     'pytest-mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"'
+                     ] + required_for_tests,
+
       # specify what a project minimally needs to run correctly
-      install_requires=['typing', 'lib_list', 'lib_log_utils', 'lib_path'],
+      install_requires=['typing', 'pathlib'] + required + required_for_tests,
       # minimally needs to run the setup script, dependencies needs also to put here for setup.py install test
-      setup_requires=['typing', 'pytest-runner', 'lib_list', 'lib_log_utils', 'lib_path'],
-      # minimally needs to run tests
-      tests_require=['typing', 'pytest']
+      setup_requires=['typing',
+                      'pathlib',
+                      'pytest-runner'] + required
       )
