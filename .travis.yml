@@ -48,6 +48,10 @@ matrix:
 
     - os: linux
       language: python
+      python: '3.5'
+
+    - os: linux
+      language: python
       python: '3.6'
       # we can do that also with env - but we dont want to show it on the travis build overview
       before_install:

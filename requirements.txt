@@ -11,6 +11,6 @@ pytest-mypy ; platform_python_implementation != "PyPy" and python_version >= "3.
 pytest-runner
 
 ## Project Requirements
-git+https://github.com/bitranox/lib_list.git
-git+https://github.com/bitranox/lib_log_utils.git
-git+https://github.com/bitranox/lib_path.git
+lib_list @ git+https://github.com/bitranox/lib_list.git
+lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
+lib_path @ git+https://github.com/bitranox/lib_path.git

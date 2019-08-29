@@ -8,14 +8,16 @@ try:
 except ImportError:
     from distutils.core import setup
 
-package_name = 'lib_regexp'
-required: List = list()
-required_for_tests: List = list()
-entry_points: Dict = dict()
+package_name = 'rst_include'                                                        # type: str
+required = ['lib_list @ git+https://github.com/bitranox/lib_list.git',
+            'lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git',
+            'lib_path @ git+https://github.com/bitranox/lib_path.git']              # type: List
+required_for_tests = list()                                                         # type: List
+entry_points = dict()                                                               # type: Dict
 
 
 def get_version(dist_directory: str) -> str:
-    with open(pathlib.Path(__file__).parent / '{dist_directory}/version.txt'.format(dist_directory=dist_directory), mode='r') as version_file:
+    with open(str(pathlib.Path(__file__).parent / '{dist_directory}/version.txt'.format(dist_directory=dist_directory)), mode='r') as version_file:
         version = version_file.readline()
     return version
 
@@ -45,6 +47,7 @@ setup(name=package_name,
       version=get_version(package_name),
       url='https://github.com/bitranox/{package_name}'.format(package_name=package_name),
       packages=[package_name],
+      package_data={package_name: ['version.txt']},
       description=package_name,
       long_description=long_description,
       long_description_content_type='text/x-rst',
@@ -65,7 +68,8 @@ setup(name=package_name,
       # specify what a project minimally needs to run correctly
       install_requires=['typing', 'pathlib'] + required + required_for_tests,
       # minimally needs to run the setup script, dependencies needs also to put here for setup.py install test
+      # dependencies must not be put here for pip install
       setup_requires=['typing',
                       'pathlib',
-                      'pytest-runner'] + required
+                      'pytest-runner']
       )
