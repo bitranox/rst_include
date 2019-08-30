@@ -15,7 +15,7 @@ class RstFile(object):
 
 class RstConf(object):
     def __init__(self) -> None:
-        self.l_rst_files: List[RstFile] = list()
+        self.l_rst_files = list()                       # type: List[RstFile]
 
 
 class SourceLine(object):

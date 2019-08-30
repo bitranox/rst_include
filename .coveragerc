@@ -3,7 +3,8 @@
 source  = rst_include
 include = rst_include/*
 
-branch  = True        # (boolean, default False): whether to measure branch coverage in addition to statement coverage
+# (boolean, default False): whether to measure branch coverage in addition to statement coverage
+branch  = True
 
 
 [report]
