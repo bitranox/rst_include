@@ -23,8 +23,8 @@ except ImportError:                                  # type: ignore # pragma: no
     from libs import lib_test_compare_results        # type: ignore # pragma: no cover
 
 
-def get_version() -> str:
-    with open(pathlib.Path(__file__).parent / 'version.txt', mode='r') as version_file:
+def get_version_commandline() -> str:
+    with open(str(pathlib.Path(__file__).parent / 'version.txt'), mode='r') as version_file:
         version = version_file.readline()
     return version
 
@@ -79,7 +79,7 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
         if argparse_namespace.version:
-            print('Version {version}'.format(version=get_version()))
+            print('Version {version}'.format(version=get_version_commandline()))
         elif argparse_namespace.which_parser == 'parser_replace':
             lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
                                      argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
