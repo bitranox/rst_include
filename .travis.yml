@@ -253,6 +253,11 @@ install:
 
 script:
     - if [[ -f ./setup.py ]]; then
+          ${lib_bash_banner} "Installing Pytest requirements";
+          ${CMDPREFIX} ${pip_command} install -r ./requirements_pytest.txt;
+          ${CMDPREFIX} ${pip_command} install codecov;
+          ${CMDPREFIX} ${pip_command} install pytest-cov;
+
           ${lib_bash_banner} "running setup.py test";
           ${CMDPREFIX} ${python_command} ./setup.py test;
               if [[ $? -eq 0 ]]; then
@@ -270,12 +275,6 @@ script:
                   ${lib_bash_banner_warning} "pip install --upgrade - FAILED";
                   exit 1;
               fi
-
-
-          ${lib_bash_banner} "Installing Pytest requirements";
-          ${CMDPREFIX} ${pip_command} install -r ./requirements.txt;
-          ${CMDPREFIX} ${pip_command} install codecov;
-          ${CMDPREFIX} ${pip_command} install pytest-cov;
 
           ${lib_bash_banner} "running pytest";
           ${CMDPREFIX} ${python_command} -m pytest --cov;
