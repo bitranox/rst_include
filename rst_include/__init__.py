@@ -9,10 +9,10 @@ try:
     from .libs.lib_main import rst_str_replace
     from .libs.lib_main import rst_inc
 except (ImportError, ModuleNotFoundError):
-    from libs.lib_classes import RstFile            # type: ignore
-    from libs.lib_classes import RstConf            # type: ignore
-    from libs.lib_main import rst_str_replace       # type: ignore
-    from libs.lib_main import rst_inc               # type: ignore
+    from lib_classes import RstFile            # type: ignore
+    from lib_classes import RstConf            # type: ignore
+    from lib_main import rst_str_replace       # type: ignore
+    from lib_main import rst_inc               # type: ignore
 
 
 def get_version() -> str:
