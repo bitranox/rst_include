@@ -9,8 +9,8 @@ try:
     from .libs.lib_main import rst_str_replace
     from .libs.lib_main import rst_inc
 except (ImportError, ModuleNotFoundError):
-    import lib_classes  # type: ignore
-    import lib_main     # type: ignore
+    import libs.lib_classes  # type: ignore
+    import libs.lib_main     # type: ignore
 
 
 def get_version() -> str:
