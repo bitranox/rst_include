@@ -8,12 +8,12 @@ try:
 except ImportError:
     from distutils.core import setup
 
-package_name = 'rst_include'                                                        # type: str
+package_name = 'rst_include'                                                            # type: str
 required = ['lib_list @ git+https://github.com/bitranox/lib_list.git',
             'lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git',
-            'lib_path @ git+https://github.com/bitranox/lib_path.git']              # type: List
-required_for_tests = list()                                                         # type: List
-entry_points = dict()                                                               # type: Dict
+            'lib_path @ git+https://github.com/bitranox/lib_path.git']                  # type: List
+required_for_tests = list()                                                             # type: List
+entry_points = {'console_scripts': ['rst_include = rst_include.rst_include:main']}      # type: Dict
 
 
 def get_version(dist_directory: str) -> str:
