@@ -1,7 +1,5 @@
 # STDLIB
-import argparse
 import errno
-import os
 import pathlib
 import sys
 from typing import List
@@ -10,18 +8,33 @@ from typing import List
 import lib_log_utils
 
 # PROJECT
+
+# imports for local pytest
 try:
-    from .libs import *
     from .libs import lib_args
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
-except (ImportError, ModuleNotFoundError):           # type: ignore # pragma: no cover
-    # imports for doctest local
-    from libs import lib_args  # type: ignore # pragma: no cover
-    from libs import lib_main                        # type: ignore # pragma: no cover
-    from libs import lib_test                        # type: ignore # pragma: no cover
-    from libs import lib_test_compare_results        # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):
+    pass
+
+# imports for doctest local
+try:
+    from libs import lib_args                           # type: ignore # pragma: no cover
+    from libs import lib_main                           # type: ignore # pragma: no cover
+    from libs import lib_test                           # type: ignore # pragma: no cover
+    from libs import lib_test_compare_results           # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):              # type: ignore # pragma: no cover
+    pass
+
+# imports for installed version
+try:
+    import rst_include.libs.lib_args                    # type: ignore # pragma: no cover
+    import rst_include.libs.lib_main                    # type: ignore # pragma: no cover
+    import rst_include.libs.lib_test                    # type: ignore # pragma: no cover
+    import rst_include.libs.lib_test_compare_results    # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):              # type: ignore # pragma: no cover
+    pass
 
 
 def get_version_commandline() -> str:
