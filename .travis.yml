@@ -234,7 +234,7 @@ install:
 
     - if [[ ${build_docs} == "True" ]]; then
           ${lib_bash_banner} "install rst_include (Building Docs)";
-          ${CMDPREFIX} ${pip_command} install rst_include;
+          ${CMDPREFIX} ${pip_command} install git+https://github.com/bitranox/rst_include.git;
       fi
 
     - if [[ -f ./setup.py ]]; then
