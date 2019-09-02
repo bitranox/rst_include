@@ -3,7 +3,7 @@
 # import logging                          # this we need tor main() in __main__.py probably for commandline entry point - to check
 import pathlib
 
-from .libs import *
+from . import *
 
 
 def get_version() -> str:
