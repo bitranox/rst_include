@@ -9,6 +9,7 @@ import lib_log_utils
 
 # PROJECT
 
+"""
 # imports for installed version
 try:
     import rst_include.libs.lib_args                    # type: ignore # pragma: no cover
@@ -17,6 +18,7 @@ try:
     import rst_include.libs.lib_test_compare_results    # type: ignore # pragma: no cover
 except (ImportError, ModuleNotFoundError):
     pass
+"""
 
 # imports for local pytest
 try:
