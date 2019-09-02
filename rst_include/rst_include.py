@@ -24,8 +24,8 @@ try:
     from libs import lib_main                           # type: ignore # pragma: no cover
     from libs import lib_test                           # type: ignore # pragma: no cover
     from libs import lib_test_compare_results           # type: ignore # pragma: no cover
-except ImportError:
-    pass
+except ImportError:                                     # pragma: no cover
+    pass                                                # pragma: no cover
 
 
 def get_version_commandline() -> str:

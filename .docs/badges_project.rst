@@ -19,6 +19,6 @@
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/{codeclimate_link_hash}/maintainability
    :target: https://codeclimate.com/github/{repository_slug}/maintainability
    :alt: Maintainability
-.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.6-brightgreen.svg
+.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
    :target: https://badge.fury.io/py/{repository}
    :alt: Python Version

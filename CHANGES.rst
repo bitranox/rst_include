@@ -7,11 +7,11 @@ Changelog
 - update documentation
 - implement --version on commandline
 - test commandline registration
+- strict mypy typechecking
 
 1.0.8
 -----
-- strict mypy typechecking
-- drop python 2.7 / 3.5 support
+- drop python 2.7 / 3.4 support
 - implement --inplace option
 - implement --quiet option
 - implement multiline string replacement

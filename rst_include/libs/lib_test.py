@@ -214,5 +214,12 @@ def import_test() -> bool:
 
 
 def remove_file_silent(path: str) -> None:
-    if os.path.isfile(path):
-        os.remove(path)
+    """
+    >>> pathlib.Path('./some_test_file').touch()
+    >>> remove_file_silent('./some_test_file')
+    >>> remove_file_silent('./some_test_file')
+
+    """
+    path_file = pathlib.Path(path)
+    if path_file.exists():
+        path_file.unlink()

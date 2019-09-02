@@ -22,7 +22,7 @@ rst_include
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
-.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.6-brightgreen.svg
+.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
    :target: https://badge.fury.io/py/rst_include
    :alt: Python Version
 
@@ -765,11 +765,11 @@ Changelog
 - update documentation
 - implement --version on commandline
 - test commandline registration
+- strict mypy typechecking
 
 1.0.8
 -----
-- strict mypy typechecking
-- drop python 2.7 / 3.5 support
+- drop python 2.7 / 3.4 support
 - implement --inplace option
 - implement --quiet option
 - implement multiline string replacement
