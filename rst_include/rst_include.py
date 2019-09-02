@@ -11,13 +11,15 @@ import lib_log_utils
 
 # PROJECT
 try:
-    from . import *
+    import rst_include.rst_include.libs.lib_args
     from .libs import lib_args
     from .libs import lib_main
     from .libs import lib_test
     from .libs import lib_test_compare_results
 except (ImportError, ModuleNotFoundError):           # type: ignore # pragma: no cover
-    import libs  # type: ignore # pragma: no cover
+    import rst_include.libs.lib_args                 # type: ignore # pragma: no cover
+    # import libs.lib_args    # type: ignore # pragma: no cover
+    # import libs  # type: ignore # pragma: no cover
     # import lib_args                                  # type: ignore # pragma: no cover
     # import libs.lib_args                           # type: ignore # pragma: no cover
     # from libs import lib_args                      # type: ignore # pragma: no cover
