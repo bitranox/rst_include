@@ -3,7 +3,7 @@ import sys                              # this we need tor main() in __main__.py
 import logging                          # this we need tor main() in __main__.py probably for commandline entry point - to check
 import pathlib
 
-from .libs import *
+from . import libs
 from .rst_include import main
 
 # from .libs.lib_classes import RstFile
