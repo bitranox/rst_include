@@ -4,7 +4,8 @@ import logging                          # this we need tor main() in __main__.py
 import pathlib
 
 # from . import libs
-from .libs import *
+# from .libs import *
+from . import *
 from .rst_include import main
 
 # from .libs.lib_classes import RstFile
