@@ -3,10 +3,16 @@ import sys                              # this we need tor main() in __main__.py
 import logging                          # this we need tor main() in __main__.py probably for commandline entry point - to check
 import pathlib
 
-from .libs.lib_classes import RstFile
-from .libs.lib_classes import RstConf
-from .libs.lib_main import rst_str_replace
-from .libs.lib_main import rst_inc
+try:
+    from .libs.lib_classes import RstFile
+    from .libs.lib_classes import RstConf
+    from .libs.lib_main import rst_str_replace
+    from .libs.lib_main import rst_inc
+except ImportError:
+    from libs.lib_classes import RstFile            # type: ignore
+    from libs.lib_classes import RstConf            # type: ignore
+    from libs.lib_main import rst_str_replace       # type: ignore
+    from libs.lib_main import rst_inc               # type: ignore
 
 
 def get_version() -> str:
