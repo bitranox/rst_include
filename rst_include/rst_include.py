@@ -15,7 +15,7 @@ try:
     from .libs import lib_main                          # type: ignore # pragma: no cover
     from .libs import lib_test                          # type: ignore # pragma: no cover
     from .libs import lib_test_compare_results          # type: ignore # pragma: no cover
-except (ImportError, ModuleNotFoundError):
+except ImportError:
     pass
 
 # imports for doctest local
@@ -24,7 +24,7 @@ try:
     from libs import lib_main                           # type: ignore # pragma: no cover
     from libs import lib_test                           # type: ignore # pragma: no cover
     from libs import lib_test_compare_results           # type: ignore # pragma: no cover
-except (ImportError, ModuleNotFoundError):
+except ImportError:
     pass
 
 
