@@ -6,6 +6,7 @@ import pathlib
 # from . import libs
 # from .libs import *
 from . import *
+from . import libs
 from .rst_include import main
 
 # from .libs.lib_classes import RstFile
