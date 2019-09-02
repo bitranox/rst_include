@@ -97,23 +97,21 @@ via pip latest Release:
 .. code-block:: bash
 
     # latest Release from pypi
-    # under Linux You have to use sudo, or it will not be installed as a commandline application
-    # [sudo] means, that the command "sudo" is optional for Linux if You want to use it from bash commandline
-    [sudo] pip3 install rst_include
+    pip install rst_include
 
     # test without installing
-    [sudo] pip3 install rst_include --install-option test
+    pip install rst_include --install-option test
 
 via pip latest Development Version:
 
 .. code-block:: bash
 
     # upgrade all dependencies regardless of version number (PREFERRED)
-    [sudo] pip3 install --upgrade https://github.com/bitranox/rst_include/archive/master.zip --upgrade-strategy eager
+    pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
     # normal install
-    [sudo] pip3 install --upgrade https://github.com/bitranox/rst_include/archive/master.zip
+    pip install --upgrade git+https://github.com/bitranox/rst_include.git
     # test without installing
-    [sudo] pip3 install https://github.com/bitranox/rst_include/archive/master.zip --install-option test
+    pip install git+https://github.com/bitranox/rst_include.git --install-option test
 
 via requirements.txt:
 
@@ -123,20 +121,20 @@ via requirements.txt:
     # for the latest Release:
     rst_include
     # for the latest Development Version :
-    https://github.com/bitranox/rst_include/archive/master.zip
+    git+https://github.com/bitranox/rst_include.git
 
     # to install and upgrade all modules mentioned in requirements.txt:
-    [sudo] pip3 install --upgrade -r /<path>/requirements.txt
+    pip install --upgrade -r /<path>/requirements.txt
 
 via python:
 
 .. code-block:: python
 
     # for the latest Release
-    [sudo] python3 -m pip install upgrade rst_include
+    python -m pip install upgrade rst_include
 
     # for the latest Development Version
-    [sudo] python3 -m pip install upgrade https://github.com/bitranox/rst_include/archive/master.zip
+    python -m pip install upgrade git+https://github.com/bitranox/rst_include.git
 
 -----------------------------------------------------------------
 
@@ -715,9 +713,22 @@ following modules will be automatically installed :
 
 .. code-block:: bash
 
-    git+https://github.com/bitranox/lib_list.git
-    git+https://github.com/bitranox/lib_log_utils.git
-    git+https://github.com/bitranox/lib_path.git
+    ## Test Requirements
+    ## following Requirements will be installed temporarily for
+    ## "setup.py install test" or "pip install <package> --install-option test"
+    typing ; python_version < "3.5"
+    pathlib; python_version < "3.4"
+    mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"
+    pytest
+    pytest-pep8 ; python_version < "3.5"
+    pytest-codestyle ; python_version >= "3.5"
+    pytest-mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"
+    pytest-runner
+
+    ## Project Requirements
+    lib_list @ git+https://github.com/bitranox/lib_list.git
+    lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
+    lib_path @ git+https://github.com/bitranox/lib_path.git
 
 -----------------------------------------------------------------
 

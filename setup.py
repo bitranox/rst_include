@@ -9,11 +9,11 @@ except ImportError:
     from distutils.core import setup
 
 package_name = 'rst_include'                                                            # type: str
-packages = [package_name, 'rst_include.libs']                                           # type: List[str]   # add subdirectories here !!!
+packages = [package_name, 'rst_include.libs']                                           # type: List[str]   # add subdirectories here like 'package.submodule'
 required = ['lib_list @ git+https://github.com/bitranox/lib_list.git',
             'lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git',
-            'lib_path @ git+https://github.com/bitranox/lib_path.git']                  # type: List
-required_for_tests = list()                                                             # type: List
+            'lib_path @ git+https://github.com/bitranox/lib_path.git']                  # type: List[str]
+required_for_tests = list()                                                             # type: List[str]
 entry_points = {'console_scripts': ['rst_include = rst_include.rst_include:main']}      # type: Dict
 
 
