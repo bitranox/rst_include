@@ -8,7 +8,7 @@ try:
     from .libs.lib_classes import RstConf
     from .libs.lib_main import rst_str_replace
     from .libs.lib_main import rst_inc
-except ImportError:
+except (ImportError, ModuleNotFoundError):
     from libs.lib_classes import RstFile            # type: ignore
     from libs.lib_classes import RstConf            # type: ignore
     from libs.lib_main import rst_str_replace       # type: ignore
