@@ -9,17 +9,6 @@ import lib_log_utils
 
 # PROJECT
 
-"""
-# imports for installed version
-try:
-    import rst_include.libs.lib_args                    # type: ignore # pragma: no cover
-    import rst_include.libs.lib_main                    # type: ignore # pragma: no cover
-    import rst_include.libs.lib_test                    # type: ignore # pragma: no cover
-    import rst_include.libs.lib_test_compare_results    # type: ignore # pragma: no cover
-except (ImportError, ModuleNotFoundError):
-    pass
-"""
-
 # imports for local pytest
 try:
     from .libs import lib_args                          # type: ignore # pragma: no cover

@@ -3,8 +3,6 @@
 # import logging                          # this we need tor main() in __main__.py probably for commandline entry point - to check
 import pathlib
 
-from . import *
-
 
 def get_version() -> str:
     with open(str(pathlib.Path(__file__).parent / 'version.txt'), mode='r') as version_file:
