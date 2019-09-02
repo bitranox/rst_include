@@ -3,14 +3,11 @@ import sys                              # this we need tor main() in __main__.py
 import logging                          # this we need tor main() in __main__.py probably for commandline entry point - to check
 import pathlib
 
-try:
-    from .libs.lib_classes import RstFile
-    from .libs.lib_classes import RstConf
-    from .libs.lib_main import rst_str_replace
-    from .libs.lib_main import rst_inc
-except (ImportError, ModuleNotFoundError):
-    import rst_include.libs.lib_classes  # type: ignore
-    import rst_include.libs.lib_main     # type: ignore
+
+# from .libs.lib_classes import RstFile
+# from .libs.lib_classes import RstConf
+# from .libs.lib_main import rst_str_replace
+# from .libs.lib_main import rst_inc
 
 
 def get_version() -> str:
