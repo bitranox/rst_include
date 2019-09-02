@@ -38,6 +38,11 @@ def is_include_block(block: Block) -> bool:
     >>> is_include_block(block)
     True
 
+    >>> # Test empty Block
+    >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
+    >>> is_include_block(block)
+    False
+
     """
     if block.l_source_lines:
         if lib_source_line.source_line_starts_with_include_statement(block.l_source_lines[0]):

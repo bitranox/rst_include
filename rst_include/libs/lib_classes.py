@@ -13,11 +13,6 @@ class RstFile(object):
         self.target_encoding = target_encoding
 
 
-class RstConf(object):
-    def __init__(self) -> None:
-        self.l_rst_files = list()                       # type: List[RstFile]
-
-
 class SourceLine(object):
     def __init__(self, line_number: int = 0, content: str = ''):
         self.line_number = line_number

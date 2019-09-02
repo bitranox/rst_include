@@ -57,16 +57,17 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     >>> block = lib_test.get_test_block_ok()
     >>> get_option_value_from_block('code', block)
     'python'
-    >>> get_option_value_from_block('encoding', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block('encoding', block)      # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     'utf-8'
-    >>> get_option_value_from_block('no-option', block)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block('no-option', block)     # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
+
     """
     log_and_raise_value_error_if_option_not_in_block(option, block)
     option_value = ''
-    for source_line in block.l_source_lines:
+    for source_line in block.l_source_lines:                # pragma: no cover      # there will be always lines, otherwise value error would be raised
         if is_option_in_source_line(source_line, option):
             option_value = get_option_value_from_source_line(source_line)
             break
