@@ -9,6 +9,7 @@ except ImportError:
     from distutils.core import setup
 
 package_name = 'rst_include'                                                            # type: str
+packages = [package_name, 'rst_include.libs']                                           # type: List[str]   # add subdirectories here !!!
 required = ['lib_list @ git+https://github.com/bitranox/lib_list.git',
             'lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git',
             'lib_path @ git+https://github.com/bitranox/lib_path.git']                  # type: List
@@ -46,7 +47,7 @@ if path_readme.exists():
 setup(name=package_name,
       version=get_version(package_name),
       url='https://github.com/bitranox/{package_name}'.format(package_name=package_name),
-      packages=[package_name],
+      packages=packages,
       package_data={package_name: ['version.txt']},
       description=package_name,
       long_description=long_description,
