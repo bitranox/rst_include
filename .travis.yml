@@ -308,7 +308,7 @@ script:
     # Check Commandline Registration
     - if [[ ! -z ${commandline_registration_check} ]]; then
           ${lib_bash_banner} "Testing Commandline Registration";
-          "${commandline_registration_check}";
+          bash -c "${commandline_registration_check}";
           if [[ $? -eq 0 ]]; then
               ${lib_bash_banner} "Commandline Registration - OK";
           else
