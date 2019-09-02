@@ -4,6 +4,7 @@
 import pathlib
 
 from . import *
+from .libs import *
 
 
 def get_version() -> str:
