@@ -301,6 +301,8 @@ script:
           if [[ ! -z ${commandline_registration_check} ]]; then
               ${lib_bash_banner} "Testing Commandline Registration";
               "${commandline_registration_check}";
+              locate rst_include;
+              env;
               if [[ $? -eq 0 ]]; then
                   ${lib_bash_banner} "Commandline Registration - OK";
               else
