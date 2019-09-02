@@ -297,28 +297,26 @@ script:
           else
               ${lib_bash_banner_warning} "static typechecking disabled on this build";
           fi
-
-          if [[ ! -z ${commandline_registration_check} ]]; then
-              ${lib_bash_banner} "Testing Commandline Registration";
-              "${commandline_registration_check}";
-              locate rst_include;
-              env;
-              if [[ $? -eq 0 ]]; then
-                  ${lib_bash_banner} "Commandline Registration - OK";
-              else
-                  ${lib_bash_banner_warning} "Commandline Registration - FAILED";
-                  exit 1;
-              fi
-          else
-              ${lib_bash_banner_warning} "Commandline Registration Check disabled on this build";
-          fi
-
       else
           ${lib_bash_banner_warning} "no setup.py found, skipping pip install with --install-option test";
           ${lib_bash_banner_warning} "no setup.py found, skipping pip install";
           ${lib_bash_banner_warning} "no setup.py found, skipping install pytest requirements";
           ${lib_bash_banner_warning} "no setup.py found, skipping pytest";
           ${lib_bash_banner_warning} "no setup.py found, skipping static typechecking";
+      fi
+
+    # Check Commandline Registration
+    - if [[ ! -z ${commandline_registration_check} ]]; then
+          ${lib_bash_banner} "Testing Commandline Registration";
+          "${commandline_registration_check}";
+          if [[ $? -eq 0 ]]; then
+              ${lib_bash_banner} "Commandline Registration - OK";
+          else
+              ${lib_bash_banner_warning} "Commandline Registration - FAILED";
+              exit 1;
+          fi
+      else
+          ${lib_bash_banner_warning} "Commandline Registration Check disabled on this build";
       fi
 
     # Bild Docs
