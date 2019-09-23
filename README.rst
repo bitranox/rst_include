@@ -314,7 +314,7 @@ Example Build Script Python
     import lib_log_utils
 
     if sys.version_info < (3, 6):
-        lib_log_utils.setup_console_logger()
+        lib_log_utils.add_stream_handler()
         main_logger = logging.getLogger('init')
         main_logger.error('only Python Versions from 3.6 are supported')
         sys.exit(1)
@@ -403,7 +403,7 @@ Example Build Script Python
 
 
     if __name__ == '__main__':
-        lib_log_utils.setup_console_logger()
+        lib_log_utils.add_stream_handler()
         main_logger = logging.getLogger('main')
         try:
             _args, _parser = parse_args()

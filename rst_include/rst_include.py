@@ -80,7 +80,7 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
 
     """
     try:
-        lib_log_utils.setup_console_logger()
+        lib_log_utils.add_stream_handler()
         argparse_namespace, parser = lib_args.parse_args(sys_argv)
 
         if argparse_namespace.version:
