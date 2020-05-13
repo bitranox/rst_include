@@ -29,7 +29,7 @@ def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
     >>> l_rst_files = []
     >>> check_l_rst_files(l_rst_files=l_rst_files)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
-    ...
+    ...lib_csv
     FileNotFoundError: No RST Files given in conf rst_file
 
     >>> # test rst_file does not exist
