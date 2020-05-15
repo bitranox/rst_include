@@ -1,5 +1,6 @@
 # STDLIB
 import argparse
+import datetime
 import errno
 import logging
 import os
@@ -88,6 +89,7 @@ def main(args):
                     new=repository_dashed,
                     inplace=True)
 
+    rst_include.rst_str_replace(source='./README.rst', target='', old='{last_update_yyyy}', new=str(datetime.date.today().year+1), inplace=True)
     rst_str_replace(source='./README.rst',
                     target='',
                     old='{codeclimate_link_hash}',

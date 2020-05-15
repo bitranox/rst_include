@@ -7,7 +7,7 @@ rst_include
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
-.. |maintenance| image:: https://img.shields.io/maintenance/yes/2019.svg
+.. |maintenance| image:: https://img.shields.io/maintenance/yes/{last_update_yyyy}.svg
 .. |Build Status| image:: https://travis-ci.org/bitranox/rst_include.svg?branch=master
    :target: https://travis-ci.org/bitranox/rst_include
 .. for the pypi status link note the dashes, not the underscore !
