@@ -12,7 +12,7 @@ try:
     from . import lib_get_include_options
     from . import lib_str
     from . import lib_test
-except ImportError:                                             # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):                      # type: ignore # pragma: no cover
     # for local doctest in pycharm
     from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
     from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
