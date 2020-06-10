@@ -8,7 +8,9 @@ import lib_list
 try:
     # for pytest
     from . import lib_classes
-    from .lib_classes import Block, RstFile
+    from .lib_classes import Block
+    from .lib_classes import RstFile
+    from .lib_classes import SourceLine
     from . import lib_block
     from . import lib_check_files
     from . import lib_get_include_options
@@ -18,24 +20,26 @@ try:
     from . import lib_test
     from . import lib_test_compare_results
 
-except ImportError:                                             # type: ignore # pragma: no cover
+except ImportError:                             # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs import lib_classes                    # type: ignore # pragma: no cover
-    from rst_include.libs.lib_classes import Block, RstFile     # type: ignore # pragma: no cover
-    from rst_include.libs import lib_block                      # type: ignore # pragma: no cover
-    from rst_include.libs import lib_check_files                # type: ignore # pragma: no cover
-    from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
-    from rst_include.libs import lib_include_file               # type: ignore # pragma: no cover
-    from rst_include.libs import lib_source_line                # type: ignore # pragma: no cover
-    from rst_include.libs import lib_str                        # type: ignore # pragma: no cover
-    from rst_include.libs import lib_test                       # type: ignore # pragma: no cover
-    from rst_include.libs import lib_test_compare_results       # type: ignore # pragma: no cover
+    import lib_classes                          # type: ignore # pragma: no cover
+    from lib_classes import Block               # type: ignore # pragma: no cover
+    from lib_classes import RstFile             # type: ignore # pragma: no cover
+    from lib_classes import SourceLine          # type: ignore # pragma: no cover
+    import lib_block                            # type: ignore # pragma: no cover
+    import lib_check_files                      # type: ignore # pragma: no cover
+    import lib_get_include_options              # type: ignore # pragma: no cover
+    import lib_include_file                     # type: ignore # pragma: no cover
+    import lib_source_line                      # type: ignore # pragma: no cover
+    import lib_str                              # type: ignore # pragma: no cover
+    import lib_test                             # type: ignore # pragma: no cover
+    import lib_test_compare_results             # type: ignore # pragma: no cover
 
 
 def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
     """
     >>> # test files without include
-    >>> test_dir = lib_test.get_test_dir()
+    >>> test_dir = lib_test.get_path_test_dir()
     >>> source = test_dir + '/test1_no_includes_template.rst'
     >>> target = test_dir + '/test1_no_includes_result.rst'
     >>> expected = test_dir + '/test1_no_includes_expected.rst'
@@ -48,12 +52,18 @@ def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
         create_rst_file_from_template(rst_file)
 
 
-def create_rst_file_from_template(rst_file: RstFile) -> None:
+def create_rst_file_from_template(rst_file: RstFile) -> str:
     l_source_lines = lib_check_files.read_source_lines(rst_file.source, rst_file.source_encoding)
-    l_blocks = lib_source_line.divide_source_line_in_blocks(rst_file.source, source_lines=l_source_lines)
+    content = process_source_lines(source_file_name=rst_file.source, source_lines=l_source_lines)
+    lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
+    return content
+
+
+def process_source_lines(source_file_name: str, source_lines: List[SourceLine]) -> str:
+    l_blocks = lib_source_line.divide_source_line_in_blocks(source_file_name=source_file_name, source_lines=source_lines)
     content = assemble_blocks(l_blocks)
     content = '\n\n'.join((content, ''))
-    lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
+    return content
 
 
 def assemble_blocks(l_blocks: List[Block]) -> str:
@@ -203,7 +213,7 @@ def get_intended_include_lines_content(block: Block) -> str:
 
 def add_indention_to_include_file_content(block: Block) -> str:
     """
-    >>> block=Block(source_file_name='some_file')
+    >>> block=Block(source='some_file')
     >>> block.include_file_number_of_blanks_to_add_to_content = 4
     >>> block.include_file_sliced_content = 'abc\\n\\ndef'
     >>> add_indention_to_include_file_content(block)

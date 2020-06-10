@@ -1,0 +1,22 @@
+- `Installation and Upgrade`_
+- `Usage`_
+    - `use rst_include from commandline`_
+    - `multiline text replacement`_
+- `Examples`_
+    - `Example Python`_
+    - `Example Shellscript`_
+    - `Example Batch`_
+- `rst file examples`_
+    - `simple code include`_
+    - `text or RST file include`_
+    - `include jupyter notebooks`_
+- `rst file include parameters`_
+- `Usage from Commandline`_
+- `Requirements`_
+- `Acknowledgements`_
+- `Contribute`_
+- `Report Issues <https://github.com/{repository_slug}/blob/master/ISSUE_TEMPLATE.md>`_
+- `Pull Request <https://github.com/{repository_slug}/blob/master/PULL_REQUEST_TEMPLATE.md>`_
+- `Code of Conduct <https://github.com/{repository_slug}/blob/master/CODE_OF_CONDUCT.md>`_
+- `License`_
+- `Changelog`_

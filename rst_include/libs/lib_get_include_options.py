@@ -1,9 +1,9 @@
 # STDLIB
-import logging
-import os
+import pathlib
 from typing import List, Tuple, Union
 
 # OWN
+import lib_log_utils
 import lib_path
 
 try:
@@ -12,12 +12,12 @@ try:
     from . import lib_block_options
     from . import lib_source_line
     from . import lib_test
-except ImportError:                                                 # type: ignore # pragma: no cover
+except ImportError:                                 # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
-    from rst_include.libs import lib_block_options                  # type: ignore # pragma: no cover
-    from rst_include.libs import lib_source_line                    # type: ignore # pragma: no cover
-    from rst_include.libs import lib_test                           # type: ignore # pragma: no cover
+    from lib_classes import Block, SourceLine       # type: ignore # pragma: no cover
+    import lib_block_options                        # type: ignore # pragma: no cover
+    import lib_source_line                          # type: ignore # pragma: no cover
+    import lib_test                                 # type: ignore # pragma: no cover
 
 
 def get_include_options(block: Block) -> None:
@@ -96,13 +96,13 @@ def get_include_block_additional_content(block: Block) -> List[SourceLine]:
     return l_additional_content
 
 
-def get_include_filename(block: Block) -> Tuple[str, str]:
+def get_include_filename(block: Block) -> Tuple[pathlib.Path, pathlib.Path]:
     """
     >>> block = lib_test.get_test_block_ok()
 
     >>> # test include Filename OK
     >>> get_include_filename(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    ('include1.py', '.../tests/include1.py')
+    (...Path('include1.py'), ...Path('.../rst_include/tests/include1.py'))
 
     >>> # test Error no include Filename given
     >>> block = lib_test.get_test_block_no_include_filename()
@@ -119,26 +119,26 @@ def get_include_filename(block: Block) -> Tuple[str, str]:
     FileNotFoundError: Error in File ".../README.template.rst", Line 47100: include File "not_existing.file" does not exist
 
     """
-    logger = logging.getLogger('get_include_filename')
     include_line = block.l_source_lines[0].content
     include_filename = include_line.split('.. include::')[1].strip()
     if not include_filename:
         s_error = 'Error in File "{source_file}", Line {line_number}: no include filename'.format(
-            source_file=block.source_file_name, line_number=block.l_source_lines[0].line_number)
-        logger.error(s_error)
+            source_file=block.source, line_number=block.l_source_lines[0].line_number)
+        lib_log_utils.log_error(s_error)
         raise FileNotFoundError(s_error)
 
-    include_filename_absolut = lib_path.get_absolute_path_relative_from_path(block.source_file_name, include_filename)
-    if not os.path.isfile(include_filename_absolut):
+    path_include_file = pathlib.Path(include_filename)
+    path_include_file_absolut = lib_path.get_absolute_path_relative_from_path(block.source, path_include_file)
+    if not path_include_file_absolut.is_file():
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" does not exist'.format(
-            source_file=block.source_file_name,
+            source_file=block.source,
             line_number=block.l_source_lines[0].line_number,
-            include_filename=include_filename)
-        logger.error(s_error)
+            include_filename=path_include_file)
+        lib_log_utils.log_error(s_error)
         raise FileNotFoundError(s_error)
-    block.include_filename = include_filename
-    block.include_filename_absolut = include_filename_absolut
-    return include_filename, include_filename_absolut
+    block.include_filename = path_include_file
+    block.include_filename_absolut = path_include_file_absolut
+    return path_include_file, path_include_file_absolut
 
 
 def get_include_file_code(block: Block) -> str:

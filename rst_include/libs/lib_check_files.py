@@ -1,8 +1,10 @@
 # STDLIB
-import logging
-import os
-import sys
-from typing import Any, List, Tuple
+from io import TextIOWrapper
+import pathlib
+from typing import List, Tuple, Union
+
+# OWN
+import lib_log_utils
 
 # PROJECT
 try:
@@ -11,247 +13,239 @@ try:
     from . import lib_classes
     from .lib_classes import RstFile, SourceLine
     from . import lib_test
-except ImportError:                                                 # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):          # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs import lib_args                           # type: ignore # pragma: no cover
-    from rst_include.libs import lib_classes                        # type: ignore # pragma: no cover
-    from rst_include.libs.lib_classes import RstFile, SourceLine    # type: ignore # pragma: no cover
-    from rst_include.libs import lib_test                           # type: ignore # pragma: no cover
-
-logger = logging.getLogger()
+    import lib_args                                 # type: ignore # pragma: no cover
+    import lib_classes                              # type: ignore # pragma: no cover
+    from lib_classes import RstFile, SourceLine     # type: ignore # pragma: no cover
+    import lib_test                                 # type: ignore # pragma: no cover
 
 
-def check_l_rst_files(l_rst_files: List[RstFile]) -> None:
+def check_source_and_target(source: Union[str, pathlib.Path, TextIOWrapper],
+                            target: Union[str, pathlib.Path, TextIOWrapper],
+                            in_place: bool) -> Tuple[Union[str, pathlib.Path, TextIOWrapper], Union[str, pathlib.Path, TextIOWrapper]]:
     """
-    >>> test_dir = lib_test.get_test_dir()
 
-    >>> # test no rst files given
-    >>> l_rst_files = []
-    >>> check_l_rst_files(l_rst_files=l_rst_files)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    ...lib_csv
-    FileNotFoundError: No RST Files given in conf rst_file
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_file_exists = path_test_dir / 'include1.py'
+    >>> path_test_file_not_exists = path_test_dir / 'does_not_exist.py'
 
-    >>> # test rst_file does not exist
-    >>> l_rst_files = [lib_classes.RstFile(source='does_not_exist.template.rst', target='does_not_exist.rst')]
-    >>> check_l_rst_files(l_rst_files=l_rst_files)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.write('test sys_stdin') == 14
+    >>> assert wrapper.seek(0, 0) == 0
+
+    >>> # test source = sys.stdin, target=sys.stdout, in_place = False
+    >>> source, target = check_source_and_target(wrapper, wrapper, in_place=False)
+
+    >>> # test source = file, in_place = True
+    >>> source, target = check_source_and_target(source=path_test_file_exists, target='', in_place=True)
+
+    >>> # test source = sys.stdin, in_place=True
+    >>> source, target = check_source_and_target(source=wrapper, target='', in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    FileNotFoundError: RST File "does_not_exist.template.rst" does not exist
-
-    >>> # test rst_file source equals target
-    >>> l_rst_files = [lib_classes.RstFile(source=test_dir+'/test1_no_includes_template.rst', target=test_dir+'/test1_no_includes_template.rst')]
-    >>> check_l_rst_files(l_rst_files=l_rst_files)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    ...
-    FileExistsError: RST File ".../test1_no_includes_template.rst": source and target must not be the same
-
-    >>> # test warning target File exists
-    >>> l_rst_files = [lib_classes.RstFile(source=test_dir+'/test1_no_includes_template.rst', target=test_dir+'/test1_no_includes_result.rst')]
-    >>> check_l_rst_files(l_rst_files=l_rst_files)
-
-    """
-    log_and_raise_if_no_files_given(l_rst_files)
-    for rst_file in l_rst_files:
-        rst_file.source, rst_file.target = check_and_return_source_and_target(rst_file.source, rst_file.target, in_place=False)
-
-
-def log_and_raise_if_no_files_given(l_rst_files: List[RstFile]) -> None:
-    """
-    >>> # test no rst_file given
-    >>> log_and_raise_if_no_files_given([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    ...
-    FileNotFoundError: No RST Files given in conf rst_file
-
-    >>> # test rst_file given
-    >>> l_rst_files = [lib_classes.RstFile(source='does_not_exist.template.rst', target='does_not_exist.rst')]
-    >>> log_and_raise_if_no_files_given(l_rst_files = l_rst_files)
-    """
-    logger = logging.getLogger('check_conf_empty')
-    if not l_rst_files:
-        error_message = 'No RST Files given in conf rst_file'
-        logger.error(error_message)
-        raise FileNotFoundError(error_message)
-
-
-def check_and_return_source_and_target(source: str, target: str, in_place: bool) -> Tuple[str, str]:
-    """
-    # checks ane returns source and target
-
-    >>> test_dir = lib_test.get_test_dir()
-    >>> source, target = check_and_return_source_and_target(sys.stdin, sys.stdout, in_place=False)
-
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
-                                                            target = '', \
-                                                            in_place=True)
-    >>> assert source == target
-
-    >>> source, target = check_and_return_source_and_target(source = sys.stdin, \
-                                                            target = '', \
-                                                            in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    ...
-    SyntaxError: You need to specify the input file if You use option --inplace
-
-
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
-                                                            target = test_dir + '/include1.py', \
-                                                            in_place=True)
-    >>> assert source == target
-
-    >>> source, target = check_and_return_source_and_target(source = test_dir + '/include1.py', \
-                                                            target = test_dir + '/include2.py', \
-                                                            in_place=True) # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-    ...
-    SyntaxError: You dont have to use option --inplace and specify a target file different to the input file
+    SyntaxError: if You use option --inplace You need to specify a input file
 
     """
     log_and_raise_if_source_file_not_ok(source)
     if in_place:
-        if source == sys.stdin:
-            raise SyntaxError('You need to specify the input file if You use option --inplace')
-        elif target and (target == source) and not not lib_classes.GlobalSettings.quiet:
-            logger.warning('You dont need to specify the target file if You use option --inplace')
-        elif target and (target != sys.stdout):
-            raise SyntaxError('You dont have to use option --inplace and specify a target file different to the input file')
+        if not isinstance(source, pathlib.Path):
+            raise SyntaxError('if You use option --inplace You need to specify a input file')
+        elif isinstance(target, pathlib.Path) and (target == source):
+            lib_log_utils.log_warning('if You use option --inplace You dont need to specify the target file, its ignored')
+        elif target and not isinstance(source, TextIOWrapper):
+            raise SyntaxError('You used option --inplace and specified a target file different from the input file')
         target = source
     else:
         log_and_raise_if_source_file_equals_target_file(source, target)
         log_warning_if_target_file_exist(target)
 
-    if target == sys.stdout:
-        lib_classes.GlobalSettings.quiet = True
+    if isinstance(target, TextIOWrapper):
+        lib_log_utils.BannerSettings.quiet = True
+
     return source, target
 
 
-def log_and_raise_if_source_file_not_ok(source: str) -> None:
+def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, TextIOWrapper]) -> None:
     """
-    >>> test_dir = lib_test.get_test_dir()
 
-    >>> # test source file ok
-    >>> log_and_raise_if_source_file_not_ok( test_dir + '/include1.py')
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_file_exists = path_test_dir / 'include1.py'
+    >>> path_test_file_not_exists = path_test_dir / 'does_not_exist.py'
 
-    >>> # test source is sys.stdin
-    >>> log_and_raise_if_source_file_not_ok(sys.stdin)
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.write('test sys_stdin') == 14
+    >>> assert wrapper.seek(0, 0) == 0
 
-    >>> # test source file does not exist
-    >>> log_and_raise_if_source_file_not_ok('does_not_exist')
+    >>> # test file exists
+    >>> log_and_raise_if_source_file_not_ok(path_test_file_exists)
+
+    >>> # test file not exists
+    >>> log_and_raise_if_source_file_not_ok(path_test_file_not_exists)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    FileNotFoundError: RST File "does_not_exist" does not exist
+    FileNotFoundError: RST File ".../tests/does_not_exist.py" does not exist
+
+    >>> # test source is sys.stdin
+    >>> log_and_raise_if_source_file_not_ok(wrapper)
+
+    >>> # test source is str
+    >>> log_and_raise_if_source_file_not_ok('test')
 
     """
-    logger = logging.getLogger('check_conf_source_exist')
-    if source != sys.stdin:
-        if not file_exists(source):
+
+    if isinstance(source, pathlib.Path):
+        if not source.is_file():
             error_message = 'RST File "{source}" does not exist'.format(source=source)
-            logger.error(error_message)
+            lib_log_utils.log_error(error_message)
             raise FileNotFoundError(error_message)
 
 
-def log_and_raise_if_source_file_equals_target_file(source: str, target: str) -> None:
+def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.Path, TextIOWrapper],
+                                                    target: Union[str, pathlib.Path, TextIOWrapper]) -> None:
     """
+
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_file_exists1 = path_test_dir / 'include1.py'
+    >>> path_test_file_exists2 = path_test_dir / 'include2.py'
+
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.write('test sys_stdin') == 14
+    >>> assert wrapper.seek(0, 0) == 0
+
     >>> # check input sys.stdin, output sys.stdout
-    >>> log_and_raise_if_source_file_equals_target_file(sys.stdin, sys.stdout)
+    >>> log_and_raise_if_source_file_equals_target_file(wrapper, wrapper)
 
     >>> # check not same file
-    >>> log_and_raise_if_source_file_equals_target_file('source', 'target')
+    >>> log_and_raise_if_source_file_equals_target_file(path_test_file_exists1, path_test_file_exists2)
 
     >>> # check same file
-    >>> log_and_raise_if_source_file_equals_target_file('source', 'source')    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> log_and_raise_if_source_file_equals_target_file(path_test_file_exists1, path_test_file_exists1)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    FileExistsError: RST File "source": source and target must not be the same
+    FileExistsError: RST File ".../tests/include1.py": source and target must not be the same
 
     """
-    logger = logging.getLogger('check_conf_source_equals_target')
-    if source == target:
+
+    if isinstance(source, pathlib.Path) and source == target:
         error_message = 'RST File "{source}": source and target must not be the same'.format(source=source)
-        logger.error(error_message)
+        lib_log_utils.log_error(error_message)
         raise FileExistsError(error_message)
 
 
 def log_warning_if_target_file_exist(target: str) -> None:
     """
-    >>> test_dir = lib_test.get_test_dir()
-    >>> lib_classes.GlobalSettings.quiet = False
-    >>> log_warning_if_target_file_exist(target=test_dir + '/include1.py')
-    >>> log_warning_if_target_file_exist(sys.stdout)
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_file_exists = path_test_dir / 'include1.py'
+    >>> path_test_file_not_exists = path_test_dir / 'does_not_exist'
+
+    >>> # TEST
+    >>> log_warning_if_target_file_exist(target=path_test_file_exists)
+    >>> log_warning_if_target_file_exist(target=path_test_file_not_exists)
 
     """
-    if target != sys.stdout:
-        logger = logging.getLogger('warn_target_exists')
-        if file_exists(target) and not lib_classes.GlobalSettings.quiet:
-            logger.warning('RST File "{target}" exists and will be overwritten'.format(target=target))
+    if isinstance(target, pathlib.Path):
+        if target.is_file():
+            lib_log_utils.log_warning('RST File "{target}" exists and will be overwritten'.format(target=target))
 
 
-def file_exists(file: str) -> bool:
+def read_input(source: Union[str, pathlib.Path, TextIOWrapper], encoding: str = 'utf-8-sig') -> str:
     """
-    >>> test_dir = lib_test.get_test_dir()
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_file = path_test_dir / 'test_read.rst'
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.write('test sys_stdin') == 14
+    >>> assert wrapper.seek(0, 0) == 0
 
-    >>> assert file_exists('does not exist') == False
-    >>> assert file_exists(test_dir + '/include1.py') == True
-    """
-    return os.path.isfile(file)
-
-
-def read_input(source: Any, encoding: str = 'utf-8-sig') -> str:
-    """
-    >>> test_dir = lib_test.get_test_dir()
+    >>> # read from string
+    >>> assert read_input('test string') == 'test string'
 
     >>> # read from input file
-    >>> assert read_input(test_dir + '/test_read.rst') == 'test file'
+    >>> assert read_input(path_test_file) == 'test file'
 
     >>> # read from sys.stdin
-    >>> test_file_name = test_dir + '/test_read.rst'
-    >>> test_file = open(test_file_name, 'r', encoding='utf-8-sig')
-    >>> assert read_input(test_file) == 'test file'
-    >>> test_file.close()
+    >>> assert read_input(wrapper) == 'test sys_stdin'
 
     """
-    if isinstance(source, str):
-        with open(source, encoding=encoding, mode='r') as sourcefile:
-            content = sourcefile.read()
-    else:
+
+    if isinstance(source, pathlib.Path):
+        content = source.read_text(encoding=encoding)
+    elif isinstance(source, TextIOWrapper):
         content = source.read()
+    elif isinstance(source, str):
+        content = source
+    else:
+        raise TypeError('type of source not valid')
     return content
 
 
-def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> List[SourceLine]:
+def read_source_lines(source: Union[str, pathlib.Path, TextIOWrapper], encoding: str = 'utf-8-sig') -> List[SourceLine]:
     """
-    >>> test_dir = lib_test.get_test_dir()
+
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_read_test_file = path_test_dir / 'test_read.rst'
+    >>> path_write_test_file = path_test_dir / 'write_test.txt'
+    >>> path_write_test_file.unlink(missing_ok=True)
+
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.write('test sys_stdin') == 14
+    >>> assert wrapper.seek(0, 0) == 0
 
     >>> # read from input file
-    >>> l_source_lines = read_source_lines(test_dir + '/test_read.rst')
+    >>> l_source_lines = read_source_lines(path_read_test_file)
     >>> assert l_source_lines[0].line_number == 0
     >>> assert l_source_lines[0].content == 'test file'
 
-    >>> target_file = test_dir + '/write_test.txt'
-    >>> write_output(target_file,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
-    >>> l_source_lines = read_source_lines(target_file)
+    >>> assert write_output(path_write_test_file,'line0\\n line1') == 'line0\\n line1'
+    >>> l_source_lines = read_source_lines(path_write_test_file)
     >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
+    >>> assert l_source_lines[0].content == 'line0'
     >>> assert l_source_lines[1].line_number == 1
-    >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
+    >>> assert l_source_lines[1].content == ' line1'
 
     >>> # read from sys.stdin
-    >>> test_file_name = test_dir + '/test_read.rst'
-    >>> test_file = open(test_file_name, 'r', encoding='utf-8-sig')
-    >>> l_source_lines = read_source_lines(test_file)
-    >>> test_file.close()
+    >>> l_source_lines = read_source_lines(wrapper)
     >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test file'
+    >>> assert l_source_lines[0].content == 'test sys_stdin'
 
+    >>> # read from str
+    >>> l_source_lines = read_source_lines('test from str')
+    >>> assert l_source_lines[0].line_number == 0
+    >>> assert l_source_lines[0].content == 'test from str'
+
+    >>> # TEARDOWN
+    >>> path_write_test_file.unlink(missing_ok=True)
 
     """
 
-    if isinstance(source, str):
-        with open(source, encoding=encoding, mode='r') as sourcefile:
+    if isinstance(source, pathlib.Path):
+        with open(str(source), encoding=encoding, mode='r') as sourcefile:
             content_lines = sourcefile.readlines()
-    else:
+    elif isinstance(source, TextIOWrapper):
         content_lines = source.readlines()
+    else:
+        content_lines = source.split('\n')
 
     l_source_lines = list()
     line_number = 0
@@ -264,35 +258,35 @@ def read_source_lines(source: Any, encoding: str = 'utf-8-sig') -> List[SourceLi
     return l_source_lines
 
 
-def write_output(target: Any, content: str, encoding: str = 'utf-8') -> None:
+def write_output(target: Union[str, pathlib.Path, TextIOWrapper], content: str, encoding: str = 'utf-8') -> str:
     """
-    >>> test_dir = lib_test.get_test_dir()
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_test_write_test_file = path_test_dir / 'write_test.txt'
+    >>> path_test_write_test_file.unlink(missing_ok=True)
+    >>> # create TextIOWrapper Object
+    >>> import io, os
+    >>> output = io.BytesIO()
+    >>> wrapper = io.TextIOWrapper(output, encoding = 'utf8', line_buffering=True)
+    >>> assert wrapper.seek(0, 0) == 0
+
 
     >>> # write to file
-    >>> target_file = test_dir + '/write_test.txt'
-    >>> write_output(target_file,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
-    >>> l_source_lines = read_source_lines(target_file)
-    >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
-    >>> assert l_source_lines[1].line_number == 1
-    >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
+    >>> assert write_output(path_test_write_test_file, 'test') == 'test'
+    >>> assert path_test_write_test_file.read_text() == 'test'
 
     >>> # write to stdout
-    >>> target_file_name = test_dir + '/write_test.txt'
-    >>> target_file_object = open(target_file_name, mode='w', encoding='utf-8')
-    >>> write_output(target_file_object,'test!"§$%&/()=?*#öäüÖÄÜ€\\ntest!"§$%&/()=?*#öäüÖÄÜ€')
-    >>> target_file_object.close()
-    >>> l_source_lines = read_source_lines(target_file_name)
-    >>> assert l_source_lines[0].line_number == 0
-    >>> assert l_source_lines[0].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
-    >>> assert l_source_lines[1].line_number == 1
-    >>> assert l_source_lines[1].content == 'test!"§$%&/()=?*#öäüÖÄÜ€'
+    >>> assert write_output(wrapper, 'test') == 'test'
+    >>> assert wrapper.seek(0, 0) == 0
+    >>> assert wrapper.read() == 'test'
 
+    >>> # Teardown
+    >>> path_test_write_test_file.unlink(missing_ok=True)
 
     """
 
-    if isinstance(target, str):
-        with open(target, encoding=encoding, mode='w') as file:
-            file.write(content)
-    else:
+    if isinstance(target, pathlib.Path):                # write to file
+        target.write_text(content, encoding=encoding)
+    elif isinstance(target, TextIOWrapper):             # write to sys.stdout
         target.write(content)
+    return content                                      # return text

@@ -2,30 +2,25 @@
 import errno
 import pathlib
 import sys
-from typing import List
+from typing import Dict, Union
+
+# EXT
+from docopt import docopt
 
 # OWN
 import lib_log_utils
 
 # PROJECT
-
 # imports for local pytest
 try:
-    from .libs import lib_args                          # type: ignore # pragma: no cover
-    from .libs import lib_main                          # type: ignore # pragma: no cover
-    from .libs import lib_test                          # type: ignore # pragma: no cover
-    from .libs import lib_test_compare_results          # type: ignore # pragma: no cover
+    from .__doc__ import __doc__
+    from . import __init__conf__
+    from .libs import lib_main
 except ImportError:                                     # type: ignore # pragma: no cover
-    pass                                                # type: ignore # pragma: no cover
-
-# imports for doctest local
-try:
-    from libs import lib_args                           # type: ignore # pragma: no cover
+    # imports for doctest local
+    from __doc__ import __doc__     # type: ignore  # pragma: no cover
+    import __init__conf__           # type: ignore  # pragma: no cover
     from libs import lib_main                           # type: ignore # pragma: no cover
-    from libs import lib_test                           # type: ignore # pragma: no cover
-    from libs import lib_test_compare_results           # type: ignore # pragma: no cover
-except ImportError:                                     # pragma: no cover
-    pass                                                # pragma: no cover
 
 
 def get_version_commandline() -> str:
@@ -34,69 +29,181 @@ def get_version_commandline() -> str:
     return version
 
 
-def main(sys_argv: List[str] = sys.argv[1:]) -> None:
+def main(docopt_args: Dict[str, Union[bool, str, None]]) -> None:
     """
-    >>> import pathlib
-    >>> source_file = lib_test.get_test_dir() + '/../../.docs/README_template.rst'
-    >>> target_file = lib_test.get_test_dir() + '/../../.docs/README_template_doctest_included.rst'
-    >>> # SETUP
-    >>> if pathlib.Path(target_file).exists(): pathlib.Path(target_file).unlink()
-    >>> main(['include', '-s', source_file, '-t', target_file])
-    >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    [...] WARNING : RST File ... exists and will be overwritten
-    >>> # Tear Down
-    >>> pathlib.Path(target_file).unlink()
+    >>> # Setup tests
+    >>> args = dict()
+    >>> args['--version'] = False
+    >>> args['--info'] = False
+    >>> args['include'] = False
+    >>> args['replace'] = False
+    >>> args['--source'] = 'stdin'
+    >>> args['--target'] = 'stdout'
+    >>> args['--source_encoding'] = 'utf-8-sig'
+    >>> args['--target_encoding'] = 'utf-8'
+    >>> args['--inplace'] = False
+    >>> args['--quiet'] = False
+    >>> args['<old>'] = None
+    >>> args['<new>'] = None
+    >>> args['<count>'] = None
 
-    >>> lib_test.run_template_tests()
-    >>> lib_test.run_template_tests_not_supported()
+    >>> # Test Version
+    >>> args['--version'] = True
+    >>> args['--info'] = False
+    >>> main(docopt_args=args)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    version: ...
 
-    >>> # test no parameter given
-    >>> main([])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    usage: ...
 
-    >>> # test help
-    >>> main(['-h'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Traceback (most recent call last):
-        ...
-    SystemExit: 0
+    >>> # Test Info
+    >>> args['--version'] = False
+    >>> args['--info'] = True
+    >>> main(docopt_args=args)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    information for ...
 
-    >>> # test replace
-    >>> source_file = lib_test.get_test_dir() + '/test1_no_includes_template.rst'
-    >>> target_file = lib_test.get_test_dir() + '/test1_no_includes_result.rst'
-    >>> expected_file_replace = lib_test.get_test_dir() + '/test1_no_includes_expected_replace.rst'
-    >>> expected_file = lib_test.get_test_dir() + '/test1_no_includes_expected.rst'
+    >>> # Test no args given
+    >>> args['--version'] = False
+    >>> args['--info'] = False
+    >>> main(docopt_args=args)
 
-    >>> lib_test.remove_file_silent(target_file)
-    >>> main(['replace', '-s', source_file, '-t', target_file, '=', '*', '-1'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_compare_results.compare_results_equal(expected_file_replace, target_file)
+    >>> # Setup Include Test 1
+    >>> path_doc_dir = pathlib.Path(__file__).parent.parent / '.docs'
+    >>> path_source_file = path_doc_dir / 'README_template.rst'
+    >>> path_target_file = path_doc_dir / 'README_doctest.rst'
+    >>> path_target_file.unlink(missing_ok=True)
+    >>> args = dict()
+    >>> args['--version'] = False
+    >>> args['--info'] = False
+    >>> args['include'] = True
+    >>> args['replace'] = False
+    >>> args['--source'] = str(path_source_file)
+    >>> args['--target'] = str(path_target_file)
+    >>> args['--source_encoding'] = 'utf-8-sig'
+    >>> args['--target_encoding'] = 'utf-8'
+    >>> args['--inplace'] = False
+    >>> args['--quiet'] = False
+    >>> args['<old>'] = None
+    >>> args['<new>'] = None
+    >>> args['<count>'] = None
 
-    >>> # test include source and target given
-    >>> lib_test.remove_file_silent(target_file)
-    >>> main(['include', '-s', source_file, '-t', target_file])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    >>> assert lib_test_compare_results.compare_results_equal(expected_file, target_file)
+    >>> # Test Include 1
+    >>> main(docopt_args=args)
 
-    >>> main(['-v'])  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    Version ...
+    >>> # teardown Test Include 1
+    >>> path_target_file.unlink(missing_ok=True)
+
+    >>> # Setup Include Test 2
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent / 'tests'
+    >>> path_source_file = path_test_dir / 'test1_no_includes_template.rst'
+    >>> path_target_file = path_test_dir / 'test1_no_includes_result.rst'
+    >>> path_expected_file = path_test_dir / 'test1_no_includes_expected.rst'
+    >>> path_target_file.unlink(missing_ok=True)
+    >>> args = dict()
+    >>> args['--version'] = False
+    >>> args['--info'] = False
+    >>> args['include'] = True
+    >>> args['replace'] = False
+    >>> args['--source'] = str(path_source_file)
+    >>> args['--target'] = str(path_target_file)
+    >>> args['--source_encoding'] = 'utf-8-sig'
+    >>> args['--target_encoding'] = 'utf-8'
+    >>> args['--inplace'] = False
+    >>> args['--quiet'] = False
+    >>> args['<old>'] = None
+    >>> args['<new>'] = None
+    >>> args['<count>'] = None
+
+    >>> # Test Include 2
+    >>> main(docopt_args=args)
+    >>> assert path_target_file.read_text() == path_expected_file.read_text()
+
+    >>> # teardown Test Include 2
+    >>> path_target_file.unlink(missing_ok=True)
+
+    >>> # Setup Replace Test
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent / 'tests'
+    >>> path_source_file = path_test_dir / 'test1_no_includes_template.rst'
+    >>> path_target_file = path_test_dir / 'test1_no_includes_result.rst'
+    >>> path_expected_file = path_test_dir / 'test1_no_includes_expected_replace.rst'
+    >>> path_target_file.unlink(missing_ok=True)
+
+    >>> args = dict()
+    >>> args['--version'] = False
+    >>> args['--info'] = False
+    >>> args['include'] = False
+    >>> args['replace'] = True
+    >>> args['--source'] = str(path_source_file)
+    >>> args['--target'] = str(path_target_file)
+    >>> args['--source_encoding'] = 'utf-8-sig'
+    >>> args['--target_encoding'] = 'utf-8'
+    >>> args['--inplace'] = False
+    >>> args['--quiet'] = False
+    >>> args['<old>'] = '='
+    >>> args['<new>'] = '*'
+    >>> args['<count>'] = '-1'
+
+    >>> # Test replace
+    >>> main(docopt_args=args)
+    >>> assert path_target_file.read_text() == path_expected_file.read_text()
+
+    >>> # teardown Test Replace
+    >>> path_target_file.unlink(missing_ok=True)
 
     """
     try:
-        lib_log_utils.add_stream_handler()
-        argparse_namespace, parser = lib_args.parse_args(sys_argv)
+        if docopt_args['--version']:
+            __init__conf__.print_version()
+            return
 
-        if argparse_namespace.version:
-            print('Version {version}'.format(version=get_version_commandline()))
-        elif argparse_namespace.which_parser == 'parser_replace':
-            lib_main.rst_str_replace(argparse_namespace.source, argparse_namespace.target,
-                                     argparse_namespace.old, argparse_namespace.new, argparse_namespace.count,
-                                     argparse_namespace.source_encoding, argparse_namespace.target_encoding, argparse_namespace.inplace)
-        elif argparse_namespace.which_parser == 'parser_include':
-            lib_main.rst_inc(argparse_namespace.source,
-                             argparse_namespace.target,
-                             argparse_namespace.source_encoding,
-                             argparse_namespace.target_encoding,
-                             argparse_namespace.inplace)
+        elif docopt_args['--info']:
+            __init__conf__.print_info()
+            return
+
+        # get the docopt commandline values
+
+        inplace = docopt_args['--inplace']
+        quiet = docopt_args['--quiet']
+
+        source = docopt_args['--source']
+        if source == 'stdin':
+            source = sys.stdin
         else:
-            parser.print_help()
+            source = pathlib.Path(source)
+
+        target = docopt_args['--target']
+        if target == 'stdout':
+            target = sys.stdout
+            quiet = True
+        else:
+            target = pathlib.Path(target)
+
+        source_encoding = docopt_args['--source_encoding']
+        target_encoding = docopt_args['--target_encoding']
+
+        if docopt_args['<count>']:
+            count = int(docopt_args['<count>'])
+        else:
+            count = -1
+
+        if docopt_args['<old>']:
+            old = str(docopt_args['<old>'])
+        else:
+            old = ''
+
+        if docopt_args['<new>']:
+            new = str(docopt_args['<new>'])
+        else:
+            new = ''
+
+        # set logging
+        lib_log_utils.add_stream_handler()
+        lib_log_utils.BannerSettings.quiet = quiet
+
+        # do the thing
+        if docopt_args['replace']:
+            lib_main.rst_str_replace(source=source, target=target, old=old, new=new, count=count,
+                                     source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
+        elif docopt_args['include']:
+            lib_main.rst_inc(source=source, target=target, source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
 
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
@@ -113,5 +220,19 @@ def main(sys_argv: List[str] = sys.argv[1:]) -> None:
         sys.exit(errno.EINVAL)      # pragma: no cover
 
 
+# entry point via commandline
+def main_commandline() -> None:
+    """
+    >>> main_commandline()  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+        ...
+    docopt.DocoptExit: ...
+
+    """
+    docopt_args = docopt(__doc__)
+    main(docopt_args)       # pragma: no cover
+
+
+# entry point if main
 if __name__ == '__main__':
-    main()                          # pragma: no cover
+    main_commandline()

@@ -4,10 +4,10 @@ try:
     # for pytest
     from . import lib_classes
     from .lib_classes import Block, SourceLine
-except ImportError:                                                 # pragma: no cover
+except ImportError:                                 # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs import lib_classes                        # type: ignore # pragma: no cover
-    from rst_include.libs.lib_classes import Block, SourceLine      # type: ignore # pragma: no cover
+    import lib_classes                              # type: ignore # pragma: no cover
+    from lib_classes import Block, SourceLine       # type: ignore # pragma: no cover
 
 
 def divide_source_line_in_blocks(source_file_name: str, source_lines: List[SourceLine]) -> List[Block]:
@@ -30,12 +30,12 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: List[Sourc
     >>> source_lines.append(lib_classes.SourceLine(line_number=4716, content='.. include:: some_file.yaml'))
     >>> source_lines.append(lib_classes.SourceLine(line_number=4717, content='    :code: yaml'))
     >>> blocks = divide_source_line_in_blocks(source_file_name, source_lines)
-    >>> assert blocks[0].source_file_name == 'some_source_file'
+    >>> assert blocks[0].source == 'some_source_file'
     >>> assert blocks[0].l_source_lines[0].line_number == 4711
     >>> assert blocks[0].l_source_lines[0].content == 'This is a test'
     >>> assert blocks[0].l_source_lines[1].line_number == 4712
     >>> assert blocks[0].l_source_lines[1].content == 'a new block will only occur'
-    >>> assert blocks[1].source_file_name == 'some_source_file'
+    >>> assert blocks[1].source == 'some_source_file'
     >>> assert blocks[1].l_source_lines[0].line_number == 4714
     >>> assert blocks[1].l_source_lines[0].content == '.. include:: some_file.py'
     >>> assert blocks[1].l_source_lines[1].line_number == 4715
@@ -78,6 +78,7 @@ def source_line_starts_with_include_statement(source_line: SourceLine) -> bool:
 
 def source_line_contains_option(source_line: SourceLine) -> bool:
     """
+    >>> # TEST
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='  :code: python ')
     >>> source_line_contains_option(source_line)
     True

@@ -1,13 +1,13 @@
 rst_include
 ===========
 
-|Pypi Status| |pyversion| |license| |maintenance|
+|Pypi Status| |license| |maintenance|
 
-|Build Status| |Codecov Status| |Better Code| |code climate| |snyk security|
+|Build Status| |Codecov Status| |Better Code| |code climate| |code climate coverage| |snyk security|
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
-.. |maintenance| image:: https://img.shields.io/maintenance/yes/{last_update_yyyy}.svg
+.. |maintenance| image:: https://img.shields.io/maintenance/yes/2021.svg
 .. |Build Status| image:: https://travis-ci.org/bitranox/rst_include.svg?branch=master
    :target: https://travis-ci.org/bitranox/rst_include
 .. for the pypi status link note the dashes, not the underscore !
@@ -22,9 +22,9 @@ rst_include
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
-.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
-   :target: https://badge.fury.io/py/rst_include
-   :alt: Python Version
+.. |code climate coverage| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/test_coverage
+   :target: https://codeclimate.com/github/bitranox/rst_include/test_coverage
+   :alt: Code Coverage
 
 since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
 
@@ -43,32 +43,30 @@ This has many advantages like :
 - commandline or programmatic interface, You can even use it in the travis.yml
 - commandline interface supporting shellscript, cmd, pipes, config-files
 
-This README was also created with rst_include, You might look at ./docs/README_template.rst ,
-build_docs.sh, build_docs.cmd and build_docs.py as examples. (they all do the same, just different versions)
+automated tests, Travis Matrix, Documentation, Badges for this Project are managed with `lib_travis_template <https://github
+.com/bitranox/lib_travis_template>`_ - check it out
 
-The travis.yml builds the Documentation on every run, so You can be sure that there are no Errors.
-rst_include does only work on python > 3.6
+supports python 3.6-3.8, pypy3 and possibly other dialects.
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, OsX, Windows and Wine <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, macOS, Windows and Wine <https://travis-ci
+.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
 ----
 
 - `Installation and Upgrade`_
-- `Basic Usage`_
-    - `issue command`_
-    - `get help`_
-    - `replace include statements`_
+- `Usage`_
+    - `use rst_include from commandline`_
     - `multiline text replacement`_
-
-- Examples
-    - `Example Build Script Python`_
-    - `Example Build Script DOS Batch`_
-    - `Example Build Script Shellscript`_
-    - `RST Includes Examples`_
+- `Examples`_
+    - `Example Python`_
+    - `Example Shellscript`_
+    - `Example Batch`_
+- `rst file examples`_
     - `simple code include`_
     - `text or RST file include`_
     - `include jupyter notebooks`_
-- `RST Include Parameters`_
+- `rst file include parameters`_
+- `Usage from Commandline`_
 - `Requirements`_
 - `Acknowledgements`_
 - `Contribute`_
@@ -78,173 +76,112 @@ rst_include does only work on python > 3.6
 - `License`_
 - `Changelog`_
 
------------------------------------------------------------------
+----
+
+
 
 Installation and Upgrade
 ------------------------
 
-From source code:
+Before You start, its highly recommended to update pip and setup tools:
+
 
 .. code-block:: bash
 
-    # normal install
-    python setup.py install
-    # test without installing
-    python setup.py test
+    python3 -m pip --upgrade pip
+    python3 -m pip --upgrade setuptools
+    python3 -m pip --upgrade wheel
 
-via pip latest Release:
 
-.. code-block:: bash
-
-    # latest Release from pypi
-    pip install rst_include
-
-    # test without installing
-    pip install rst_include --install-option test
-
-via pip latest Development Version:
+install latest version with pip (recommended):
 
 .. code-block:: bash
 
     # upgrade all dependencies regardless of version number (PREFERRED)
-    pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
-    # normal install
-    pip install --upgrade git+https://github.com/bitranox/rst_include.git
-    # test without installing
-    pip install git+https://github.com/bitranox/rst_include.git --install-option test
+    python3 -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
 
-via requirements.txt:
+    # test without installing (can be skipped)
+    python3 -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
+
+    # normal install
+    python3 -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
+
+
+install latest pypi Release (if there is any):
+
+.. code-block:: bash
+
+    # latest Release from pypi
+    python3 -m pip install --upgrade rst_include
+
+    # test without installing (can be skipped)
+    python3 -m pip install rst_include --install-option test
+
+    # normal install
+    python3 -m pip install --upgrade rst_include
+
+
+
+include it into Your requirements.txt:
 
 .. code-block:: bash
 
     # Insert following line in Your requirements.txt:
-    # for the latest Release:
+    # for the latest Release on pypi (if any):
     rst_include
     # for the latest Development Version :
-    git+https://github.com/bitranox/rst_include.git
+    rst_include @ git+https://github.com/bitranox/rst_include.git
 
     # to install and upgrade all modules mentioned in requirements.txt:
-    pip install --upgrade -r /<path>/requirements.txt
-
-via python:
-
-.. code-block:: python
-
-    # for the latest Release
-    python -m pip install upgrade rst_include
-
-    # for the latest Development Version
-    python -m pip install upgrade git+https://github.com/bitranox/rst_include.git
-
------------------------------------------------------------------
-
-Basic Usage
-===========
+    python3 -m pip install --upgrade -r /<path>/requirements.txt
 
 
-since rst_include is registered as a console script command with Your current python interpreter, You have to use the command "rst_include" (not "rst_include.py")
-
-
-issue command
--------------
+Install from source code:
 
 .. code-block:: bash
 
-    # issue command on shell or windows commandline
-    $> rst_include [OPTIONS]
+    # cd ~
+    $ git clone https://github.com/bitranox/rst_include.git
+    $ cd rst_include
 
-    # or, if python/bin is not in Your python path :
-    # on Windows
-    $> c:\python37\scripts\rst_include [OPTIONS]
-    # on Linux/oSX
-    $> /python37/bin/rst_include [OPTIONS]
+    # test without installing (can be skipped)
+    python3 setup.py test
 
-    # issue command with python interpreter
-    $> python -m rst_include [OPTIONS]
+    # normal install
+    python3 setup.py install
 
 
+via makefile:
 
-get help
---------
+if You are on linux, makefiles are a very convenient way to install. Here we can do much more, like installing virtual environment, clean caches and so on.
+This is still in development and not recommended / working at the moment:
 
-.. code-block:: bash
+.. code-block:: shell
 
-    # get help on shell or windows commandline
-    $> rst_include -h
+    # from Your shell's homedirectory:
+    $ git clone https://github.com/bitranox/rst_include.git
+    $ cd rst_include
 
-.. code-block:: bash
+    # to run the tests:
+    $ make test
 
-    usage: rst_include [-h] [-v] {include,replace} ...
+    # to install the package
+    $ make install
 
-    Process .rst File Includes
+    # to clean the package
+    $ make clean
 
-    positional arguments:
-      {include,replace}
-        include          include rst includes
-        replace          string replace
+    # uninstall the package
+    $ make uninstall
 
-    optional arguments:
-      -h, --help         show this help message and exit
-      -v, --version      version
+Usage
+-----------
 
-    check the documentation on github
+Yo might use rst_include from the commandline (Windows, Linux and MacOs is supported) or import the module to Your python script and use it from there. You
+can also use it from Bash Scripts and Windows Batch Files - See Examples.
 
-.. code-block:: bash
-
-    # get help on shell or windows commandline for include
-    $> rst_include include -h
-
-.. code-block:: bash
-
-    usage: rst_include include [-h] [-s [source]] [-t [target]]
-                               [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-q]
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -s [source], --source [source]
-                            default: stdin
-      -t [target], --target [target]
-                            default: stdout
-      -se [source encoding], --source_encoding [source encoding]
-                            default: utf-8-sig
-      -te [target encoding], --target_encoding [target encoding]
-                            default: utf-8
-      -i, --inplace         inplace - target file = sourcefile
-      -q, --quiet           quiet
-
-.. code-block:: bash
-
-    # get help on shell or windows commandline for string replace
-    $> rst_include replace -h
-
-.. code-block:: bash
-
-    usage: rst_include replace [-h] [-s [source]] [-t [target]]
-                               [-se [source encoding]] [-te [target encoding]]
-                               [-i] [-q]
-                               old new [count]
-
-    positional arguments:
-      old                   old
-      new                   new
-      count                 count
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -s [source], --source [source]
-                            default: stdin
-      -t [target], --target [target]
-                            default: stdout
-      -se [source encoding], --source_encoding [source encoding]
-                            default: utf-8-sig
-      -te [target encoding], --target_encoding [target encoding]
-                            default: utf-8
-      -i, --inplace         inplace - target file = sourcefile
-      -q, --quiet           quiet
-
-replace include statements
---------------------------
+use rst_include from commandline
+--------------------------------
 
 .. code-block:: bash
 
@@ -258,12 +195,15 @@ replace include statements
     # absolute path
     $> rst_include include -s /project/docs/source.rst -t /project/docs/target.rst
 
-    # on linux via pipe
-    $> cat /project/docs/source.rst | rst_include include > /project/docs/target.rst
+    # on linux via pipe - You need to change to the source directory first because of relative include paths
+    $> cd /project/docs
+    $> cat ./source.rst | rst_include include > /project/docs/target.rst
 
-    # on Windows via pipe
-    $> type /project/docs/source.rst | rst_include include > /project/docs/target.rst
+    # on Windows via pipe - You need to change to the source directory first because of relative include paths
+    $> cd /project/docs
+    $> type ./source.rst | rst_include include > /project/docs/target.rst
 
+-----------------------------------------------------------------
 
 multiline text replacement
 --------------------------
@@ -294,11 +234,13 @@ piping under Linux:
     # multiline example
     $> cat ./text.txt | rst_include replace "line1${IFS}line2" "line1${IFS}something_between${IFS}line2" > ./text.txt
 
-
 -----------------------------------------------------------------
 
-Example Build Script Python
-===========================
+Examples
+========
+
+Example Python
+==============
 
 .. code-block:: python
 
@@ -311,170 +253,19 @@ Example Build Script Python
     import subprocess
 
     # OWN
-    import lib_log_utils
+    from rst_include import *
 
-    if sys.version_info < (3, 6):
-        lib_log_utils.add_stream_handler()
-        main_logger = logging.getLogger('init')
-        main_logger.error('only Python Versions from 3.6 are supported')
-        sys.exit(1)
-    else:
-        # OWN
-        from rst_include import *
+    def main():
+        rst_inc(source='./.docs/README_template.rst', target='./README.rst')
+        rst_str_replace(source='./README.rst', target='', old='{some pattern}', new='some text', inplace=True)
 
+    if __name__ == '__main':
+        main()
 
-    # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
-    codeclimate_link_hash = "ff3f414903627e5cfc35"
+----
 
-
-    def project_specific(repository_slug, repository, repository_dashed):
-        # PROJECT SPECIFIC
-        logger = logging.getLogger('project_specific')
-        logger.info('create help documentation files {dir}'.format(dir=os.path.abspath(os.path.curdir)))
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py -h > ./.docs/rst_include_help_output.txt'.
-                       format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py include -h > ./.docs/rst_include_help_include_output.txt'.
-                       format(sys_executable=sys.executable), shell=True, check=True)
-        subprocess.run('{sys_executable} ./rst_include/rst_include.py replace -h > ./.docs/rst_include_help_replace_output.txt'.
-                       format(sys_executable=sys.executable), shell=True, check=True)
-
-
-    def parse_args(cmd_args=sys.argv[1:]):
-        # type: ([]) -> []
-        parser = argparse.ArgumentParser(
-            description='Create Readme.rst',
-            epilog='check the documentation on github',
-            add_help=True)
-
-        parser.add_argument('travis_repo_slug', metavar='TRAVIS_REPO_SLUG in the form "<github_account>/<repository>"')
-        args = parser.parse_args(cmd_args)
-        return args, parser
-
-
-    def main(args):
-        logger = logging.getLogger('build_docs')
-        logger.info('create the README.rst')
-        travis_repo_slug = args.travis_repo_slug
-        repository = travis_repo_slug.split('/')[1]
-        repository_dashed = repository.replace('_', '-')
-
-        project_specific(travis_repo_slug, repository, repository_dashed)
-
-        """
-        paths absolute, or relative to the location of the config file
-        the notation for relative files is like on windows or linux - not like in python.
-        so You might use ../../some/directory/some_document.rst to go two levels back.
-        avoid absolute paths since You never know where the program will run.
-        """
-
-        logger.info('include the include blocks')
-        rst_inc(source='./.docs/README_template.rst',
-                target='./README.rst')
-
-        # please note that the replace syntax is not shown correctly in the README.rst,
-        # because it gets replaced itself by the build_docs.py
-        # we could overcome this by first replacing, and afterwards including -
-        # check out the build_docs.py for the correct syntax !
-        logger.info('replace repository related strings')
-        rst_str_replace(source='./README.rst',
-                        target='',
-                        old='bitranox/rst_include',
-                        new=travis_repo_slug,
-                        inplace=True)
-        rst_str_replace(source='./README.rst',
-                        target='',
-                        old='rst_include',
-                        new=repository,
-                        inplace=True)
-        rst_str_replace(source='./README.rst',
-                        target='',
-                        old='rst-include',
-                        new=repository_dashed,
-                        inplace=True)
-
-        rst_str_replace(source='./README.rst',
-                        target='',
-                        old='ff3f414903627e5cfc35',
-                        new=codeclimate_link_hash,
-                        inplace=True)
-
-        logger.info('done')
-        sys.exit(0)
-
-
-    if __name__ == '__main__':
-        lib_log_utils.add_stream_handler()
-        main_logger = logging.getLogger('main')
-        try:
-            _args, _parser = parse_args()
-
-            main(_args)
-        except FileNotFoundError:
-            # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
-            sys.exit(errno.ENOENT)      # No such file or directory
-        except FileExistsError:
-            sys.exit(errno.EEXIST)      # File exists
-        except TypeError:
-            sys.exit(errno.EINVAL)      # Invalid Argument
-        except ValueError:
-            sys.exit(errno.EINVAL)      # Invalid Argument
-
-Example Build Script DOS Batch
-==============================
-
-.. code-block:: bat
-
-    REM
-    REM rst_include needs to be installed and python paths set correctly
-    @echo off
-    cls
-
-    REM # You might also use Environment Variable here, or as commandline parameter
-    REM # this is just an example, I use actually the build_readme.py python file myself
-    REM # I do not recommend cmd files anymore - why it it is so much easier under python ...
-    REM # I am sure there is a more elegant was to do it on batch files, this is only an example
-
-    SET repository_slug="bitranox/rst_include"
-    SET repository="rst_include"
-    SET codeclimate_link_hash="ff3f414903627e5cfc35"
-
-    REM # get dashed repository name for pypi links
-    echo %repository% | rst_include replace "_" "-" > temp.txt
-    set /p repository_dashed= < temp.txt
-    del temp.txt
-
-
-    REM paths absolute, or relative to the location of the config file
-    REM the notation for relative files is like on windows or linux - not like in python.
-    REM so You might use ../../some/directory/some_document.rst to go two levels back.
-    REM avoid absolute paths since You never know where the program will run.
-
-    echo 'create the sample help outputs'
-    rst_include -h > ./.docs/rst_include_help_output.txt
-    rst_include include -h > ./.docs/rst_include_help_include_output.txt
-    rst_include replace -h > ./.docs/rst_include_help_replace_output.txt
-
-    echo "import the include blocks"
-    rst_include include -s ./.docs/README_template.rst -t ./README.rst
-
-    REM please note that the replace syntax is not shown correctly in the README.rst,
-    REM because it gets replaced itself by the build_docs.py
-    REM we could overcome this by first replacing, and afterwards including -
-    REM check out the build_docs.cmd for the correct syntax !
-
-    echo "replace repository_slug"
-    rst_include --inplace replace -s ./.docs/README_template.rst bitranox/rst_include %repository_slug%
-    echo "replace repository"
-    rst_include --inplace replace -s ./.docs/README_template.rst rst_include %repository%
-    echo "replace repository_dashed"
-    rst_include --inplace replace -s ./.docs/README_template.rst rst-include %repository_dashed%
-    echo "replace codeclimate_link_hash"
-    rst_include --inplace replace -s ./.docs/README_template.rst ff3f414903627e5cfc35 %codeclimate_link_hash%
-
-    echo 'finished'
-
-Example Build Script Shellscript
-================================
+Example Shellscript
+===================
 
 .. code-block:: bash
 
@@ -484,99 +275,39 @@ Example Build Script Shellscript
     export SUDO_ASKPASS="${sudo_askpass}"
     export NO_AT_BRIDGE=1  # get rid of (ssh-askpass:25930): dbind-WARNING **: 18:46:12.019: Couldn't register with accessibility bus: Did not receive a reply.
 
-
-    function set_lib_bash_permissions {
-        local user
-        user="$(printenv USER)"
-        $(command -v sudo 2>/dev/null) chmod -R 0755 "/usr/local/lib_bash"
-        $(command -v sudo 2>/dev/null) chmod -R +x /usr/local/lib_bash/*.sh
-        $(command -v sudo 2>/dev/null) chown -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chown -R "${user}" /usr/local/lib_bash || echo "giving up set owner" # there is no user root on travis
-        $(command -v sudo 2>/dev/null) chgrp -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chgrp -R "${user}" /usr/local/lib_bash || echo "giving up set group" # there is no user root on travis
-    }
-
-
-    function install_lib_bash {
-        echo "installing lib_bash"
-        $(command -v sudo 2>/dev/null) rm -fR /usr/local/lib_bash
-        $(command -v sudo 2>/dev/null) git clone https://github.com/bitranox/lib_bash.git /usr/local/lib_bash > /dev/null 2>&1
-        set_lib_bash_permissions
-    }
-
-
-
-    function install_or_update_lib_bash {
-        if [[ -f "/usr/local/lib_bash/install_or_update.sh" ]]; then
-            # file exists - so update
-            $(command -v sudo 2>/dev/null) /usr/local/lib_bash/install_or_update.sh
-        else
-            install_lib_bash
-        fi
-    }
-
-    install_or_update_lib_bash
-
-
-    function include_dependencies {
-        source /usr/local/lib_bash/lib_color.sh
-        source /usr/local/lib_bash/lib_retry.sh
-        source /usr/local/lib_bash/lib_helpers.sh
-    }
-
-    include_dependencies
-
-
-    ### CONSTANTS
-    codeclimate_link_hash="ff3f414903627e5cfc35"
-    # TRAVIS_TAG
-
-
-    function check_repository_name {
-        if [[ -z ${TRAVIS_REPO_SLUG} ]]
-            then
-                clr_bold clr_red "ERROR no travis repository name set - exiting"
-                exit 1
-            fi
-    }
-
-    clr_bold clr_green "Build README.rst for repository: ${TRAVIS_REPO_SLUG}"
-
-    check_repository_name
-
-    repository="${TRAVIS_REPO_SLUG#*/}"                                 # "username/repository_name" --> "repository_name"
-    repository_dashed="$( echo -e "$repository" | tr  '_' '-'  )"       # "repository_name --> repository-name"
-
-    clr_green "create the sample help outputs"
-    rst_include -h > ./.docs/rst_include_help_output.txt
-    rst_include include -h > ./.docs/rst_include_help_include_output.txt
-    rst_include replace -h > ./.docs/rst_include_help_replace_output.txt
-
-    clr_green "import the include blocks"
+    echo "import the include blocks"
     rst_include include -s ./.docs/README_template.rst -t ./README.rst
 
-    clr_green "replace repository strings"
-
-    # please note that the replace syntax is not shown correctly in the README.rst,
-    # because it gets replaced itself by the build_docs.py
-    # we could overcome this by first replacing, and afterwards including -
-    # check out the build_docs.sh for the correct syntax !
+    echo "replace some patterns"
 
     # example for piping
     cat ./README.rst \
-        | rst_include --inplace replace "bitranox/rst_include" "${TRAVIS_REPO_SLUG}" \
-        | rst_include --inplace replace "rst_include" "$rst_include" \
-        | rst_include --inplace replace "rst-include" "$rst-include" \
-        | rst_include --inplace replace "ff3f414903627e5cfc35" "$ff3f414903627e5cfc35" \
+        | rst_include --inplace replace "#pattern1#" "replacement text 1" \
+        | rst_include --inplace replace "#pattern2#" "replacement text 2" \
+        | rst_include --inplace replace "#pattern3#" "replacement text 3" \
          > ./README.rst
 
-    clr_green "done"
-    clr_green "******************************************************************************************************************"
-    clr_bold clr_green "FINISHED building README.rst"
-    clr_green "******************************************************************************************************************"
+----
+
+Example Batch
+=============
+
+.. code-block:: bat
+
+    REM
+    REM rst_include needs to be installed and python paths set correctly
+    @echo off
+    cls
+
+    rst_include include -s ./.docs/README_template.rst -t ./README.rst
+    rst_include --inplace replace -s ./.docs/README_template.rst #pattern1# "replace string 1"
+
+    echo 'finished'
 
 -----------------------------------------------------------------
 
-RST Includes Examples
-=====================
+rst file examples
+=================
 
 simple code include
 ===================
@@ -592,7 +323,6 @@ simple code include
         :start-after: # start marker
         :end-before: # end-marker
         :encoding: utf-8
-
 
 text or RST file include
 ========================
@@ -624,8 +354,8 @@ Filenames can be a hash of the picture data, in order to avoid web caching issue
 
 -----------------------------------------------------------------
 
-RST Include Parameters
-======================
+rst file include parameters
+===========================
 
 taken from : http://docutils.sourceforge.net/docs/ref/rst/directives.html
 
@@ -706,38 +436,45 @@ The following options are recognized:
 
 -----------------------------------------------------------------
 
+Usage from Commandline
+------------------------
+
+.. code-block:: bash
+
+   Usage:
+       rst_include (-h | -v | -i)
+       rst_include include [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q]
+       rst_include replace [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q] <old> <new> [<count>]
+
+   Options:
+       -s <sourcefile>, --source=<sourcefile>                      source file name [default: stdin]
+       -t <targetfile>, --target=<targetfile>                      target file name [default: stdout]
+       -e <source_encoding>, --source_encoding=<source_encoding>   source encoding [default: utf-8-sig]
+       -E <target_encoding>, --target_encoding=<target_encoding>   target encoding [default: utf-8]
+       -p, --inplace                                               inplace
+       -q, --quiet                                                 quiet
+       -h, --help                                                  show help
+       -v, --version                                               show version
+       -i, --info                                                  show Info
+
+   this module exposes no other useful functions to the commandline
+
 Requirements
 ------------
-
 following modules will be automatically installed :
 
 .. code-block:: bash
 
-    ## Test Requirements
-    ## following Requirements will be installed temporarily for
-    ## "setup.py install test" or "pip install <package> --install-option test"
-    typing ; python_version < "3.5"
-    pathlib; python_version < "3.4"
-    mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"
-    pytest
-    pytest-pep8 ; python_version < "3.5"
-    pytest-pycodestyle ; python_version >= "3.5"
-    pytest-mypy ; platform_python_implementation != "PyPy" and python_version >= "3.5"
-    pytest-runner
-
     ## Project Requirements
+    docopt
     lib_list @ git+https://github.com/bitranox/lib_list.git
     lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
     lib_path @ git+https://github.com/bitranox/lib_path.git
-
------------------------------------------------------------------
 
 Acknowledgements
 ----------------
 
 - special thanks to "uncle bob" Robert C. Martin, especially for his books on "clean code" and "clean architecture"
-
------------------------------------------------------------------
 
 Contribute
 ----------
@@ -745,16 +482,12 @@ Contribute
 I would love for you to fork and send me pull request for this project.
 - `please Contribute <https://github.com/bitranox/rst_include/blob/master/CONTRIBUTING.md>`_
 
------------------------------------------------------------------
-
 License
 -------
 
 This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/MIT_License>`_
 
------------------------------------------------------------------
-
-.. Changelog link comes from the included document !
+---
 
 Changelog
 =========

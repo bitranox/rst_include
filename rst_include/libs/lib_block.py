@@ -10,12 +10,12 @@ try:
     from .lib_classes import SourceLine
     from . import lib_classes
     from . import lib_source_line
-except ImportError:                                             # type: ignore # pragma: no cover
+except ImportError:                             # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
-    from rst_include.libs.lib_classes import SourceLine         # type: ignore # pragma: no cover
-    from rst_include.libs import lib_classes                    # type: ignore # pragma: no cover
-    from rst_include.libs import lib_source_line                # type: ignore # pragma: no cover
+    from lib_classes import Block               # type: ignore # pragma: no cover
+    from lib_classes import SourceLine          # type: ignore # pragma: no cover
+    import lib_classes                          # type: ignore # pragma: no cover
+    import lib_source_line                      # type: ignore # pragma: no cover
 
 
 def is_include_block(block: Block) -> bool:

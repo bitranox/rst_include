@@ -1,12 +1,14 @@
+from io import TextIOWrapper
+import pathlib
 from typing import List, Union
 
 
-class GlobalSettings(object):
-    quiet = False
-
-
 class RstFile(object):
-    def __init__(self, source: str, target: str, source_encoding: str = 'utf-8-sig', target_encoding: str = 'utf-8'):
+    def __init__(self,
+                 source: Union[str, pathlib.Path, TextIOWrapper],
+                 target: Union[str, pathlib.Path, TextIOWrapper],
+                 source_encoding: str = 'utf-8-sig',
+                 target_encoding: str = 'utf-8'):
         self.source = source
         self.source_encoding = source_encoding
         self.target = target
@@ -20,13 +22,13 @@ class SourceLine(object):
 
 
 class Block(object):
-    def __init__(self, source_file_name: str):
+    def __init__(self, source: Union[str, pathlib.Path, TextIOWrapper]):
         self.is_include_block = False
-        self.source_file_name = source_file_name
+        self.source = source                            # either pathlib.Path of the source file, or "str" or "sys.stdin"
         self.l_source_lines = []                        # type: List[SourceLine]
 
-        self.include_filename = ''
-        self.include_filename_absolut = ''
+        self.include_filename = pathlib.Path()
+        self.include_filename_absolut = pathlib.Path()
         self.include_file_code = ''
         self.include_file_encoding = 'utf-8-sig'
         self.include_file_start_line = None             # type: Union[int, None]

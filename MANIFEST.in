@@ -1,7 +1,4 @@
 # see : https://docs.python.org/3.8/distutils/sourcedist.html#manifest
 
-# check if really needed
+# include rst files, like changes.rst
 include *.rst
-
-# check if really needed
-include version.txt

@@ -1,6 +1,6 @@
-|Pypi Status| |pyversion| |license| |maintenance|
+|Pypi Status| |license| |maintenance|
 
-|Build Status| |Codecov Status| |Better Code| |code climate| |snyk security|
+|Build Status| |Codecov Status| |Better Code| |code climate| |code climate coverage| |snyk security|
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
@@ -19,6 +19,6 @@
 .. |code climate| image:: https://api.codeclimate.com/v1/badges/{codeclimate_link_hash}/maintainability
    :target: https://codeclimate.com/github/{repository_slug}/maintainability
    :alt: Maintainability
-.. |pyversion| image:: https://img.shields.io/badge/python-%3E%3D3.5-brightgreen.svg
-   :target: https://badge.fury.io/py/{repository}
-   :alt: Python Version
+.. |code climate coverage| image:: https://api.codeclimate.com/v1/badges/{codeclimate_link_hash}/test_coverage
+   :target: https://codeclimate.com/github/{repository_slug}/test_coverage
+   :alt: Code Coverage

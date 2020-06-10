@@ -100,7 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# pytest cache
+# pytest
 .pytest_cache/
-
-./.docs/README_template_doctest_included.rst
+.idea/

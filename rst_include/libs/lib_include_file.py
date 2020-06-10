@@ -1,23 +1,36 @@
 # STDLIB
-import logging
-import sys
+from collections import OrderedDict
+import pathlib
 from typing import List
+
 
 # OWN
 import lib_list
+import lib_log_utils
 
 try:
     # for pytest
-    from .lib_classes import Block
+    from .lib_classes import Block, RstFile
+    from . import lib_assemble_block
     from . import lib_get_include_options
     from . import lib_str
     from . import lib_test
-except (ImportError, ModuleNotFoundError):                      # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):      # type: ignore # pragma: no cover
     # for local doctest in pycharm
-    from rst_include.libs.lib_classes import Block              # type: ignore # pragma: no cover
-    from rst_include.libs import lib_get_include_options        # type: ignore # pragma: no cover
-    from rst_include.libs import lib_str                        # type: ignore # pragma: no cover
-    from rst_include.libs import lib_test                       # type: ignore # pragma: no cover
+    from lib_classes import Block, RstFile      # type: ignore # pragma: no cover
+    import lib_assemble_block                   # type: ignore # pragma: no cover
+    import lib_get_include_options              # type: ignore # pragma: no cover
+    import lib_str                              # type: ignore # pragma: no cover
+    import lib_test                             # type: ignore # pragma: no cover
+
+
+class IncludeTrace(object):
+    def __init__(self, path_source_file: pathlib.Path, line_number: int):
+        self.path_source_file = path_source_file
+        self.line_number = line_number
+
+
+includes_stack = OrderedDict()                        # type: OrderedDict[pathlib.Path, IncludeTrace]
 
 
 def read_include_file(block: Block) -> List[str]:
@@ -33,33 +46,49 @@ def read_include_file(block: Block) -> List[str]:
     IndexError: list index out of range
     >>> assert block.include_file_lines == ['def my_include() -> None:', '    pass']
 
-    >>> block.include_filename_absolut='non_existing_file'
+    >>> block.include_filename_absolut=pathlib.Path('non_existing_file')
     >>> content = read_include_file(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
     ...
-    OSError: Error in File "...", Line 47100: File read Error "[Errno ...] No such file or directory: 'non_existing_file'"
-
+    OSError: Error in File ".../tests/README.template.rst", Line 47100: File not found : "non_existing_file"
 
     """
 
-    logger = logging.getLogger('read_include_file')
-
     try:
-        with open(block.include_filename_absolut, mode='r', encoding=block.include_file_encoding) as include_file:
-            include_file_lines = include_file.readlines()
-            include_file_lines = [line.rstrip() for line in include_file_lines]
-            include_file_lines = lib_list.ls_strip_list(include_file_lines)
-            block.include_file_lines = include_file_lines
+        if not block.include_filename_absolut.is_file():
+            raise FileNotFoundError()
+
+        if block.include_filename_absolut in includes_stack:
+            raise RuntimeError('Recursion detected')    # TODO better Error Description
+
+        includes_stack[block.include_filename_absolut] = IncludeTrace(block.source, block.l_source_lines[0].line_number)
+
+        rst_file = RstFile(source=block.include_filename_absolut, target='', source_encoding=block.include_file_encoding)
+        content = lib_assemble_block.create_rst_file_from_template(rst_file)
+        include_file_lines = content.split('\n')
+        include_file_lines = right_strip_lines_from_list(include_file_lines)
+        include_file_lines = delete_empty_lines_from_list(include_file_lines)
+        block.include_file_lines = include_file_lines
+        includes_stack.popitem()
         return include_file_lines
 
-    except Exception:
-        exc_info = sys.exc_info()[1]
-        s_error = 'Error in File "{source_file}", Line {line_number}: File read Error "{exc_info}"'.format(
-            source_file=block.source_file_name,
-            line_number=block.l_source_lines[0].line_number,
-            exc_info=exc_info)
-        logger.error(s_error)
+    except FileNotFoundError:
+        s_error = 'Error in File "{source_file}", Line {line_number}: File not found : '\
+                  '"{include_file}"'.format(source_file=block.source,
+                                            line_number=block.l_source_lines[0].line_number,
+                                            include_file=block.include_filename_absolut)
+        lib_log_utils.log_exception_traceback(s_error)
         raise IOError(s_error)
+
+
+def delete_empty_lines_from_list(source_lines: List[str]) -> List[str]:
+    source_lines_without_empty_lines = lib_list.ls_strip_list(source_lines)
+    return source_lines_without_empty_lines
+
+
+def right_strip_lines_from_list(source_lines: List[str]) -> List[str]:
+    right_striped_lines = [line.rstrip() for line in source_lines]
+    return right_striped_lines
 
 
 def process_include_file_lines(block: Block) -> None:
@@ -193,29 +222,27 @@ def slice_include_file_markers(block: Block) -> None:
 
 
 def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block) -> None:
-    logger = logging.getLogger('slice_include_file_start_after')
     if block.include_file_start_after not in content:
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : start-after "{start_after}" not found'.format(
-            source_file=block.source_file_name,
+            source_file=block.source,
             line_number=block.l_source_lines[0].line_number,
             include_filename=block.include_filename,
             start_after=block.include_file_start_after)
         s_error = s_error + get_additional_error_string(block)
-        logger.error(s_error)
+        lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
 
 
 def log_and_raise_if_end_before_not_found_in_string(content: str, block: Block) -> None:
-    logger = logging.getLogger('slice_include_file_end_before')
     if block.include_file_end_before not in content:
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : end-before "{end_before}" not found'.format(
-            source_file=block.source_file_name,
+            source_file=block.source,
             line_number=block.l_source_lines[0].line_number,
             include_filename=block.include_filename,
             end_before=block.include_file_end_before)
         s_error = s_error + get_additional_error_string(block)
         s_error = s_error + get_additional_error_string_start_after(block)
-        logger.error(s_error)
+        lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
 
 
