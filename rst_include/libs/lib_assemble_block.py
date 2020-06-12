@@ -1,4 +1,5 @@
 # STDLIB
+import pathlib
 from typing import List
 
 # OWN
@@ -38,14 +39,16 @@ except ImportError:                             # type: ignore # pragma: no cove
 
 def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
     """
-    >>> # test files without include
-    >>> test_dir = lib_test.get_path_test_dir()
-    >>> source = test_dir + '/test1_no_includes_template.rst'
-    >>> target = test_dir + '/test1_no_includes_result.rst'
-    >>> expected = test_dir + '/test1_no_includes_expected.rst'
-    >>> l_rst_files = [lib_classes.RstFile(source, target)]
+    >>> # Setup
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
+    >>> path_source_file = path_test_dir / 'test1_no_includes_template.rst'
+    >>> path_target_file = path_test_dir / 'test1_no_includes_result.rst'
+    >>> path_expected_file = path_test_dir / 'test1_no_includes_expected.rst'
+
+    >>> # test
+    >>> l_rst_files = [lib_classes.RstFile(path_source_file, path_target_file)]
     >>> create_l_rst_files_from_templates(l_rst_files)
-    >>> assert lib_test_compare_results.compare_results_equal(expected, target)
+    >>> assert lib_test_compare_results.compare_results_equal(path_expected_file, path_target_file)
 
     """
     for rst_file in l_rst_files:
