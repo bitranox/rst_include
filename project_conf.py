@@ -31,7 +31,7 @@ travis_pypi_secure_code = 'kunEN/xI7zqyo7II2hD6oMFTUQHkMH8w11vNk5QcrfLkTGCdsEvET
 package_data = dict()       # type: Dict[str, List[str]]
 
 author = 'Robert Nowotny'
-author_email = 'rnowotny1966@gmail.com'
+author_email = 'bitranox@gmail.com'
 github_account = 'bitranox'
 
 linux_tests = True

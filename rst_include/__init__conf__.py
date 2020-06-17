@@ -3,7 +3,7 @@ title = 'since You can not include files into RST files on github and PyPi, You 
 version = '1.1.0'
 url = 'https://github.com/bitranox/rst_include'
 author = 'Robert Nowotny'
-author_email = 'rnowotny1966@gmail.com'
+author_email = 'bitranox@gmail.com'
 shell_command = 'rst_include'
 
 
@@ -19,4 +19,4 @@ def print_info() -> None:
           Version      : 1.1.0
           url          : https://github.com/bitranox/rst_include
           author       : Robert Nowotny
-          author_email : rnowotny1966@gmail.com""")
+          author_email : bitranox@gmail.com""")
