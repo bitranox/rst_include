@@ -1,8 +1,11 @@
 # PROJECT
 from .rst_include import *
+try:
+    from . import __init__conf__
+except (ImportError, ModuleNotFoundError):  # pragma: no cover
+    import __init__conf__                   # type: ignore  # pragma: no cover
 
 # this needs to come after the module imports, otherwise circular import under windows
-from . import __init__conf__
 __title__ = __init__conf__.title
 __version__ = __init__conf__.version
 __name__ = __init__conf__.name
