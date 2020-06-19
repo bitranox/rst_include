@@ -16,12 +16,12 @@ import lib_log_utils
 try:
     from .__doc__ import __doc__
     from . import __init__conf__
-    from .libs import lib_main
+    from .libs import *
 except ImportError:                                     # type: ignore # pragma: no cover
     # imports for doctest local
     from __doc__ import __doc__     # type: ignore  # pragma: no cover
     import __init__conf__           # type: ignore  # pragma: no cover
-    from libs import lib_main                           # type: ignore # pragma: no cover
+    from libs import *
 
 
 def get_version_commandline() -> str:
@@ -45,13 +45,13 @@ def build(path_rst_source_file: pathlib.Path, path_rst_target_file: pathlib.Path
     """
 
     lib_log_utils.log_info('include the include blocks')
-    lib_main.rst_inc(source=path_rst_source_file, target=path_rst_target_file)
+    rst_inc(source=path_rst_source_file, target=path_rst_target_file)
 
     lib_log_utils.log_info('replace repository related strings')
-    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_slug}}', new=travis_repo_slug, inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository}}', new=repository, inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.double_underline_repository}}', new='=' * len(repository), inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_dashed}}', new=repository_dashed, inplace=True)
+    rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_slug}}', new=travis_repo_slug, inplace=True)
+    rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository}}', new=repository, inplace=True)
+    rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.double_underline_repository}}', new='=' * len(repository), inplace=True)
+    rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_dashed}}', new=repository_dashed, inplace=True)
     lib_log_utils.log_info('done')
 
 
@@ -226,10 +226,10 @@ def main(docopt_args: Dict[str, Union[bool, str, None]]) -> None:
 
         # do the thing
         if docopt_args['replace']:
-            lib_main.rst_str_replace(source=source, target=target, old=old, new=new, count=count,
-                                     source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
+            rst_str_replace(source=source, target=target, old=old, new=new, count=count,
+                            source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
         elif docopt_args['include']:
-            lib_main.rst_inc(source=source, target=target, source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
+            rst_inc(source=source, target=target, source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
 
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
