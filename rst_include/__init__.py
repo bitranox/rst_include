@@ -1,5 +1,4 @@
 # PROJECT
-import rst_include.libs
 import rst_include.__init__conf__ as __init__conf
 from rst_include.main import build
 
