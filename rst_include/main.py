@@ -13,8 +13,8 @@ import lib_log_utils                # type: ignore
 
 # PROJECT
 try:
-    from . import __init__conf__
-    from .libs import lib_main
+    import rst_include.__init__conf__ as __init__conf__
+    import rst_include.libs.lib_main as lib_main
 except (ImportError, ModuleNotFoundError):              # pragma: no cover
     import __init__conf__           # type: ignore      # pragma: no cover
     from libs import lib_main       # type: ignore      # pragma: no cover
