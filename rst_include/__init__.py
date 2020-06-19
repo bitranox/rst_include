@@ -1,7 +1,8 @@
 # PROJECT
-from libs.lib_classes import RstFile
-from libs.lib_main import rst_str_replace
-from libs.lib_main import rst_inc
+# from .libs.lib_classes import RstFile
+# from libs.lib_main import rst_str_replace
+# from libs.lib_main import rst_inc
+from .libs import *
 from .rst_include import build
 
 # this needs to come after the module imports, otherwise circular import under windows
