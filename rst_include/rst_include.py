@@ -1,4 +1,5 @@
 # STDLIB
+import datetime
 import errno
 import pathlib
 import sys
@@ -27,6 +28,31 @@ def get_version_commandline() -> str:
     with open(str(pathlib.Path(__file__).parent / 'version.txt'), mode='r') as version_file:
         version = version_file.readline()
     return version
+
+
+def build(path_rst_source_file: pathlib.Path, path_rst_target_file: pathlib.Path, travis_repo_slug: str) -> None:
+
+    # noinspection PyBroadException
+    lib_log_utils.log_info('create the README.rst')
+    repository = travis_repo_slug.split('/')[1]
+    repository_dashed = repository.replace('_', '-')
+
+    """
+    paths absolute, or relative to the location of the config file
+    the notation for relative files is like on windows or linux - not like in python.
+    so You might use ../../some/directory/some_document.rst to go two levels back.
+    avoid absolute paths since You never know where the program will run.
+    """
+
+    lib_log_utils.log_info('include the include blocks')
+    lib_main.rst_inc(source=path_rst_source_file, target=path_rst_target_file)
+
+    lib_log_utils.log_info('replace repository related strings')
+    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_slug}}', new=travis_repo_slug, inplace=True)
+    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository}}', new=repository, inplace=True)
+    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.double_underline_repository}}', new='=' * len(repository), inplace=True)
+    lib_main.rst_str_replace(source=path_rst_target_file, target='', old='{{rst_include.repository_dashed}}', new=repository_dashed, inplace=True)
+    lib_log_utils.log_info('done')
 
 
 def main(docopt_args: Dict[str, Union[bool, str, None]]) -> None:
