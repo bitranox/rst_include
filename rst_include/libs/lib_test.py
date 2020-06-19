@@ -9,7 +9,7 @@ try:
     from . import lib_get_include_options
     from . import lib_include_file
     from . import lib_test_compare_results
-except ImportError:                                 # type: ignore # pragma: no cover
+except ImportError:                                 # pragma: no cover
     # for local doctest in pycharm
     import lib_assemble_block                       # type: ignore # pragma: no cover
     import lib_classes                              # type: ignore # pragma: no cover
@@ -35,6 +35,7 @@ def run_template_tests() -> None:
         rst_file = lib_classes.RstFile(source=path_source_file, target=path_result_file)
         lib_assemble_block.create_rst_file_from_template(rst_file)
         assert lib_test_compare_results.compare_results_equal(expected_file=path_expected_file, result_file=path_result_file)
+        path_result_file.unlink()
 
 
 def run_template_tests_not_supported() -> None:
@@ -50,6 +51,7 @@ def run_template_tests_not_supported() -> None:
         rst_file = lib_classes.RstFile(source=path_source_file, target=path_result_file)
         lib_assemble_block.create_rst_file_from_template(rst_file)
         assert lib_test_compare_results.compare_results_equal(expected_file=path_expected_file, result_file=path_result_file)
+        path_result_file.unlink()
 
 
 def read_include_file_2() -> Block:
@@ -191,7 +193,6 @@ def get_test_block_end_before_invalid() -> Block:
 def get_path_test_dir() -> pathlib.Path:
     """
     >>> assert str(get_path_test_dir()).endswith('/rst_include/tests')
-
     """
-    test_dir = pathlib.Path(__file__).absolute().parent
+    test_dir = pathlib.Path(__file__).absolute().parent.parent.parent / 'tests'
     return test_dir

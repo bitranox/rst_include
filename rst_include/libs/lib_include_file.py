@@ -1,12 +1,12 @@
 # STDLIB
 from collections import OrderedDict
 import pathlib
-from typing import List
+from typing import List, Union, IO
 
 
 # OWN
 import lib_list
-import lib_log_utils
+import lib_log_utils    # type: ignore
 
 try:
     # for pytest
@@ -15,7 +15,7 @@ try:
     from . import lib_get_include_options
     from . import lib_str
     from . import lib_test
-except (ImportError, ModuleNotFoundError):      # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):      # pragma: no cover
     # for local doctest in pycharm
     from lib_classes import Block, RstFile      # type: ignore # pragma: no cover
     import lib_assemble_block                   # type: ignore # pragma: no cover
@@ -25,7 +25,7 @@ except (ImportError, ModuleNotFoundError):      # type: ignore # pragma: no cove
 
 
 class IncludeTrace(object):
-    def __init__(self, path_source_file: pathlib.Path, line_number: int):
+    def __init__(self, path_source_file: Union[str, pathlib.Path, IO[str]], line_number: int):
         self.path_source_file = path_source_file
         self.line_number = line_number
 
@@ -63,7 +63,7 @@ def read_include_file(block: Block) -> List[str]:
 
         includes_stack[block.include_filename_absolut] = IncludeTrace(block.source, block.l_source_lines[0].line_number)
 
-        rst_file = RstFile(source=block.include_filename_absolut, target='', source_encoding=block.include_file_encoding)
+        rst_file = RstFile(source=block.include_filename_absolut, target='-', source_encoding=block.include_file_encoding)
         content = lib_assemble_block.create_rst_file_from_template(rst_file)
         include_file_lines = content.split('\n')
         include_file_lines = right_strip_lines_from_list(include_file_lines)

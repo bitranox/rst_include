@@ -3,8 +3,8 @@ import pathlib
 from typing import List, Tuple, Union
 
 # OWN
-import lib_log_utils
-import lib_path
+import lib_log_utils    # type: ignore
+import lib_path         # type: ignore
 
 try:
     # for pytest
@@ -12,7 +12,7 @@ try:
     from . import lib_block_options
     from . import lib_source_line
     from . import lib_test
-except ImportError:                                 # type: ignore # pragma: no cover
+except ImportError:                                 # pragma: no cover
     # for local doctest in pycharm
     from lib_classes import Block, SourceLine       # type: ignore # pragma: no cover
     import lib_block_options                        # type: ignore # pragma: no cover

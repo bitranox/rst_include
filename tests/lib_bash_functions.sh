@@ -52,6 +52,7 @@ function clean_caches() {
   sudo find "${project_root_dir}" -name "dist" -type d -exec rm -rf {} \; 2>/dev/null
   sudo find "${project_root_dir}" -name "*.egg-info" -type d -exec rm -rf {} \; 2>/dev/null
   sudo rm -rf "$HOME/.eggs/*"
+  sudo rm -rf "$HOME/.mypy_cache"
 }
 
 function install_virtualenv_debian() {
@@ -115,7 +116,7 @@ function pytest_codestyle_mypy() {
 
 function mypy_strict() {
   my_banner "mypy strict"
-  if ! python3 -m mypy "${project_root_dir}" --strict --no-warn-unused-ignores --follow-imports=skip; then
+  if ! python3 -m mypy "${project_root_dir}" --strict --warn-unused-ignores --implicit-reexport --follow-imports=silent; then
     my_banner_warning "mypy strict ERROR"
     beep
     sleep "${sleeptime_on_error}"
@@ -125,7 +126,7 @@ function mypy_strict() {
 
 function mypy_strict_with_imports() {
   my_banner "mypy strict including imports"
-  if ! python3 -m mypy "${project_root_dir}" --strict --no-warn-unused-ignores &>/dev/null; then
+  if ! python3 -m mypy "${project_root_dir}" --strict --warn-unused-ignores --implicit-reexport --follow-imports&>/dev/null; then
     my_banner_warning "mypy strict including imports ERROR"
     beep
     sleep "${sleeptime_on_error}"
@@ -164,9 +165,9 @@ function test_commandline_interface_venv() {
   # this will fail if rotek lib directory is in the path - keep this as a reminder
   my_banner "test commandline interface on virtual environment"
 
-  registered_shell_command=$(python3 "${project_root_dir}/project_update.py" --get_registered_shell_command)
+  registered_shell_command=$(python3 "${project_root_dir}/project_conf.py" get_shell_command)
   clr_green "issuing command : $HOME/venv/bin/${registered_shell_command} -v"
-  if ! "$HOME/venv/bin/${registered_shell_command}" -v; then
+  if ! "$HOME/venv/bin/${registered_shell_command}" --version; then
     my_banner_warning "test commandline interface on virtual environment ERROR"
     beep
     sleep "${sleeptime_on_error}"

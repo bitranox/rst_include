@@ -1,19 +1,15 @@
 .. code-block:: bash
 
-   Usage:
-       rst_include (-h | -v | -i)
-       rst_include include [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q]
-       rst_include replace [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q] <old> <new> [<count>]
+   Usage: rst_include.py [OPTIONS] COMMAND [ARGS]...
+   
+     since You can not include files into RST files on github and PyPi, You can
+     replace those imports with this software.
    
    Options:
-       -s <sourcefile>, --source=<sourcefile>                      source file name [default: stdin]
-       -t <targetfile>, --target=<targetfile>                      target file name [default: stdout]
-       -e <source_encoding>, --source_encoding=<source_encoding>   source encoding [default: utf-8-sig]
-       -E <target_encoding>, --target_encoding=<target_encoding>   target encoding [default: utf-8]
-       -p, --inplace                                               inplace 
-       -q, --quiet                                                 quiet
-       -h, --help                                                  show help
-       -v, --version                                               show version
-       -i, --info                                                  show Info
+     --version   Show the version and exit.
+     -h, --help  Show this message and exit.
    
-   this module exposes no other useful functions to the commandline
+   Commands:
+     include   include the include files, use "-" for stdin as SOURCE and "-"...
+     info     get program informations
+     replace  replace <str_pattern> with <str_replace> <count> times

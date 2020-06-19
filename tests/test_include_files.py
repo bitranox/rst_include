@@ -4,7 +4,7 @@ try:
     from . import include2
     from . import include3
     from .subdir import include_subdir
-except ImportError:                                                         # type: ignore # pragma: no cover
+except ImportError:                                                         # pragma: no cover
     # for local doctest in pycharm
     import rst_include.tests.include1 as include1                           # type: ignore # pragma: no cover
     import rst_include.tests.include2 as include2                           # type: ignore # pragma: no cover

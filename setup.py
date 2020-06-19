@@ -12,7 +12,7 @@ from typing import List
 import project_conf
 
 try:
-    from setuptools import setup        # type: ignore
+    from setuptools import setup            # type: ignore
 except ImportError:
     from distutils.core import setup
 
@@ -106,5 +106,6 @@ if __name__ == '__main__':
           install_requires=install_requires + ['typing', 'pathlib'],
           # minimally needs to run the setup script, dependencies needs also to put here for "setup.py install test"
           # dependencies must not be put here for pip install
-          setup_requires=setup_requires
+          setup_requires=setup_requires,
+          zip_save=project_conf.zip_save
           )

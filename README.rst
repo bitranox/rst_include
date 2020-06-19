@@ -1,30 +1,45 @@
 rst_include
 ===========
 
-|Pypi Status| |license| |maintenance|
+|travis_build| |license| |pypi|
 
-|Build Status| |Codecov Status| |Better Code| |code climate| |code climate coverage| |snyk security|
+|codecov| |better_code| |cc_maintain| |cc_issues| |cc_coverage| |snyk|
+
+
+.. |travis_build| image:: https://img.shields.io/travis/bitranox/rst_include/master.svg
+   :target: https://travis-ci.org/bitranox/rst_include
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
-.. |maintenance| image:: https://img.shields.io/maintenance/yes/2021.svg
-.. |Build Status| image:: https://travis-ci.org/bitranox/rst_include.svg?branch=master
-   :target: https://travis-ci.org/bitranox/rst_include
+
+.. |jupyter| image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/bitranox/rst_include/master?filepath=jupyter_test_rst_include.ipynb
+
 .. for the pypi status link note the dashes, not the underscore !
-.. |Pypi Status| image:: https://badge.fury.io/py/rst-include.svg
+.. |pypi| image:: https://img.shields.io/pypi/status/rst-include?label=PyPI%20Package
    :target: https://badge.fury.io/py/rst_include
-.. |Codecov Status| image:: https://codecov.io/gh/bitranox/rst_include/branch/master/graph/badge.svg
+
+
+.. |codecov| image:: https://img.shields.io/codecov/c/github/bitranox/rst_include
    :target: https://codecov.io/gh/bitranox/rst_include
-.. |Better Code| image:: https://bettercodehub.com/edge/badge/bitranox/rst_include?branch=master
+
+.. |better_code| image:: https://bettercodehub.com/edge/badge/bitranox/rst_include?branch=master
    :target: https://bettercodehub.com/results/bitranox/rst_include
-.. |snyk security| image:: https://snyk.io/test/github/bitranox/rst_include/badge.svg
-   :target: https://snyk.io/test/github/bitranox/rst_include
-.. |code climate| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/maintainability
+
+.. |cc_maintain| image:: https://img.shields.io/codeclimate/maintainability-percentage/bitranox/rst_include?label=CC%20maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
-.. |code climate coverage| image:: https://api.codeclimate.com/v1/badges/ff3f414903627e5cfc35/test_coverage
+
+.. |cc_issues| image:: https://img.shields.io/codeclimate/issues/bitranox/rst_include?label=CC%20issues
+   :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
+   :alt: Maintainability
+
+.. |cc_coverage| image:: https://img.shields.io/codeclimate/coverage/bitranox/rst_include?label=CC%20coverage
    :target: https://codeclimate.com/github/bitranox/rst_include/test_coverage
    :alt: Code Coverage
+
+.. |snyk| image:: https://img.shields.io/snyk/vulnerabilities/github/bitranox/rst_include
+   :target: https://snyk.io/test/github/bitranox/rst_include
 
 since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
 
@@ -48,8 +63,8 @@ automated tests, Travis Matrix, Documentation, Badges for this Project are manag
 
 supports python 3.6-3.8, pypy3 and possibly other dialects.
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, macOS, Windows and Wine <https://travis-ci
-.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, macOS, Windows and Wine
+<https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
 
 ----
 
@@ -70,9 +85,9 @@ supports python 3.6-3.8, pypy3 and possibly other dialects.
 - `Requirements`_
 - `Acknowledgements`_
 - `Contribute`_
-- `Report Issues <https://github.com/bitranox/rst_include/blob/master/ISSUE_TEMPLATE.md>`_
-- `Pull Request <https://github.com/bitranox/rst_include/blob/master/PULL_REQUEST_TEMPLATE.md>`_
-- `Code of Conduct <https://github.com/bitranox/rst_include/blob/master/CODE_OF_CONDUCT.md>`_
+- `Report Issues <https://github.com/{repository_slug}/blob/master/ISSUE_TEMPLATE.md>`_
+- `Pull Request <https://github.com/{repository_slug}/blob/master/PULL_REQUEST_TEMPLATE.md>`_
+- `Code of Conduct <https://github.com/{repository_slug}/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 - `Changelog`_
 
@@ -180,6 +195,15 @@ Usage
 Yo might use rst_include from the commandline (Windows, Linux and MacOs is supported) or import the module to Your python script and use it from there. You
 can also use it from Bash Scripts and Windows Batch Files - See Examples.
 
+Commandline Parameter
+=====================
+
+.. code-block:: bash
+
+    STUB
+
+-----------------------------------------------------------------
+
 use rst_include from commandline
 --------------------------------
 
@@ -190,18 +214,18 @@ use rst_include from commandline
     # examples :
 
     # relativ path
-    $> rst_include include -s ./source.rst -t ./target.rst
+    $> rst_include include ./source.rst ./target.rst
 
     # absolute path
-    $> rst_include include -s /project/docs/source.rst -t /project/docs/target.rst
+    $> rst_include include /project/docs/source.rst /project/docs/target.rst
 
     # on linux via pipe - You need to change to the source directory first because of relative include paths
     $> cd /project/docs
-    $> cat ./source.rst | rst_include include > /project/docs/target.rst
+    $> cat ./source.rst | rst_include include - - > /project/docs/target.rst
 
     # on Windows via pipe - You need to change to the source directory first because of relative include paths
     $> cd /project/docs
-    $> type ./source.rst | rst_include include > /project/docs/target.rst
+    $> type ./source.rst | rst_include include - - > /project/docs/target.rst
 
 -----------------------------------------------------------------
 
@@ -215,11 +239,11 @@ Additional You can easily replace (also multiline) text strings :
     # replace text strings easily
     # examples :
 
-    $> rst_include replace -s ./source.rst -t ./target.rst "{template_string}" "new content"
+    $> rst_include replace ./source.rst ./target.rst "{{template_string}}" "new content"
 
     # multiline example
     # note ${IFS} is the standard bash seperator
-    $> rst_include replace --inplace -s ./source.txt "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
+    $> rst_include --inplace replace ./source.txt - "line1${IFS}line2" "line1${IFS}something_between${IFS}line2"
 
 
 piping under Linux:
@@ -227,12 +251,12 @@ piping under Linux:
 .. code-block:: bash
 
     # piping examples
-    $> rst_include include -s ./source.rst | rst_include replace -t ./target.rst "{template_string}" "new content"
+    $> rst_include include ./source.rst - | rst_include replace - ./target.rst "{{pattern}}" "new content"
     # same result
-    $> cat ./source.rst | rst_include include | rst_include replace "{template_string}" "new content" > ./target.rst
+    $> cat ./source.rst | rst_include include - - | rst_include replace - - "{template_string}" "new content" > ./target.rst
 
     # multiline example
-    $> cat ./text.txt | rst_include replace "line1${IFS}line2" "line1${IFS}something_between${IFS}line2" > ./text.txt
+    $> cat ./text.txt | rst_include replace - - "line1${IFS}line2" "line1${IFS}something_between${IFS}line2" > ./text.txt
 
 -----------------------------------------------------------------
 
@@ -245,11 +269,6 @@ Example Python
 .. code-block:: python
 
     # STDLIB
-    import argparse
-    import errno
-    import logging
-    import os
-    import sys
     import subprocess
 
     # OWN
@@ -257,7 +276,7 @@ Example Python
 
     def main():
         rst_inc(source='./.docs/README_template.rst', target='./README.rst')
-        rst_str_replace(source='./README.rst', target='', old='{some pattern}', new='some text', inplace=True)
+        rst_str_replace(source='./README.rst', target='', str_pattern='{{some pattern}}', str_replace='some text', inplace=True)
 
     if __name__ == '__main':
         main()
@@ -276,15 +295,15 @@ Example Shellscript
     export NO_AT_BRIDGE=1  # get rid of (ssh-askpass:25930): dbind-WARNING **: 18:46:12.019: Couldn't register with accessibility bus: Did not receive a reply.
 
     echo "import the include blocks"
-    rst_include include -s ./.docs/README_template.rst -t ./README.rst
+    rst_include include ./.docs/README_template.rst ./README.rst
 
     echo "replace some patterns"
 
     # example for piping
     cat ./README.rst \
-        | rst_include --inplace replace "#pattern1#" "replacement text 1" \
-        | rst_include --inplace replace "#pattern2#" "replacement text 2" \
-        | rst_include --inplace replace "#pattern3#" "replacement text 3" \
+        | rst_include --inplace replace - - "{{pattern1}}" "some_text_1" \
+        | rst_include --inplace replace - - "{{pattern2}}" "some_text_2" \
+        | rst_include --inplace replace - - "{{pattern3}}" "some_text_3" \
          > ./README.rst
 
 ----
@@ -299,8 +318,8 @@ Example Batch
     @echo off
     cls
 
-    rst_include include -s ./.docs/README_template.rst -t ./README.rst
-    rst_include --inplace replace -s ./.docs/README_template.rst #pattern1# "replace string 1"
+    rst_include include ./.docs/README_template.rst ./README.rst
+    rst_include --inplace replace ./.docs/README_template.rst - "{{pattern}}" "replace string 1"
 
     echo 'finished'
 
@@ -441,23 +460,19 @@ Usage from Commandline
 
 .. code-block:: bash
 
-   Usage:
-       rst_include (-h | -v | -i)
-       rst_include include [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q]
-       rst_include replace [-s <sourcefile>, -t <targetfile>, -e <source_encoding>, --target_encoding=<target_encoding>, -p, -q] <old> <new> [<count>]
+   Usage: rst_include.py [OPTIONS] COMMAND [ARGS]...
+
+     since You can not include files into RST files on github and PyPi, You can
+     replace those imports with this software.
 
    Options:
-       -s <sourcefile>, --source=<sourcefile>                      source file name [default: stdin]
-       -t <targetfile>, --target=<targetfile>                      target file name [default: stdout]
-       -e <source_encoding>, --source_encoding=<source_encoding>   source encoding [default: utf-8-sig]
-       -E <target_encoding>, --target_encoding=<target_encoding>   target encoding [default: utf-8]
-       -p, --inplace                                               inplace
-       -q, --quiet                                                 quiet
-       -h, --help                                                  show help
-       -v, --version                                               show version
-       -i, --info                                                  show Info
+     --version   Show the version and exit.
+     -h, --help  Show this message and exit.
 
-   this module exposes no other useful functions to the commandline
+   Commands:
+     include   include the include files, use "-" for stdin as SOURCE and "-"...
+     info     get program informations
+     replace  replace <str_pattern> with <str_replace> <count> times
 
 Requirements
 ------------
@@ -466,7 +481,7 @@ following modules will be automatically installed :
 .. code-block:: bash
 
     ## Project Requirements
-    docopt
+    click
     lib_list @ git+https://github.com/bitranox/lib_list.git
     lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
     lib_path @ git+https://github.com/bitranox/lib_path.git
@@ -491,6 +506,19 @@ This software is licensed under the `MIT license <http://en.wikipedia.org/wiki/M
 
 Changelog
 =========
+
+- new MAJOR version for incompatible API changes,
+- new MINOR version for added functionality in a backwards compatible manner
+- new PATCH version for backwards compatible bug fixes
+
+2.0.0
+-----
+2020-06-19
+
+- new CLI Interface
+- avoid recursive imports
+- manage the project with lib_travis_template
+
 
 1.0.9
 -----

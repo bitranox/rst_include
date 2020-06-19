@@ -1,7 +1,7 @@
-{repository}
-{double_underline_repository}
+{{rst_include.repository}}
+{{rst_include.double_underline_repository}}
 
-.. include:: ./badges_project.rst
+.. include:: ./badges.rst
 
 .. include:: ./description.rst
 
@@ -20,7 +20,7 @@ automated tests, Travis Matrix, Documentation, Badges for this Project are manag
 
 ----
 
-{try_in_jupyter}
+
 
 Installation and Upgrade
 ------------------------

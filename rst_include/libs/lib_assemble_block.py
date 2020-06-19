@@ -1,6 +1,6 @@
 # STDLIB
 import pathlib
-from typing import List
+from typing import List, IO, Union
 
 # OWN
 import lib_list
@@ -20,8 +20,7 @@ try:
     from . import lib_str
     from . import lib_test
     from . import lib_test_compare_results
-
-except ImportError:                             # type: ignore # pragma: no cover
+except ImportError:                             # pragma: no cover
     # for local doctest in pycharm
     import lib_classes                          # type: ignore # pragma: no cover
     from lib_classes import Block               # type: ignore # pragma: no cover
@@ -50,6 +49,10 @@ def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
     >>> create_l_rst_files_from_templates(l_rst_files)
     >>> assert lib_test_compare_results.compare_results_equal(path_expected_file, path_target_file)
 
+    >>> # Teardown
+    >>> path_target_file.unlink()
+
+
     """
     for rst_file in l_rst_files:
         create_rst_file_from_template(rst_file)
@@ -57,13 +60,13 @@ def create_l_rst_files_from_templates(l_rst_files: List[RstFile]) -> None:
 
 def create_rst_file_from_template(rst_file: RstFile) -> str:
     l_source_lines = lib_check_files.read_source_lines(rst_file.source, rst_file.source_encoding)
-    content = process_source_lines(source_file_name=rst_file.source, source_lines=l_source_lines)
+    content = process_source_lines(path_source_file=rst_file.source, source_lines=l_source_lines)
     lib_check_files.write_output(rst_file.target, content, rst_file.target_encoding)
     return content
 
 
-def process_source_lines(source_file_name: str, source_lines: List[SourceLine]) -> str:
-    l_blocks = lib_source_line.divide_source_line_in_blocks(source_file_name=source_file_name, source_lines=source_lines)
+def process_source_lines(path_source_file: Union[str, pathlib.Path, IO[str]], source_lines: List[SourceLine]) -> str:
+    l_blocks = lib_source_line.divide_source_line_in_blocks(path_source_file=path_source_file, source_lines=source_lines)
     content = assemble_blocks(l_blocks)
     content = '\n\n'.join((content, ''))
     return content
@@ -97,7 +100,7 @@ def assemble_additional_content(block: Block) -> str:
     """
     >>> block = lib_test.get_test_block_include2_ok()
     >>> lib_get_include_options.get_include_options(block)
-    >>> assemble_additional_content(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> assemble_additional_content(block)
     '    :no-option:\\n\\nadditional content1...\\nadditional content5'
 
     """

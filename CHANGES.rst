@@ -1,6 +1,19 @@
 Changelog
 =========
 
+- new MAJOR version for incompatible API changes,
+- new MINOR version for added functionality in a backwards compatible manner
+- new PATCH version for backwards compatible bug fixes
+
+2.0.0
+-----
+2020-06-19
+
+- new CLI Interface
+- avoid recursive imports
+- manage the project with lib_travis_template
+
+
 1.0.9
 -----
 - drop support for configfiles

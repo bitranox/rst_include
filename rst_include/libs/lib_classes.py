@@ -1,12 +1,11 @@
-from io import TextIOWrapper
 import pathlib
-from typing import List, Union
+from typing import List, IO, Union
 
 
 class RstFile(object):
     def __init__(self,
-                 source: Union[str, pathlib.Path, TextIOWrapper],
-                 target: Union[str, pathlib.Path, TextIOWrapper],
+                 source: Union[str, pathlib.Path, IO[str]],
+                 target: Union[str, pathlib.Path, IO[str]],
                  source_encoding: str = 'utf-8-sig',
                  target_encoding: str = 'utf-8'):
         self.source = source
@@ -22,7 +21,7 @@ class SourceLine(object):
 
 
 class Block(object):
-    def __init__(self, source: Union[str, pathlib.Path, TextIOWrapper]):
+    def __init__(self, source: Union[str, pathlib.Path, IO[str]]):
         self.is_include_block = False
         self.source = source                            # either pathlib.Path of the source file, or "str" or "sys.stdin"
         self.l_source_lines = []                        # type: List[SourceLine]

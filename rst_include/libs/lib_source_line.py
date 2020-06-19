@@ -1,4 +1,5 @@
-from typing import List
+import pathlib
+from typing import List, Union, IO
 
 try:
     # for pytest
@@ -10,14 +11,14 @@ except ImportError:                                 # pragma: no cover
     from lib_classes import Block, SourceLine       # type: ignore # pragma: no cover
 
 
-def divide_source_line_in_blocks(source_file_name: str, source_lines: List[SourceLine]) -> List[Block]:
+def divide_source_line_in_blocks(path_source_file: Union[str, pathlib.Path, IO[str]], source_lines: List[SourceLine]) -> List[Block]:
     """
     return blocks  - each block starts with ".." and ends with a line that does not begin with tab or blank
     or begins with .. (another block)
     trailing blank lines are part of the block
 
-    >>> source_file_name = 'some_source_file'
-    >>> divide_source_line_in_blocks(source_file_name, source_lines=[])
+    >>> path_source_file = pathlib.Path('some_source_file')
+    >>> divide_source_line_in_blocks(path_source_file, source_lines=[])
     []
 
     >>> # test ['a']
@@ -29,13 +30,13 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: List[Sourc
     >>> source_lines.append(lib_classes.SourceLine(line_number=4715, content='    :code: python'))
     >>> source_lines.append(lib_classes.SourceLine(line_number=4716, content='.. include:: some_file.yaml'))
     >>> source_lines.append(lib_classes.SourceLine(line_number=4717, content='    :code: yaml'))
-    >>> blocks = divide_source_line_in_blocks(source_file_name, source_lines)
-    >>> assert blocks[0].source == 'some_source_file'
+    >>> blocks = divide_source_line_in_blocks(path_source_file, source_lines)
+    >>> assert blocks[0].source == path_source_file
     >>> assert blocks[0].l_source_lines[0].line_number == 4711
     >>> assert blocks[0].l_source_lines[0].content == 'This is a test'
     >>> assert blocks[0].l_source_lines[1].line_number == 4712
     >>> assert blocks[0].l_source_lines[1].content == 'a new block will only occur'
-    >>> assert blocks[1].source == 'some_source_file'
+    >>> assert blocks[1].source == path_source_file
     >>> assert blocks[1].l_source_lines[0].line_number == 4714
     >>> assert blocks[1].l_source_lines[0].content == '.. include:: some_file.py'
     >>> assert blocks[1].l_source_lines[1].line_number == 4715
@@ -47,11 +48,11 @@ def divide_source_line_in_blocks(source_file_name: str, source_lines: List[Sourc
 
     """
     blocks = list()                               # type: List[Block]
-    block = lib_classes.Block(source_file_name)   # type: Block
+    block = lib_classes.Block(path_source_file)   # type: Block
     for source_line in source_lines:
         if source_line_starts_with_include_statement(source_line):
             append_non_empty_block(block, blocks)
-            block = lib_classes.Block(source_file_name)
+            block = lib_classes.Block(path_source_file)
         block.l_source_lines.append(source_line)
     append_non_empty_block(block, blocks)
     return blocks

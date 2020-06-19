@@ -1,4 +1,5 @@
 # STDLIB
+import pathlib
 from typing import List
 
 # OWN
@@ -10,7 +11,7 @@ try:
     from .lib_classes import SourceLine
     from . import lib_classes
     from . import lib_source_line
-except ImportError:                             # type: ignore # pragma: no cover
+except ImportError:                             # pragma: no cover
     # for local doctest in pycharm
     from lib_classes import Block               # type: ignore # pragma: no cover
     from lib_classes import SourceLine          # type: ignore # pragma: no cover
@@ -20,26 +21,27 @@ except ImportError:                             # type: ignore # pragma: no cove
 
 def is_include_block(block: Block) -> bool:
     """
-    >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
+    >>> source = pathlib.Path('some_source_file.txt')
+    >>> block = lib_classes.Block(source=source)
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='something')
     >>> block.l_source_lines.append(source_line)
     >>> is_include_block(block)
     False
 
-    >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
+    >>> block = lib_classes.Block(source=source)
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='.. include::')
     >>> block.l_source_lines.append(source_line)
     >>> is_include_block(block)
     True
 
-    >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
+    >>> block = lib_classes.Block(source=source)
     >>> source_line = lib_classes.SourceLine(line_number=4711, content='.. include:: some_file.txt')
     >>> block.l_source_lines.append(source_line)
     >>> is_include_block(block)
     True
 
     >>> # Test empty Block
-    >>> block = lib_classes.Block(source_file_name='some_source_file.txt')
+    >>> block = lib_classes.Block(source=source)
     >>> is_include_block(block)
     False
 

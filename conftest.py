@@ -2,7 +2,7 @@ import platform
 import sys
 from typing import List
 
-collect_ignore = ['templates/*', 'build_docs.py', 'project_update.py']
+collect_ignore = ['templates/*']
 
 
 def pytest_cmdline_preparse(args: List[str]) -> None:

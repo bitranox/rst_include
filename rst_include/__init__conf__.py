@@ -1,22 +1,20 @@
 name = 'rst_include'
 title = 'since You can not include files into RST files on github and PyPi, You can replace those imports with this software.'
-version = '1.1.0'
+version = '2.0.0'
 url = 'https://github.com/bitranox/rst_include'
 author = 'Robert Nowotny'
 author_email = 'bitranox@gmail.com'
 shell_command = 'rst_include'
 
 
-def print_version() -> None:
-    print('version: 1.1.0')
-
-
 def print_info() -> None:
-    print("""information for "rst_include":
+    print("""\
 
-          since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
+Info for rst_include:
 
-          Version      : 1.1.0
-          url          : https://github.com/bitranox/rst_include
-          author       : Robert Nowotny
-          author_email : bitranox@gmail.com""")
+    since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
+
+    Version : 2.0.0
+    Url     : https://github.com/bitranox/rst_include
+    Author  : Robert Nowotny
+    Email   : bitranox@gmail.com""")

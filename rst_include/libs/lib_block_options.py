@@ -1,15 +1,15 @@
+import lib_log_utils    # type: ignore
+
 try:
     # for pytest
     from . import lib_classes
     from .lib_classes import Block, SourceLine
-    from . import lib_log_utils
     from . import lib_source_line
     from . import lib_test
-except ImportError:                                 # type: ignore # pragma: no cover
+except ImportError:                                 # pragma: no cover
     # for local doctest in pycharm
     import lib_classes                              # type: ignore # pragma: no cover
     from lib_classes import Block, SourceLine       # type: ignore # pragma: no cover
-    import lib_log_utils                            # type: ignore # pragma: no cover
     import lib_source_line                          # type: ignore # pragma: no cover
     import lib_test                                 # type: ignore # pragma: no cover
 
@@ -23,13 +23,13 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block:
     'python'
 
     >>> # empty value
-    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('pass-through1', block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('pass-through1', block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47107: option "pass-through1" has no value
 
     >>> # option not found
-    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('no-option', block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('no-option', block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
@@ -39,7 +39,7 @@ def get_option_value_from_block_or_raise_if_empty_or_invalid(option: str, block:
     '10'
 
     >>> # option check type not integer
-    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('start-after', block, value_must_be_int=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block_or_raise_if_empty_or_invalid('start-after', block, value_must_be_int=True)
     Traceback (most recent call last):
     ...
     TypeError: Error in File ".../README.template.rst", Line 47105: option "start-after" has to be integer
@@ -57,9 +57,9 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     >>> block = lib_test.get_test_block_ok()
     >>> get_option_value_from_block('code', block)
     'python'
-    >>> get_option_value_from_block('encoding', block)      # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block('encoding', block)
     'utf-8'
-    >>> get_option_value_from_block('no-option', block)     # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_option_value_from_block('no-option', block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
@@ -101,9 +101,9 @@ def get_source_line_number_for_option(option: str, block: Block) -> int:
     >>> block = lib_test.get_test_block_ok()
     >>> get_source_line_number_for_option('code', block)
     47101
-    >>> get_source_line_number_for_option('encoding', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_source_line_number_for_option('encoding', block)
     47102
-    >>> get_source_line_number_for_option('no-option', block)   # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_source_line_number_for_option('no-option', block)
     Traceback (most recent call last):
       ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100

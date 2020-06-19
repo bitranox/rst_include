@@ -1,29 +1,27 @@
 # STDLIB
 from io import TextIOWrapper
 import pathlib
-from typing import List, Tuple, Union
+from typing import List, IO, Tuple, Union
 
 # OWN
-import lib_log_utils
+import lib_log_utils    # type: ignore
 
 # PROJECT
 try:
     # for pytest
-    from . import lib_args
     from . import lib_classes
     from .lib_classes import RstFile, SourceLine
     from . import lib_test
-except (ImportError, ModuleNotFoundError):          # type: ignore # pragma: no cover
+except (ImportError, ModuleNotFoundError):          # pragma: no cover
     # for local doctest in pycharm
-    import lib_args                                 # type: ignore # pragma: no cover
     import lib_classes                              # type: ignore # pragma: no cover
     from lib_classes import RstFile, SourceLine     # type: ignore # pragma: no cover
     import lib_test                                 # type: ignore # pragma: no cover
 
 
-def check_source_and_target(source: Union[str, pathlib.Path, TextIOWrapper],
-                            target: Union[str, pathlib.Path, TextIOWrapper],
-                            in_place: bool) -> Tuple[Union[str, pathlib.Path, TextIOWrapper], Union[str, pathlib.Path, TextIOWrapper]]:
+def check_source_and_target(source: Union[str, pathlib.Path, IO[str]],
+                            target: Union[str, pathlib.Path, IO[str]],
+                            in_place: bool) -> Tuple[Union[str, pathlib.Path, IO[str]], Union[str, pathlib.Path, IO[str]]]:
     """
 
     >>> # Setup
@@ -45,7 +43,7 @@ def check_source_and_target(source: Union[str, pathlib.Path, TextIOWrapper],
     >>> source, target = check_source_and_target(source=path_test_file_exists, target='', in_place=True)
 
     >>> # test source = sys.stdin, in_place=True
-    >>> source, target = check_source_and_target(source=wrapper, target='', in_place=True)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> source, target = check_source_and_target(source=wrapper, target='', in_place=True)
     Traceback (most recent call last):
     ...
     SyntaxError: if You use option --inplace You need to specify a input file
@@ -70,7 +68,7 @@ def check_source_and_target(source: Union[str, pathlib.Path, TextIOWrapper],
     return source, target
 
 
-def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, TextIOWrapper]) -> None:
+def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, IO[str]]) -> None:
     """
 
     >>> # Setup
@@ -89,7 +87,7 @@ def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, TextIOW
     >>> log_and_raise_if_source_file_not_ok(path_test_file_exists)
 
     >>> # test file not exists
-    >>> log_and_raise_if_source_file_not_ok(path_test_file_not_exists)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> log_and_raise_if_source_file_not_ok(path_test_file_not_exists)
     Traceback (most recent call last):
     ...
     FileNotFoundError: RST File ".../tests/does_not_exist.py" does not exist
@@ -109,8 +107,8 @@ def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, TextIOW
             raise FileNotFoundError(error_message)
 
 
-def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.Path, TextIOWrapper],
-                                                    target: Union[str, pathlib.Path, TextIOWrapper]) -> None:
+def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.Path, IO[str]],
+                                                    target: Union[str, pathlib.Path, IO[str]]) -> None:
     """
 
     >>> # Setup
@@ -132,7 +130,7 @@ def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.P
     >>> log_and_raise_if_source_file_equals_target_file(path_test_file_exists1, path_test_file_exists2)
 
     >>> # check same file
-    >>> log_and_raise_if_source_file_equals_target_file(path_test_file_exists1, path_test_file_exists1)    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> log_and_raise_if_source_file_equals_target_file(path_test_file_exists1, path_test_file_exists1)
     Traceback (most recent call last):
     ...
     FileExistsError: RST File ".../tests/include1.py": source and target must not be the same
@@ -145,7 +143,7 @@ def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.P
         raise FileExistsError(error_message)
 
 
-def log_warning_if_target_file_exist(target: str) -> None:
+def log_warning_if_target_file_exist(path_target: Union[str, pathlib.Path, IO[str]]) -> None:
     """
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
@@ -153,16 +151,16 @@ def log_warning_if_target_file_exist(target: str) -> None:
     >>> path_test_file_not_exists = path_test_dir / 'does_not_exist'
 
     >>> # TEST
-    >>> log_warning_if_target_file_exist(target=path_test_file_exists)
-    >>> log_warning_if_target_file_exist(target=path_test_file_not_exists)
+    >>> log_warning_if_target_file_exist(path_target=path_test_file_exists)
+    >>> log_warning_if_target_file_exist(path_target=path_test_file_not_exists)
 
     """
-    if isinstance(target, pathlib.Path):
-        if target.is_file():
-            lib_log_utils.log_warning('RST File "{target}" exists and will be overwritten'.format(target=target))
+    if isinstance(path_target, pathlib.Path):
+        if path_target.is_file():
+            lib_log_utils.log_warning('RST File "{target}" exists and will be overwritten'.format(target=path_target))
 
 
-def read_input(source: Union[str, pathlib.Path, TextIOWrapper], encoding: str = 'utf-8-sig') -> str:
+def read_input(source: Union[str, pathlib.Path, IO[str]], encoding: str = 'utf-8-sig') -> str:
     """
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
@@ -196,7 +194,7 @@ def read_input(source: Union[str, pathlib.Path, TextIOWrapper], encoding: str = 
     return content
 
 
-def read_source_lines(source: Union[str, pathlib.Path, TextIOWrapper], encoding: str = 'utf-8-sig') -> List[SourceLine]:
+def read_source_lines(source: Union[str, pathlib.Path, IO[str]], encoding: str = 'utf-8-sig') -> List[SourceLine]:
     """
 
     >>> # Setup
@@ -244,8 +242,10 @@ def read_source_lines(source: Union[str, pathlib.Path, TextIOWrapper], encoding:
             content_lines = sourcefile.readlines()
     elif isinstance(source, TextIOWrapper):
         content_lines = source.readlines()
-    else:
+    elif isinstance(source, str):
         content_lines = source.split('\n')
+    else:
+        raise TypeError('unknown type of source line')
 
     l_source_lines = list()
     line_number = 0
@@ -258,7 +258,7 @@ def read_source_lines(source: Union[str, pathlib.Path, TextIOWrapper], encoding:
     return l_source_lines
 
 
-def write_output(target: Union[str, pathlib.Path, TextIOWrapper], content: str, encoding: str = 'utf-8') -> str:
+def write_output(target: Union[str, pathlib.Path, IO[str]], content: str, encoding: str = 'utf-8') -> str:
     """
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'

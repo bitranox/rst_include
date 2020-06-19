@@ -1,13 +1,17 @@
 # single point for all configuration of the project
 
 # stdlib
-from setuptools import find_packages  # type: ignore
+import sys
 from typing import List, Dict
 
+included_files: List[str] = list()
+
+# #############################################################################################################################################################
+# Project Configuration
+# #############################################################################################################################################################
+
 package_name = 'rst_include'  # type: str
-version = '1.1.0'
-# codeclimate_link_hash - get it under https://codeclimate.com/github/<user>/<project>/badges
-codeclimate_link_hash = 'ff3f414903627e5cfc35'  # for rst_include
+version = '2.0.0'
 
 # cc_test_reporter_id - get it under https://codeclimate.com/github/<user>/<project> and press "test coverage"
 cc_test_reporter_id = ''    # for rst_include
@@ -26,10 +30,6 @@ travis_pypi_secure_code = 'kunEN/xI7zqyo7II2hD6oMFTUQHkMH8w11vNk5QcrfLkTGCdsEvET
                           'nHbhbzX9ac1YgZtyi/300gWJy0gca5ZyBGoGiypiCmAOCzYnv0TKD1TLeCviNellvbOrGIJ6THuEqPY5lw7Ex3RFax485IHTH1o8mD59EvsA1CUYEPkUWX+lvI'\
                           'LHEa+hTBVbXrWTxLOLGWVP+84XtdEx0trDb/6ZfTPRtZ2XsHNNsW6O2rERcMiVdb++0X6TNFg='
 
-# include package data files
-# package_data = {package_name: ['some_file_to_include.txt']}
-package_data = dict()       # type: Dict[str, List[str]]
-
 author = 'Robert Nowotny'
 author_email = 'bitranox@gmail.com'
 github_account = 'bitranox'
@@ -40,9 +40,14 @@ pypy_tests = True
 windows_tests = True
 wine_tests = False
 badges_with_jupiter = False
+pypi_package = True
+is_typed_package = True
 
 # a short description of the Package - especially if You deploy on PyPi !
 description = 'since You can not include files into RST files on github and PyPi, You can replace those imports with this software.'
+
+# ##### include package data files here !!!
+# included_files.append('version.txt')
 
 # #############################################################################################################################################################
 # DEFAULT SETTINGS - no need to change usually, but can be adopted
@@ -54,12 +59,23 @@ module_name = package_name
 init_config_title = description
 init_config_name = package_name
 
+# will be overwritten with the content of README.rst if exists
+long_description = package_name
+
+# if can run from a zip file - see : https://setuptools.readthedocs.io/en/latest/setuptools.html#setting-the-zip-safe-flag
+zip_save = False
+
 # we ned to have a function main_commandline in module module_name - see examples
-entry_points = {'console_scripts': ['{shell_command} = {src_dir}.{module_name}:main_commandline'
+entry_points = {'console_scripts': ['{shell_command} = {src_dir}.{module_name}:cli_main'
                 .format(shell_command=shell_command, src_dir=src_dir, module_name=module_name)]}  # type: Dict[str, List[str]]
 
-long_description = package_name  # will be overwritten with the content of README.rst if exists
+if is_typed_package:
+    included_files.append('py.typed')
+    # zip_safe needs to be false for a typed project
+    # noinspection PyRedeclaration
+    zip_save = False
 
+package_data = {package_name: included_files}
 packages = [package_name]
 
 url = 'https://github.com/{github_account}/{package_name}'.format(github_account=github_account, package_name=package_name)
@@ -73,3 +89,46 @@ CLASSIFIERS = ['Development Status :: 5 - Production/Stable',
                'Operating System :: OS Independent',
                'Programming Language :: Python',
                'Topic :: Software Development :: Libraries :: Python Modules']
+
+# #############################################################################################################################################################
+# CLI Interface
+# #############################################################################################################################################################
+
+help_txt = """
+Usage: project_conf.py [OPTIONS] COMMAND [ARGS]...
+
+  configuration for "{package_name}"
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  get_shell_command  returns the registered shell command
+""".format(package_name=package_name)
+
+
+def main() -> None:
+    """
+    >>> # Test no command - show help
+    >>> main()
+    Usage: ...
+
+
+    >>> # Test command "get_shell_command"
+    >>> sys.argv.append('get_shell_command')
+    >>> main()
+    <BLANKLINE>
+    ...
+
+    >>> # Teardown
+    >>> disregard = sys.argv.pop()
+
+    """
+    if 'get_shell_command' in sys.argv:
+        print(shell_command)
+    else:
+        print(help_txt)
+
+
+if __name__ == '__main__':
+    main()

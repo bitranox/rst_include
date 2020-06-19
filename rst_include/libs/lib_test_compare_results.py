@@ -3,13 +3,13 @@ import pathlib
 from typing import List, Tuple
 
 # OWN
-import lib_log_utils
+import lib_log_utils    # type: ignore
 
 # PROJECT
 try:
     # for pytest
     from . import lib_test
-except ImportError:                     # type: ignore # pragma: no cover
+except ImportError:                     # pragma: no cover
     # for local doctest in pycharm
     import lib_test                     # type: ignore # pragma: no cover
 
@@ -18,7 +18,7 @@ def compare_results_equal(expected_file: pathlib.Path, result_file: pathlib.Path
                           file_expected_encoding: str = 'utf-8-sig', file_result_encoding: str = 'utf-8-sig') -> bool:
     """
     >>> # Setup test
-    >>> path_test_dir = pathlib.Path(__file__).parent
+    >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
     >>> expected_file = path_test_dir / 'test_compare_file_original.txt'
     >>> compare_results_equal(expected_file, path_test_dir / 'test_compare_file_result_equal.txt')
     True
