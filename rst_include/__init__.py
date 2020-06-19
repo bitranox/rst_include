@@ -1,4 +1,5 @@
 # PROJECT
+from . import *
 
 try:
     from .main import build
