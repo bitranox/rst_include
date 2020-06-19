@@ -1,10 +1,8 @@
 # PROJECT
 
 try:
-    from .libs import lib_main
     from .main import build
 except (ImportError, ModuleNotFoundError):              # pragma: no cover
-    from libs import lib_main       # type: ignore      # pragma: no cover
     from main import build          # type: ignore      # pragma: no cover
 
 # this needs to come after the module imports, otherwise circular import under windows
