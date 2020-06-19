@@ -2,16 +2,9 @@
 import pathlib
 from typing import IO, Union
 
-try:
-    # for pytest
-    from . import lib_classes
-    from . import lib_assemble_block
-    from . import lib_check_files
-except ImportError:                                     # pragma: no cover
-    # for local doctest in pycharm
-    import lib_classes                                  # type: ignore # pragma: no cover
-    import lib_assemble_block                           # type: ignore # pragma: no cover
-    import lib_check_files                              # type: ignore # pragma: no cover
+from . import lib_classes
+from . import lib_assemble_block
+from . import lib_check_files
 
 
 def rst_str_replace(source: Union[str, pathlib.Path, IO[str]],  # str, file or sys.stdin

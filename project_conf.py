@@ -53,11 +53,11 @@ description = 'since You can not include files into RST files on github and PyPi
 # DEFAULT SETTINGS - no need to change usually, but can be adopted
 # #############################################################################################################################################################
 
-shell_command = package_name
-src_dir = package_name
-module_name = package_name
-init_config_title = description
-init_config_name = package_name
+shell_command = package_name            # the shell command which will be registered
+src_dir = package_name                  # the directory under the project directory
+module_name = 'main'
+init_config_title = description         # the title that is used for __init__.py __title__ and cli command INFO
+init_config_name = package_name         # the name that is used for __init__.py __name__ and cli command INFO
 
 # will be overwritten with the content of README.rst if exists
 long_description = package_name

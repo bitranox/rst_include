@@ -101,19 +101,19 @@ def get_include_filename(block: Block) -> Tuple[pathlib.Path, pathlib.Path]:
     >>> block = lib_test.get_test_block_ok()
 
     >>> # test include Filename OK
-    >>> get_include_filename(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    (...Path('include1.py'), ...Path('.../rst_include/tests/include1.py'))
+    >>> get_include_filename(block)
+    (...Path('include1.py'), ...Path('.../tests/include1.py'))
 
     >>> # test Error no include Filename given
     >>> block = lib_test.get_test_block_no_include_filename()
-    >>> get_include_filename(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_include_filename(block)
     Traceback (most recent call last):
     ...
     FileNotFoundError: Error in File ".../README.template.rst", Line 47100: no include filename
 
     >>> # test Error include File does not exist
     >>> block = lib_test.get_test_block_include_filename_not_existing()
-    >>> get_include_filename(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> get_include_filename(block)
     Traceback (most recent call last):
     ...
     FileNotFoundError: Error in File ".../README.template.rst", Line 47100: include File "not_existing.file" does not exist
