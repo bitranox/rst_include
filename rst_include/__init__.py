@@ -1,6 +1,5 @@
 # PROJECT
 from . import *
-from .rst_include import build
 
 # this needs to come after the module imports, otherwise circular import under windows
 from . import __init__conf__
