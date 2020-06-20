@@ -1,1 +1,1 @@
-from . import *
+from rst_include.libs import *
