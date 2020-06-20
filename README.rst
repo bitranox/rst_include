@@ -460,7 +460,7 @@ Usage from Commandline
 
 .. code-block:: bash
 
-   Usage: main.py [OPTIONS] COMMAND [ARGS]...
+   Usage: rst_include.py [OPTIONS] COMMAND [ARGS]...
 
      since You can not include files into RST files on github and PyPi, You can
      replace those imports with this software.

@@ -1,11 +1,6 @@
-# PROJECT
-import rst_include.__init__conf__ as __init__conf
-from rst_include.main import build
-
 # this needs to come after the module imports, otherwise circular import under windows
-# import rst_include.__init__conf__ as __init__conf__   # valid absolute import
-# from rst_include import __init__conf__                # valid absolute import
-# from . import __init__conf__                            # valid relative Import
+from .rst_include import build
+from . import __init__conf__                            # valid relative Import
 __title__ = __init__conf__.title
 __version__ = __init__conf__.version
 __name__ = __init__conf__.name

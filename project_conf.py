@@ -55,7 +55,7 @@ description = 'since You can not include files into RST files on github and PyPi
 
 shell_command = package_name            # the shell command which will be registered
 src_dir = package_name                  # the directory under the project directory
-module_name = 'main'
+module_name = package_name              # the main module where cli_main is registered
 init_config_title = description         # the title that is used for __init__.py __title__ and cli command INFO
 init_config_name = package_name         # the name that is used for __init__.py __name__ and cli command INFO
 
@@ -76,7 +76,6 @@ if is_typed_package:
     zip_save = False
 
 package_data = {package_name: included_files}
-packages = [package_name]
 
 url = 'https://github.com/{github_account}/{package_name}'.format(github_account=github_account, package_name=package_name)
 github_master = 'git+https://github.com/{github_account}/{package_name}.git'.format(github_account=github_account, package_name=package_name)

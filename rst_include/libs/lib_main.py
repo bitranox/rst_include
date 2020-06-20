@@ -2,9 +2,14 @@
 import pathlib
 from typing import IO, Union
 
-from . import lib_classes
-from . import lib_assemble_block
-from . import lib_check_files
+try:
+    from . import lib_classes
+    from . import lib_assemble_block
+    from . import lib_check_files
+except (ImportError, ModuleNotFoundError):      # pragma: no cover
+    import lib_classes          # type: ignore  # pragma: no cover
+    import lib_assemble_block   # type: ignore  # pragma: no cover
+    import lib_check_files      # type: ignore  # pragma: no cover
 
 
 def rst_str_replace(source: Union[str, pathlib.Path, IO[str]],  # str, file or sys.stdin

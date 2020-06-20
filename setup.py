@@ -11,10 +11,8 @@ from typing import List
 # single point of configuration
 import project_conf
 
-try:
-    from setuptools import setup            # type: ignore
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup            # type: ignore
+from setuptools import find_packages
 
 
 def is_travis_deploy() -> bool:
@@ -91,7 +89,7 @@ if __name__ == '__main__':
     setup(name=project_conf.package_name,
           version=project_conf.version,
           url=project_conf.url,
-          packages=project_conf.packages,
+          packages=find_packages(),
           package_data=project_conf.package_data,
           description=project_conf.description,
           long_description=long_description,
