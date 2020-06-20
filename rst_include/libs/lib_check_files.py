@@ -201,7 +201,7 @@ def read_source_lines(source: Union[str, pathlib.Path, IO[str]], encoding: str =
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
     >>> path_read_test_file = path_test_dir / 'test_read.rst'
     >>> path_write_test_file = path_test_dir / 'write_test.txt'
-    >>> path_write_test_file.unlink(missing_ok=True)
+    >>> if path_write_test_file.exists(): path_write_test_file.unlink()
 
     >>> # create TextIOWrapper Object
     >>> import io, os
@@ -233,7 +233,7 @@ def read_source_lines(source: Union[str, pathlib.Path, IO[str]], encoding: str =
     >>> assert l_source_lines[0].content == 'test from str'
 
     >>> # TEARDOWN
-    >>> path_write_test_file.unlink(missing_ok=True)
+    >>> if path_write_test_file.exists(): path_write_test_file.unlink()
 
     """
 
@@ -263,7 +263,7 @@ def write_output(target: Union[str, pathlib.Path, IO[str]], content: str, encodi
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
     >>> path_test_write_test_file = path_test_dir / 'write_test.txt'
-    >>> path_test_write_test_file.unlink(missing_ok=True)
+    >>> if path_test_write_test_file.exists(): path_test_write_test_file.unlink()
     >>> # create TextIOWrapper Object
     >>> import io, os
     >>> output = io.BytesIO()
@@ -281,7 +281,7 @@ def write_output(target: Union[str, pathlib.Path, IO[str]], content: str, encodi
     >>> assert wrapper.read() == 'test'
 
     >>> # Teardown
-    >>> path_test_write_test_file.unlink(missing_ok=True)
+    >>> if path_test_write_test_file.exists(): path_test_write_test_file.unlink()
 
     """
 
