@@ -14,7 +14,7 @@ package_name = 'rst_include'  # type: str
 version = '2.0.0'
 
 # cc_test_reporter_id - get it under https://codeclimate.com/github/<user>/<project> and press "test coverage"
-cc_test_reporter_id = ''    # for rst_include
+cc_test_reporter_id = '2abffcf7a7bd906a39c12f2757e335fed3cb368529f4ce3482a4bdebc95b8fd0'    # for rst_include
 
 # pypi_password
 # to create the secret :
