@@ -1,5 +1,5 @@
-{{rst_include.repository}}
-{{rst_include.double_underline_repository}}
+{{PizzaCutter.repository}}
+{{PizzaCutter.double_underline_repository}}
 
 .. include:: ./badges.rst
 

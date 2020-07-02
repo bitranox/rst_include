@@ -13,13 +13,13 @@ install latest version with pip (recommended):
 .. code-block:: bash
 
     # upgrade all dependencies regardless of version number (PREFERRED)
-    python3 -m pip install --upgrade git+https://github.com/{{rst_include.repository_slug}}.git --upgrade-strategy eager
+    python3 -m pip install --upgrade git+https://github.com/{{PizzaCutter.repository_slug}}.git --upgrade-strategy eager
 
     # test without installing (can be skipped)
-    python3 -m pip install git+https://github.com/{{rst_include.repository_slug}}.git --install-option test
+    python3 -m pip install git+https://github.com/{{PizzaCutter.repository_slug}}.git --install-option test
 
     # normal install
-    python3 -m pip install --upgrade git+https://github.com/{{rst_include.repository_slug}}.git
+    python3 -m pip install --upgrade git+https://github.com/{{PizzaCutter.repository_slug}}.git
 
 
 install latest pypi Release (if there is any):
@@ -27,13 +27,13 @@ install latest pypi Release (if there is any):
 .. code-block:: bash
 
     # latest Release from pypi
-    python3 -m pip install --upgrade {{rst_include.repository}}
+    python3 -m pip install --upgrade {{PizzaCutter.repository}}
 
     # test without installing (can be skipped)
-    python3 -m pip install {{rst_include.repository}} --install-option test
+    python3 -m pip install {{PizzaCutter.repository}} --install-option test
 
     # normal install
-    python3 -m pip install --upgrade {{rst_include.repository}}
+    python3 -m pip install --upgrade {{PizzaCutter.repository}}
 
 
 
@@ -43,9 +43,9 @@ include it into Your requirements.txt:
 
     # Insert following line in Your requirements.txt:
     # for the latest Release on pypi (if any):
-    {{rst_include.repository}}
+    {{PizzaCutter.repository}}
     # for the latest Development Version :
-    {{rst_include.repository}} @ git+https://github.com/{{rst_include.repository_slug}}.git
+    {{PizzaCutter.repository}} @ git+https://github.com/{{PizzaCutter.repository_slug}}.git
 
     # to install and upgrade all modules mentioned in requirements.txt:
     python3 -m pip install --upgrade -r /<path>/requirements.txt
@@ -56,8 +56,8 @@ Install from source code:
 .. code-block:: bash
 
     # cd ~
-    $ git clone https://github.com/{{rst_include.repository_slug}}.git
-    $ cd {{rst_include.repository}}
+    $ git clone https://github.com/{{PizzaCutter.repository_slug}}.git
+    $ cd {{PizzaCutter.repository}}
 
     # test without installing (can be skipped)
     python3 setup.py test
@@ -74,8 +74,8 @@ This is still in development and not recommended / working at the moment:
 .. code-block:: shell
 
     # from Your shell's homedirectory:
-    $ git clone https://github.com/{{rst_include.repository_slug}}.git
-    $ cd {{rst_include.repository}}
+    $ git clone https://github.com/{{PizzaCutter.repository_slug}}.git
+    $ cd {{PizzaCutter.repository}}
 
     # to run the tests:
     $ make test

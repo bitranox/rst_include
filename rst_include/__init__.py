@@ -1,5 +1,7 @@
 # this needs to come after the module imports, otherwise circular import under windows
-from .rst_include import build
+from .libs.lib_main import rst_inc
+from .libs.lib_main import rst_str_replace
+
 from . import __init__conf__                            # valid relative Import
 __title__ = __init__conf__.title
 __version__ = __init__conf__.version

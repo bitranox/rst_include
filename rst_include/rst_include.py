@@ -1,9 +1,10 @@
 # STDLIB
 import errno
-from io import TextIOWrapper, TextIOBase
+import importlib
+import importlib.util
 import pathlib
 import sys
-from typing import Tuple, Union, IO
+from typing import Dict, Tuple, Union, IO
 
 # EXT
 import click
@@ -22,41 +23,6 @@ except (ImportError, ModuleNotFoundError):              # pragma: no cover
 
 # CONSTANTS
 CLICK_CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-
-
-def get_version_commandline() -> str:
-    with open(str(pathlib.Path(__file__).parent / 'version.txt'), mode='r') as version_file:
-        version = version_file.readline()
-    return version
-
-
-def build(path_rst_source_file: pathlib.Path, path_rst_target_file: pathlib.Path, travis_repo_slug: str) -> None:
-
-    # noinspection PyBroadException
-    lib_log_utils.log_info('create the README.rst')
-    repository = travis_repo_slug.split('/')[1]
-    repository_dashed = repository.replace('_', '-')
-
-    """
-    paths absolute, or relative to the location of the config file
-    the notation for relative files is like on windows or linux - not like in python.
-    so You might use ../../some/directory/some_document.rst to go two levels back.
-    avoid absolute paths since You never know where the program will run.
-    """
-
-    lib_log_utils.log_info('include the include blocks')
-    lib_main.rst_inc(source=path_rst_source_file, target=path_rst_target_file)
-
-    lib_log_utils.log_info('replace repository related strings')
-    lib_main.rst_str_replace(source=path_rst_target_file, target='',
-                             str_pattern='{{rst_include.repository_slug}}', str_replace=travis_repo_slug, inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='',
-                             str_pattern='{{rst_include.repository}}', str_replace=repository, inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='',
-                             str_pattern='{{rst_include.double_underline_repository}}', str_replace='=' * len(repository), inplace=True)
-    lib_main.rst_str_replace(source=path_rst_target_file, target='',
-                             str_pattern='{{rst_include.repository_dashed}}', str_replace=repository_dashed, inplace=True)
-    lib_log_utils.log_info('done')
 
 
 def include(source: str, target: str, quiet: bool, inplace: bool, source_encoding: str, target_encoding: str) -> None:
@@ -105,6 +71,60 @@ def replace(source: str, target: str, str_pattern: str, str_replace: str, count:
     lib_log_utils.BannerSettings.quiet = quiet
     lib_main.rst_str_replace(source=path_source, target=path_target, str_pattern=str_pattern, str_replace=str_replace, count=count,
                              source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
+
+
+def import_module_from_file(module_fullpath: Union[pathlib.Path, str], reload: bool = False):   # type: ignore
+    """
+    TODO : replace with lib_import when avail maybe take from pycharm
+    """
+    module_fullpath = pathlib.Path(module_fullpath)
+
+    if not module_fullpath.suffix == '.py':
+        module_fullpath = pathlib.Path(str(module_fullpath) + '.py')
+
+    module_name = module_fullpath.stem
+
+    if not reload and module_name in sys.modules:
+        return sys.modules[module_name]
+
+    if reload:
+        invalidate_caches()
+
+    if sys.version_info < (3, 6):
+        sys.path.append(str(module_fullpath.parent))
+        mod = importlib.import_module(module_name)
+        sys.path.pop()
+        sys.modules[module_name] = mod
+
+    else:
+        sys.path.append(str(module_fullpath.parent))
+
+        spec = importlib.util.spec_from_file_location(module_name, module_fullpath)
+        if spec is None:
+            sys.path.pop()
+            raise ImportError('can not get spec from file location "{}"'.format(module_fullpath))
+
+        try:
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = mod
+        except Exception as exc:
+            raise ImportError('can not load module "{}"'.format(module_name)) from exc
+        finally:
+            sys.path.pop()
+            sys.path.append(str(module_fullpath.parent))
+
+        try:
+            spec.loader.exec_module(mod)    # type: ignore
+        except Exception as exc:
+            sys.path.pop()
+            raise ImportWarning('module "{}" reloaded, but can not be executed'.format(module_name)) from exc
+
+    return mod
+
+
+def invalidate_caches() -> None:    # see https://docs.python.org/3/library/importlib.html
+    if sys.version_info >= (3, 3):
+        importlib.invalidate_caches()
 
 
 def adjust_cli_parameters(target: str, quiet: bool, inplace: bool) -> Tuple[str, bool]:
