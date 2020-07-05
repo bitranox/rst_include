@@ -1,5 +1,5 @@
 # STDLIB
-import pathlib
+import pathlib3x as pathlib
 from typing import IO, Union
 
 try:
@@ -21,6 +21,12 @@ def rst_str_replace(source: Union[str, pathlib.Path, IO[str]],  # str, file or s
                     target_encoding: str = 'utf-8',
                     inplace: bool = False) -> None:
 
+    # make sure it is pathlib3x instance
+    if pathlib.Path.is_path_instance(source):
+        source = pathlib.Path(source)           # type: ignore
+    if pathlib.Path.is_path_instance(target):
+        target = pathlib.Path(target)           # type: ignore
+
     path_source, path_target = lib_check_files.check_source_and_target(source, target, inplace)
     content = lib_check_files.read_input(path_source, source_encoding)
     content = content.replace(str_pattern, str_replace, count)
@@ -33,6 +39,11 @@ def rst_inc(source: Union[str, pathlib.Path, IO[str]],
             target_encoding: str = 'utf-8',
             inplace: bool = False) -> None:
 
+    # make sure it is pathlib3x instance
+    if pathlib.Path.is_path_instance(source):
+        source = pathlib.Path(source)           # type: ignore
+    if pathlib.Path.is_path_instance(target):
+        target = pathlib.Path(target)           # type: ignore
     path_source, path_target = lib_check_files.check_source_and_target(source, target, inplace)
     rst_file = lib_classes.RstFile(path_source, path_target, source_encoding, target_encoding)
     lib_assemble_block.create_rst_file_from_template(rst_file)

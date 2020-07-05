@@ -5,6 +5,13 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+2.0.1
+-----
+2020-07-05 : patch release
+    - fix typos
+    - manage project with PizzaCutter
+    - restructured cli entry points
+
 2.0.0
 -----
 2020-06-19

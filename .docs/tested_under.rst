@@ -1,4 +1,3 @@
-supports python 3.6-3.8, pypy3 and possibly other dialects.
+tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.8-dev, pypy3
 
-`100% code coverage <https://codecov.io/gh/{{PizzaCutter.repository_slug}}>`_, mypy static type checking, tested under `Linux, macOS, Windows and Wine
-<https://travis-ci.org/{{PizzaCutter.repository_slug}}>`_, automatic daily builds  and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, codestyle checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds and monitoring

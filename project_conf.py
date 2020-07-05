@@ -44,7 +44,7 @@ pypi_package = True
 is_typed_package = True
 
 # a short description of the Package - especially if You deploy on PyPi !
-description = 'since You can not include files into RST files on github and PyPi, You can replace those imports with this software.'
+description = 'commandline tool to resolve RST File includes'
 
 # ##### include package data files here !!!
 # included_files.append('version.txt')
@@ -63,7 +63,7 @@ init_config_name = package_name         # the name that is used for __init__.py 
 long_description = package_name
 
 # if can run from a zip file - see : https://setuptools.readthedocs.io/en/latest/setuptools.html#setting-the-zip-safe-flag
-zip_save = False
+zip_safe = False
 
 # we ned to have a function main_commandline in module module_name - see examples
 entry_points = {'console_scripts': ['{shell_command} = {src_dir}.{module_name}:cli_main'
@@ -73,7 +73,7 @@ if is_typed_package:
     included_files.append('py.typed')
     # zip_safe needs to be false for a typed project
     # noinspection PyRedeclaration
-    zip_save = False
+    zip_safe = False
 
 package_data = {package_name: included_files}
 

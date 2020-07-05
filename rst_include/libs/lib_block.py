@@ -1,9 +1,9 @@
 # STDLIB
-import pathlib
+import pathlib3x as pathlib
 from typing import List
 
 # OWN
-import lib_list
+import lib_list  # type: ignore
 
 try:
     # for pytest

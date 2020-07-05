@@ -1,5 +1,5 @@
 # STDLIB
-import pathlib
+import pathlib3x as pathlib
 from typing import List, Tuple
 
 # OWN

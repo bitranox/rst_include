@@ -1,11 +1,11 @@
 # STDLIB
 from collections import OrderedDict
-import pathlib
+import pathlib3x as pathlib
 from typing import List, Union, IO
 
 
 # OWN
-import lib_list
+import lib_list         # type: ignore
 import lib_log_utils    # type: ignore
 
 try:
@@ -82,7 +82,7 @@ def read_include_file(block: Block) -> List[str]:
 
 
 def delete_empty_lines_from_list(source_lines: List[str]) -> List[str]:
-    source_lines_without_empty_lines = lib_list.ls_strip_list(source_lines)
+    source_lines_without_empty_lines = [str(element) for element in lib_list.ls_strip_list(source_lines)]
     return source_lines_without_empty_lines
 
 

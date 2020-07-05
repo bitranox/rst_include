@@ -41,10 +41,10 @@ rst_include
 .. |snyk| image:: https://img.shields.io/snyk/vulnerabilities/github/bitranox/rst_include
    :target: https://snyk.io/test/github/bitranox/rst_include
 
-since You can not include files into RST files on github and PyPi, You can replace those imports with this software.
+since You can not include files into RST files on github or PyPi, You can resolve such imports with this software.
 
 That means You can locally write Your RST documents (for instance with pycharm) and use there
-the .. include: option to include other RST Files or code snippets into Your Document.
+the *.. include:* option to include other RST Files or code snippets into Your Document.
 Afterwards You can run this software to create a monolithic README.rst that can be viewed on Github or Pypi
 
 You might also include Text/Code from Jupyter Notebooks (sorry, no pictures at the moment, but it is not very hard to do that)
@@ -58,36 +58,28 @@ This has many advantages like :
 - commandline or programmatic interface, You can even use it in the travis.yml
 - commandline interface supporting shellscript, cmd, pipes, config-files
 
-automated tests, Travis Matrix, Documentation, Badges for this Project are managed with `lib_travis_template <https://github
-.com/bitranox/lib_travis_template>`_ - check it out
+----
 
-supports python 3.6-3.8, pypy3 and possibly other dialects.
+automated tests, Travis Matrix, Documentation, Badges, etc. are managed with `PizzaCutter <https://github
+.com/bitranox/PizzaCutter>`_ (cookiecutter on steroids)
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, mypy static type checking, tested under `Linux, macOS, Windows and Wine
-<https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds  and monitoring
+Python version required: 3.6.0 or newer
+
+tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.8-dev, pypy3
+
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, codestyle checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds and monitoring
 
 ----
 
 - `Installation and Upgrade`_
 - `Usage`_
-    - `use rst_include from commandline`_
-    - `multiline text replacement`_
-- `Examples`_
-    - `Example Python`_
-    - `Example Shellscript`_
-    - `Example Batch`_
-- `rst file examples`_
-    - `simple code include`_
-    - `text or RST file include`_
-    - `include jupyter notebooks`_
-- `rst file include parameters`_
 - `Usage from Commandline`_
 - `Requirements`_
 - `Acknowledgements`_
 - `Contribute`_
-- `Report Issues <https://github.com/{repository_slug}/blob/master/ISSUE_TEMPLATE.md>`_
-- `Pull Request <https://github.com/{repository_slug}/blob/master/PULL_REQUEST_TEMPLATE.md>`_
-- `Code of Conduct <https://github.com/{repository_slug}/blob/master/CODE_OF_CONDUCT.md>`_
+- `Report Issues <https://github.com/bitranox/rst_include/blob/master/ISSUE_TEMPLATE.md>`_
+- `Pull Request <https://github.com/bitranox/rst_include/blob/master/PULL_REQUEST_TEMPLATE.md>`_
+- `Code of Conduct <https://github.com/bitranox/rst_include/blob/master/CODE_OF_CONDUCT.md>`_
 - `License`_
 - `Changelog`_
 
@@ -98,60 +90,57 @@ supports python 3.6-3.8, pypy3 and possibly other dialects.
 Installation and Upgrade
 ------------------------
 
-Before You start, its highly recommended to update pip and setup tools:
+- Before You start, its highly recommended to update pip and setup tools:
 
 
 .. code-block:: bash
 
-    python3 -m pip --upgrade pip
-    python3 -m pip --upgrade setuptools
-    python3 -m pip --upgrade wheel
+    python -m pip --upgrade pip
+    python -m pip --upgrade setuptools
+    python -m pip --upgrade wheel
 
-
-install latest version with pip (recommended):
+- to install the latest release from PyPi via pip (recommended):
 
 .. code-block:: bash
 
-    # upgrade all dependencies regardless of version number (PREFERRED)
-    python3 -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
+    # install latest release from PyPi
+    python -m pip install --upgrade rst_include
 
-    # test without installing (can be skipped)
-    python3 -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
+    # test latest release from PyPi without installing (can be skipped)
+    python -m pip install rst_include --install-option test
+
+- to install the latest development version from github via pip:
+
+
+.. code-block:: bash
 
     # normal install
-    python3 -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
+    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
+
+    # to test without installing (can be skipped)
+    python -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
+
+    # to install and upgrade all dependencies regardless of version number
+    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
 
 
-install latest pypi Release (if there is any):
-
-.. code-block:: bash
-
-    # latest Release from pypi
-    python3 -m pip install --upgrade rst_include
-
-    # test without installing (can be skipped)
-    python3 -m pip install rst_include --install-option test
-
-    # normal install
-    python3 -m pip install --upgrade rst_include
-
-
-
-include it into Your requirements.txt:
+- include it into Your requirements.txt:
 
 .. code-block:: bash
 
     # Insert following line in Your requirements.txt:
-    # for the latest Release on pypi (if any):
+    # for the latest Release on pypi:
     rst_include
-    # for the latest Development Version :
+
+    # for the latest development version :
     rst_include @ git+https://github.com/bitranox/rst_include.git
 
     # to install and upgrade all modules mentioned in requirements.txt:
-    python3 -m pip install --upgrade -r /<path>/requirements.txt
+    python -m pip install --upgrade -r /<path>/requirements.txt
 
 
-Install from source code:
+
+- to install the latest development version from source code:
 
 .. code-block:: bash
 
@@ -159,17 +148,15 @@ Install from source code:
     $ git clone https://github.com/bitranox/rst_include.git
     $ cd rst_include
 
-    # test without installing (can be skipped)
-    python3 setup.py test
+    # to test without installing (can be skipped)
+    python setup.py test
 
     # normal install
-    python3 setup.py install
+    python setup.py install
 
-
-via makefile:
-
-if You are on linux, makefiles are a very convenient way to install. Here we can do much more, like installing virtual environment, clean caches and so on.
-This is still in development and not recommended / working at the moment:
+- via makefile:
+  makefiles are a very convenient way to install. Here we can do much more,
+  like installing virtual environments, clean caches and so on.
 
 .. code-block:: shell
 
@@ -194,15 +181,6 @@ Usage
 
 Yo might use rst_include from the commandline (Windows, Linux and MacOs is supported) or import the module to Your python script and use it from there. You
 can also use it from Bash Scripts and Windows Batch Files - See Examples.
-
-Commandline Parameter
-=====================
-
-.. code-block:: bash
-
-    STUB
-
------------------------------------------------------------------
 
 use rst_include from commandline
 --------------------------------
@@ -460,17 +438,16 @@ Usage from Commandline
 
 .. code-block:: bash
 
-   Usage: rst_include.py [OPTIONS] COMMAND [ARGS]...
+   Usage: rst_include [OPTIONS] COMMAND [ARGS]...
 
-     since You can not include files into RST files on github and PyPi, You can
-     replace those imports with this software.
+     commandline tool to resolve RST File includes
 
    Options:
      --version   Show the version and exit.
      -h, --help  Show this message and exit.
 
    Commands:
-     include   include the include files, use "-" for stdin as SOURCE and "-"...
+     include  include the include files, use "-" for stdin as SOURCE and "-"...
      info     get program informations
      replace  replace <str_pattern> with <str_replace> <count> times
 
@@ -482,6 +459,7 @@ following modules will be automatically installed :
 
     ## Project Requirements
     click
+    pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
     lib_list @ git+https://github.com/bitranox/lib_list.git
     lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
     lib_path @ git+https://github.com/bitranox/lib_path.git
@@ -510,6 +488,13 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+2.0.1
+-----
+2020-07-05 : patch release
+    - fix typos
+    - manage project with PizzaCutter
+    - restructured cli entry points
 
 2.0.0
 -----

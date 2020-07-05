@@ -1,6 +1,6 @@
 # STDLIB
 from io import TextIOWrapper
-import pathlib
+import pathlib3x as pathlib
 from typing import List, IO, Tuple, Union
 
 # OWN
@@ -281,7 +281,7 @@ def write_output(target: Union[str, pathlib.Path, IO[str]], content: str, encodi
     >>> assert wrapper.read() == 'test'
 
     >>> # Teardown
-    >>> if path_test_write_test_file.exists(): path_test_write_test_file.unlink()
+    >>> path_test_write_test_file.unlink(missing_ok=True)
 
     """
 

@@ -1,4 +1,4 @@
-import pathlib
+import pathlib3x as pathlib
 from typing import List, Union, IO
 
 try:
