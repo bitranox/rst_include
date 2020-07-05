@@ -128,7 +128,12 @@ def get_include_filename(block: Block) -> Tuple[pathlib.Path, pathlib.Path]:
         raise FileNotFoundError(s_error)
 
     path_include_file = pathlib.Path(include_filename)
-    path_include_file_absolut = lib_path.get_absolute_path_relative_from_path(block.source, path_include_file)
+
+    if not path_include_file.is_absolute():
+        path_include_file_absolut = (pathlib.Path(block.source).parent / path_include_file).resolve()  # type: ignore
+    else:
+        path_include_file_absolut = path_include_file.resolve()
+
     if not path_include_file_absolut.is_file():
         s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" does not exist'.format(
             source_file=block.source,
