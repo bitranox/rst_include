@@ -192,7 +192,7 @@ def get_test_block_end_before_invalid() -> Block:
 
 def get_path_test_dir() -> pathlib.Path:
     """
-    >>> assert str(get_path_test_dir()).endswith('/tests')
+    >>> assert str(get_path_test_dir()).endswith('tests')
     """
     test_dir = pathlib.Path(__file__).absolute().parent.parent.parent / 'tests'
     return test_dir
