@@ -12,8 +12,8 @@ except (ImportError, ModuleNotFoundError):      # pragma: no cover
     import lib_check_files      # type: ignore  # pragma: no cover
 
 
-def rst_str_replace(source: Union[str, pathlib.Path, IO[str]],  # str, file or sys.stdin
-                    target: Union[str, pathlib.Path, IO[str]],  # str, file or sys.stdout
+def rst_str_replace(source: Union[pathlib.Path, IO[str]],  # str, file or sys.stdin
+                    target: Union[pathlib.Path, IO[str], None],  # str, file or sys.stdout, or None for no Output
                     str_pattern: str,
                     str_replace: str,
                     count: int = -1,
@@ -33,8 +33,8 @@ def rst_str_replace(source: Union[str, pathlib.Path, IO[str]],  # str, file or s
     lib_check_files.write_output(path_target, content, target_encoding)
 
 
-def rst_inc(source: Union[str, pathlib.Path, IO[str]],
-            target: Union[str, pathlib.Path, IO[str]],
+def rst_inc(source: Union[pathlib.Path, IO[str]],
+            target: Union[pathlib.Path, IO[str], None],
             source_encoding: str = 'utf-8-sig',
             target_encoding: str = 'utf-8',
             inplace: bool = False) -> None:

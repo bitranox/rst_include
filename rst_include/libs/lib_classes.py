@@ -4,8 +4,9 @@ from typing import List, IO, Union
 
 class RstFile(object):
     def __init__(self,
-                 source: Union[str, pathlib.Path, IO[str]],
-                 target: Union[str, pathlib.Path, IO[str]],
+                 source: Union[pathlib.Path, IO[str]],
+                 # if target = None, then the Output will be just returned as Text and not written anywere
+                 target: Union[pathlib.Path, IO[str], None],
                  source_encoding: str = 'utf-8-sig',
                  target_encoding: str = 'utf-8'):
         self.source = source

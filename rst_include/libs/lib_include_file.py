@@ -63,7 +63,7 @@ def read_include_file(block: Block) -> List[str]:
 
         includes_stack[block.include_filename_absolut] = IncludeTrace(block.source, block.l_source_lines[0].line_number)
 
-        rst_file = RstFile(source=block.include_filename_absolut, target='-', source_encoding=block.include_file_encoding)
+        rst_file = RstFile(source=block.include_filename_absolut, target=None, source_encoding=block.include_file_encoding)
         content = lib_assemble_block.create_rst_file_from_template(rst_file)
         include_file_lines = content.split('\n')
         include_file_lines = right_strip_lines_from_list(include_file_lines)

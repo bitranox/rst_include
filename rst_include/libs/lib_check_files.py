@@ -19,9 +19,9 @@ except (ImportError, ModuleNotFoundError):          # pragma: no cover
     import lib_test                                 # type: ignore # pragma: no cover
 
 
-def check_source_and_target(source: Union[str, pathlib.Path, IO[str]],
-                            target: Union[str, pathlib.Path, IO[str]],
-                            in_place: bool) -> Tuple[Union[str, pathlib.Path, IO[str]], Union[str, pathlib.Path, IO[str]]]:
+def check_source_and_target(source: Union[pathlib.Path, IO[str]],
+                            target: Union[pathlib.Path, IO[str], None],
+                            in_place: bool) -> Tuple[Union[pathlib.Path, IO[str]], Union[pathlib.Path, IO[str], None]]:
     """
 
     >>> # Setup
@@ -40,10 +40,10 @@ def check_source_and_target(source: Union[str, pathlib.Path, IO[str]],
     >>> source, target = check_source_and_target(wrapper, wrapper, in_place=False)
 
     >>> # test source = file, in_place = True
-    >>> source, target = check_source_and_target(source=path_test_file_exists, target='', in_place=True)
+    >>> source, target = check_source_and_target(source=path_test_file_exists, target=None, in_place=True)
 
     >>> # test source = sys.stdin, in_place=True
-    >>> source, target = check_source_and_target(source=wrapper, target='', in_place=True)
+    >>> source, target = check_source_and_target(source=wrapper, target=None, in_place=True)
     Traceback (most recent call last):
     ...
     SyntaxError: if You use option --inplace You need to specify a input file
@@ -108,7 +108,7 @@ def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, IO[str]
 
 
 def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.Path, IO[str]],
-                                                    target: Union[str, pathlib.Path, IO[str]]) -> None:
+                                                    target: Union[str, pathlib.Path, IO[str], None]) -> None:
     """
 
     >>> # Setup
@@ -143,7 +143,7 @@ def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.P
         raise FileExistsError(error_message)
 
 
-def log_warning_if_target_file_exist(path_target: Union[str, pathlib.Path, IO[str]]) -> None:
+def log_warning_if_target_file_exist(path_target: Union[str, pathlib.Path, IO[str], None]) -> None:
     """
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
@@ -258,8 +258,9 @@ def read_source_lines(source: Union[str, pathlib.Path, IO[str]], encoding: str =
     return l_source_lines
 
 
-def write_output(target: Union[str, pathlib.Path, IO[str]], content: str, encoding: str = 'utf-8') -> str:
+def write_output(target: Union[pathlib.Path, IO[str], None], content: str, encoding: str = 'utf-8') -> str:
     """
+    writes the output to the target. If the target is None, only the text will be returned
     >>> # Setup
     >>> path_test_dir = pathlib.Path(__file__).parent.parent.parent / 'tests'
     >>> path_test_write_test_file = path_test_dir / 'write_test.txt'
