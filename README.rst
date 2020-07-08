@@ -12,13 +12,12 @@ rst_include
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
 
-.. |jupyter| image:: https://mybinder.org/badge.svg
-   :target: https://mybinder.org/v2/gh/bitranox/rst_include/master?filepath=jupyter_test_rst_include.ipynb
+.. |jupyter| image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/bitranox/rst_include/master?filepath=rst_include.ipynb
 
 .. for the pypi status link note the dashes, not the underscore !
 .. |pypi| image:: https://img.shields.io/pypi/status/rst-include?label=PyPI%20Package
    :target: https://badge.fury.io/py/rst_include
-
 
 .. |codecov| image:: https://img.shields.io/codecov/c/github/bitranox/rst_include
    :target: https://codecov.io/gh/bitranox/rst_include
