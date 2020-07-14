@@ -63,7 +63,7 @@ def check_source_and_target(source: Union[pathlib.Path, IO[str]],
         log_warning_if_target_file_exist(target)
 
     if isinstance(target, TextIOWrapper):
-        lib_log_utils.BannerSettings.quiet = True
+        lib_log_utils.LogSettings.quiet = True
 
     return source, target
 

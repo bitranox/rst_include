@@ -77,7 +77,7 @@ def read_include_file(block: Block) -> List[str]:
                   '"{include_file}"'.format(source_file=block.source,
                                             line_number=block.l_source_lines[0].line_number,
                                             include_file=block.include_filename_absolut)
-        lib_log_utils.log_exception_traceback(s_error)
+        lib_log_utils.log_traceback.log_exception_traceback(s_error)
         raise IOError(s_error)
 
 
