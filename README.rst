@@ -442,8 +442,9 @@ Usage from Commandline
      commandline tool to resolve RST File includes
 
    Options:
-     --version   Show the version and exit.
-     -h, --help  Show this message and exit.
+     --version                     Show the version and exit.
+     --traceback / --no-traceback  return traceback information on cli
+     -h, --help                    Show this message and exit.
 
    Commands:
      include  include the include files, use "-" for stdin as SOURCE and "-"...
@@ -487,6 +488,13 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+2.0.2
+-----
+2020-07-16: Patch release
+    - fix cli test
+    - enable traceback option on cli errors
+
 
 2.0.1
 -----

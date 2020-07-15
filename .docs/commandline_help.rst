@@ -5,8 +5,9 @@
      commandline tool to resolve RST File includes
 
    Options:
-     --version   Show the version and exit.
-     -h, --help  Show this message and exit.
+     --version                     Show the version and exit.
+     --traceback / --no-traceback  return traceback information on cli
+     -h, --help                    Show this message and exit.
 
    Commands:
      include  include the include files, use "-" for stdin as SOURCE and "-"...
