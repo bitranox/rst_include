@@ -22,7 +22,7 @@ CLICK_CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 def include(source: str, target: str, quiet: bool, inplace: bool, source_encoding: str, target_encoding: str) -> None:
-    lib_log_utils.log_handlers.add_stream_handler()
+    lib_log_utils.log_handlers.set_stream_handler()
 
     target, quiet = adjust_cli_parameters(target=target, quiet=quiet, inplace=inplace)
 
@@ -63,7 +63,7 @@ def replace(source: str, target: str, str_pattern: str, str_replace: str, count:
     else:
         path_target = pathlib.Path(target)
 
-    lib_log_utils.log_handlers.add_stream_handler()
+    lib_log_utils.log_handlers.set_stream_handler()
     lib_log_utils.LogSettings.quiet = quiet
     lib_main.rst_str_replace(source=path_source, target=path_target, str_pattern=str_pattern, str_replace=str_replace, count=count,
                              source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
