@@ -491,8 +491,9 @@ Changelog
 
 2.0.3
 -----
-2020-xx-xx: development
-
+2020-07-16: feature release
+    - fix cli test
+    - enable traceback option on cli errors
 
 2.0.2
 -----
