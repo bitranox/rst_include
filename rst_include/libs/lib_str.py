@@ -1,5 +1,5 @@
 # OWN
-import lib_list     # type: ignore
+import lib_list
 
 
 def strip_multiline_string(str_multiline: str) -> str:

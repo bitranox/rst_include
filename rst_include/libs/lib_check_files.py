@@ -3,7 +3,7 @@ from io import TextIOWrapper
 from typing import List, IO, Tuple, Union
 
 # OWN
-import lib_log_utils    # type: ignore
+import lib_log_utils
 import pathlib3x as pathlib
 
 # PROJECT

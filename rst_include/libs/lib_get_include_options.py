@@ -2,7 +2,7 @@
 from typing import List, Tuple, Union
 
 # OWN
-import lib_log_utils    # type: ignore
+import lib_log_utils
 import pathlib3x as pathlib
 
 try:

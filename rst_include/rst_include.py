@@ -6,7 +6,7 @@ import sys
 from typing import Tuple, Union, IO
 
 # OWN
-import lib_log_utils                # type: ignore
+import lib_log_utils
 
 # PROJECT
 try:

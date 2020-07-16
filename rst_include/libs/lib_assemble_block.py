@@ -2,7 +2,7 @@
 from typing import List, IO, Union
 
 # OWN
-import lib_list     # type: ignore
+import lib_list
 import pathlib3x as pathlib
 
 
