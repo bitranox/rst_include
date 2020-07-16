@@ -1,5 +1,8 @@
-import pathlib3x as pathlib
+# STDLIB
 from typing import List, IO, Union
+
+# OWN
+import pathlib3x as pathlib
 
 
 class RstFile(object):

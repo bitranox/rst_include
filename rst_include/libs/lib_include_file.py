@@ -1,12 +1,12 @@
 # STDLIB
 from collections import OrderedDict
-import pathlib3x as pathlib
 from typing import List, Union, IO
 
 
 # OWN
-import lib_list         # type: ignore
-import lib_log_utils    # type: ignore
+import lib_list
+import lib_log_utils
+import pathlib3x as pathlib
 
 try:
     # for pytest

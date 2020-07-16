@@ -1,5 +1,7 @@
-import lib_log_utils    # type: ignore
+# OWN
+import lib_log_utils
 
+# PROJ
 try:
     # for pytest
     from . import lib_classes

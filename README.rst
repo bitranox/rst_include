@@ -459,10 +459,9 @@ following modules will be automatically installed :
 
     ## Project Requirements
     click
-    pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
     lib_list @ git+https://github.com/bitranox/lib_list.git
     lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
-    lib_path @ git+https://github.com/bitranox/lib_path.git
+    pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
 
 Acknowledgements
 ----------------
@@ -489,12 +488,17 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+2.0.3
+-----
+2020-07-16: feature release
+    - fix cli test
+    - enable traceback option on cli errors
+
 2.0.2
 -----
 2020-07-16: Patch release
     - fix cli test
     - enable traceback option on cli errors
-
 
 2.0.1
 -----
