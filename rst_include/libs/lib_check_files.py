@@ -1,10 +1,10 @@
 # STDLIB
 from io import TextIOWrapper
-import pathlib3x as pathlib
 from typing import List, IO, Tuple, Union
 
 # OWN
 import lib_log_utils    # type: ignore
+import pathlib3x as pathlib
 
 # PROJECT
 try:

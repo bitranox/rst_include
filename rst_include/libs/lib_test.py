@@ -1,6 +1,9 @@
 # STDLIB
+
+# OWN
 import pathlib3x as pathlib
 
+# PROJ
 try:
     # for pytest
     from . import lib_assemble_block

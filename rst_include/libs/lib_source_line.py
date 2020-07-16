@@ -1,6 +1,10 @@
-import pathlib3x as pathlib
+# STDLIB
 from typing import List, Union, IO
 
+# OWN
+import pathlib3x as pathlib
+
+# PROJ
 try:
     # for pytest
     from . import lib_classes

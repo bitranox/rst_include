@@ -1,7 +1,10 @@
 # STDLIB
-import pathlib3x as pathlib
 from typing import IO, Union
 
+# OWN
+import pathlib3x as pathlib
+
+# PROJ
 try:
     from . import lib_classes
     from . import lib_assemble_block
