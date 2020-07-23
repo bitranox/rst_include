@@ -1,3 +1,7 @@
+Version 2.0.4 as of 2020-07-23, see changelog_
+
+=======================================================
+
 rst_include
 ===========
 
@@ -490,7 +494,8 @@ Changelog
 
 2.0.4
 -----
-development
+2020-07-23: patch release
+    - adopt lib_log_utils 0.3.0
 
 2.0.3
 -----
@@ -500,7 +505,7 @@ development
 
 2.0.2
 -----
-2020-07-16: Patch release
+2020-07-16: patch release
     - fix cli test
     - enable traceback option on cli errors
 
