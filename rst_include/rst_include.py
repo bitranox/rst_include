@@ -40,7 +40,7 @@ def include(source: str, target: str, quiet: bool, inplace: bool, source_encodin
     else:
         path_target = pathlib.Path(target)
 
-    lib_log_utils.LogSettings.quiet = quiet
+    lib_log_utils.log_settings.quiet = quiet
     lib_main.rst_inc(source=path_source, target=path_target, source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
 
 
@@ -64,7 +64,7 @@ def replace(source: str, target: str, str_pattern: str, str_replace: str, count:
         path_target = pathlib.Path(target)
 
     lib_log_utils.log_handlers.set_stream_handler()
-    lib_log_utils.LogSettings.quiet = quiet
+    lib_log_utils.log_settings.quiet = quiet
     lib_main.rst_str_replace(source=path_source, target=path_target, str_pattern=str_pattern, str_replace=str_replace, count=count,
                              source_encoding=source_encoding, target_encoding=target_encoding, inplace=inplace)
 

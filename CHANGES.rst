@@ -5,6 +5,11 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+2.0.4
+-----
+2020-07-23: patch release
+    - adopt lib_log_utils 0.3.0
+
 2.0.3
 -----
 2020-07-16: feature release
@@ -13,7 +18,7 @@ Changelog
 
 2.0.2
 -----
-2020-07-16: Patch release
+2020-07-16: patch release
     - fix cli test
     - enable traceback option on cli errors
 
