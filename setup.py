@@ -83,7 +83,7 @@ if is_travis_deploy() and is_tagged_commit():
 
 setup_kwargs: Dict[str, Any] = dict()
 setup_kwargs['name'] = 'rst_include'
-setup_kwargs['version'] = '2.0.4'
+setup_kwargs['version'] = '2.0.5a0'
 setup_kwargs['url'] = 'https://github.com/bitranox/rst_include'
 setup_kwargs['packages'] = find_packages()
 setup_kwargs['package_data'] = {'rst_include': ['py.typed', '*.pyi', '__init__.pyi']}
