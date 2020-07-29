@@ -1,5 +1,6 @@
 ## Project Requirements
 click
+cli_exit_tools @ git+https://github.com/bitranox/cli_exit_tools.git
 lib_list @ git+https://github.com/bitranox/lib_list.git
 lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
 pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
