@@ -1,4 +1,4 @@
-Version 2.0.4 as of 2020-07-23, see changelog_
+Version 2.0.5 as of 2020-07-29, see changelog_
 
 =======================================================
 
@@ -74,9 +74,9 @@ tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.8-dev, pypy3
 
 ----
 
-- `Installation and Upgrade`_
 - `Usage`_
 - `Usage from Commandline`_
+- `Installation and Upgrade`_
 - `Requirements`_
 - `Acknowledgements`_
 - `Contribute`_
@@ -89,95 +89,6 @@ tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.8-dev, pypy3
 ----
 
 
-
-Installation and Upgrade
-------------------------
-
-- Before You start, its highly recommended to update pip and setup tools:
-
-
-.. code-block:: bash
-
-    python -m pip --upgrade pip
-    python -m pip --upgrade setuptools
-    python -m pip --upgrade wheel
-
-- to install the latest release from PyPi via pip (recommended):
-
-.. code-block:: bash
-
-    # install latest release from PyPi
-    python -m pip install --upgrade rst_include
-
-    # test latest release from PyPi without installing (can be skipped)
-    python -m pip install rst_include --install-option test
-
-- to install the latest development version from github via pip:
-
-
-.. code-block:: bash
-
-    # normal install
-    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
-
-    # to test without installing (can be skipped)
-    python -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
-
-    # to install and upgrade all dependencies regardless of version number
-    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
-
-
-- include it into Your requirements.txt:
-
-.. code-block:: bash
-
-    # Insert following line in Your requirements.txt:
-    # for the latest Release on pypi:
-    rst_include
-
-    # for the latest development version :
-    rst_include @ git+https://github.com/bitranox/rst_include.git
-
-    # to install and upgrade all modules mentioned in requirements.txt:
-    python -m pip install --upgrade -r /<path>/requirements.txt
-
-
-
-- to install the latest development version from source code:
-
-.. code-block:: bash
-
-    # cd ~
-    $ git clone https://github.com/bitranox/rst_include.git
-    $ cd rst_include
-
-    # to test without installing (can be skipped)
-    python setup.py test
-
-    # normal install
-    python setup.py install
-
-- via makefile:
-  makefiles are a very convenient way to install. Here we can do much more,
-  like installing virtual environments, clean caches and so on.
-
-.. code-block:: shell
-
-    # from Your shell's homedirectory:
-    $ git clone https://github.com/bitranox/rst_include.git
-    $ cd rst_include
-
-    # to run the tests:
-    $ make test
-
-    # to install the package
-    $ make install
-
-    # to clean the package
-    $ make clean
-
-    # uninstall the package
-    $ make uninstall
 
 Usage
 -----------
@@ -455,6 +366,95 @@ Usage from Commandline
      info     get program informations
      replace  replace <str_pattern> with <str_replace> <count> times
 
+Installation and Upgrade
+------------------------
+
+- Before You start, its highly recommended to update pip and setup tools:
+
+
+.. code-block:: bash
+
+    python -m pip --upgrade pip
+    python -m pip --upgrade setuptools
+    python -m pip --upgrade wheel
+
+- to install the latest release from PyPi via pip (recommended):
+
+.. code-block:: bash
+
+    # install latest release from PyPi
+    python -m pip install --upgrade rst_include
+
+    # test latest release from PyPi without installing (can be skipped)
+    python -m pip install rst_include --install-option test
+
+- to install the latest development version from github via pip:
+
+
+.. code-block:: bash
+
+    # normal install
+    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
+
+    # to test without installing (can be skipped)
+    python -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
+
+    # to install and upgrade all dependencies regardless of version number
+    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
+
+
+- include it into Your requirements.txt:
+
+.. code-block:: bash
+
+    # Insert following line in Your requirements.txt:
+    # for the latest Release on pypi:
+    rst_include
+
+    # for the latest development version :
+    rst_include @ git+https://github.com/bitranox/rst_include.git
+
+    # to install and upgrade all modules mentioned in requirements.txt:
+    python -m pip install --upgrade -r /<path>/requirements.txt
+
+
+
+- to install the latest development version from source code:
+
+.. code-block:: bash
+
+    # cd ~
+    $ git clone https://github.com/bitranox/rst_include.git
+    $ cd rst_include
+
+    # to test without installing (can be skipped)
+    python setup.py test
+
+    # normal install
+    python setup.py install
+
+- via makefile:
+  makefiles are a very convenient way to install. Here we can do much more,
+  like installing virtual environments, clean caches and so on.
+
+.. code-block:: shell
+
+    # from Your shell's homedirectory:
+    $ git clone https://github.com/bitranox/rst_include.git
+    $ cd rst_include
+
+    # to run the tests:
+    $ make test
+
+    # to install the package
+    $ make install
+
+    # to clean the package
+    $ make clean
+
+    # uninstall the package
+    $ make uninstall
+
 Requirements
 ------------
 following modules will be automatically installed :
@@ -463,6 +463,7 @@ following modules will be automatically installed :
 
     ## Project Requirements
     click
+    cli_exit_tools @ git+https://github.com/bitranox/cli_exit_tools.git
     lib_list @ git+https://github.com/bitranox/lib_list.git
     lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
     pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
@@ -491,6 +492,13 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+
+2.0.5
+-------
+2020-07-29: feature release
+    - use the new pizzacutter template
+    - use cli_exit_tools
 
 2.0.4
 -----

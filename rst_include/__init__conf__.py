@@ -1,6 +1,6 @@
 name = 'rst_include'
 title = 'commandline tool to resolve RST File includes'
-version = '2.0.4'
+version = '2.0.5'
 url = 'https://github.com/bitranox/rst_include'
 author = 'Robert Nowotny'
 author_email = 'bitranox@gmail.com'
@@ -14,7 +14,7 @@ Info for rst_include:
 
     commandline tool to resolve RST File includes
 
-    Version : 2.0.4
+    Version : 2.0.5
     Url     : https://github.com/bitranox/rst_include
     Author  : Robert Nowotny
     Email   : bitranox@gmail.com""")

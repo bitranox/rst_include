@@ -5,18 +5,20 @@ from typing import Optional
 # EXT
 import click
 
-# CONSTANTS
-CLICK_CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+# OWN
+import cli_exit_tools
 
+# PROJ
 try:
     from . import __init__conf__
-    from . import cli_exit_tools
     from . import rst_include
 except (ImportError, ModuleNotFoundError):  # pragma: no cover
     # imports for doctest
     import __init__conf__                   # type: ignore  # pragma: no cover
-    import cli_exit_tools                   # type: ignore  # pragma: no cover
     import rst_include                      # type: ignore  # pragma: no cover
+
+# CONSTANTS
+CLICK_CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 def info() -> None:
@@ -84,3 +86,5 @@ if __name__ == '__main__':
     except Exception as exc:
         cli_exit_tools.print_exception_message()
         sys.exit(cli_exit_tools.get_system_exit_code(exc))
+    finally:
+        cli_exit_tools.flush_streams()

@@ -5,6 +5,13 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+
+2.0.5
+-------
+2020-07-29: feature release
+    - use the new pizzacutter template
+    - use cli_exit_tools
+
 2.0.4
 -----
 2020-07-23: patch release
