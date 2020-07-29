@@ -13,6 +13,10 @@ env:
         - cPIP="python -m pip"
         # switch off wine fix me messages
         - WINEDEBUG=fixme-all
+        # mypy path
+        - MYPYPATH="./rst_include/3rd_party_stubs"
+        # package name
+        - PACKAGE_NAME="rst_include"
         # the registered CLI Command
         - CLI_COMMAND=rst_include
         # the source file for rst_include (rebuild rst file includes)
@@ -78,7 +82,7 @@ matrix:
       python: "3.8"
       before_install:
           - export MYPY_STRICT="True"
-          - export BUILD_DOCS="True"
+          - export BUILD_DOCS="False"
           - export DEPLOY_CHECK="True"
           - export DEPLOY="True"
 
