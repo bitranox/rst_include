@@ -1,4 +1,4 @@
-Version 2.0.6a0 as of 2020-07-29, see changelog_
+Version 2.0.6 as of 2020-07-31, see changelog_
 
 =======================================================
 
@@ -494,9 +494,9 @@ Changelog
 - new PATCH version for backwards compatible bug fixes
 
 
-2.0.6a0
+2.0.6
 -------
-2020-07-29: development
+2020-07-31: fix environ.pop issue in doctest
 
 
 2.0.5
