@@ -5,6 +5,10 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+v2.0.8
+---------
+2020-08-01: fix pypi deploy
+
 v2.0.7
 ---------
 2020-07-31: fix travis build
