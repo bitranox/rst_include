@@ -145,7 +145,7 @@ matrix:
       language: python
       python: "3.8"
       before_install:
-          - export BUILD_DOCS="False"
+          - export BUILD_DOCS="True"
           - export DEPLOY_SDIST="False"
           - export DEPLOY_WHEEL="False"
           - export BUILD_TEST="True"
