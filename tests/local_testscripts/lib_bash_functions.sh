@@ -112,6 +112,29 @@ function cleanup() {
   trap 2 # enable Ctrl+C
 }
 
+function run_pycodestyle_tests() {
+  # run pycodestyle, settings from setup.cfg
+  my_banner "running flake8 with settings from ${project_root_dir}/setup.cfg"
+  if ! python3 -m flake8 --append-config="${project_root_dir}/setup.cfg" "$@" "${project_root_dir}"; then
+    my_banner_warning "flake8 ERROR"
+    beep
+    sleep "${sleeptime_on_error}"
+    return 1
+  fi
+}
+
+
+function run_flake8_tests() {
+  # run flake8, settings from setup.cfg
+  my_banner "running flake8 with settings from ${project_root_dir}/setup.cfg"
+  if ! python3 -m flake8 --append-config="${project_root_dir}/setup.cfg" "$@" "${project_root_dir}"; then
+    my_banner_warning "flake8 ERROR"
+    beep
+    sleep "${sleeptime_on_error}"
+    return 1
+  fi
+}
+
 function run_pytest() {
   # run pytest, accepts additional pytest parameters like --disable-warnings and so on
   my_banner "running pytest with settings from pytest.ini, mypy.ini and conftest.py"

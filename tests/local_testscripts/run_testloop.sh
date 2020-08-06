@@ -10,7 +10,8 @@ fi
 # shellcheck disable=SC1090
 source "${own_dir}/lib_bash_functions.sh"
 project_root_dir="${project_root_dir}"
-do_mypy_tests="True"  # this is set py PizzaCutter
+DO_FLAKE8_TESTS="True"
+DO_MYPY_TESTS="True"
 # cleanup on cntrl-c
 trap cleanup EXIT
 
@@ -21,12 +22,23 @@ function pytest_loop {
     while true; do
         banner "Project Root Dir: ${project_root_dir}"
         cleanup
+
+        # we prefer to run tests on its own, not within pytest, due to shaky and outdated pytest plugins
+        if [ "${DO_PYCODESTYLE_TESTS}" == "True" ]; then
+          if ! run_pycodestyle_tests; then continue; fi
+        fi
+
+        # we prefer to run tests on its own, not within pytest, due to shaky and outdated pytest plugins
+        if [ "${DO_FLAKE8_TESTS}" == "True" ]; then
+          if ! run_flake8_tests; then continue; fi
+        fi
+
         # pytest options can be passed to run_pytest like --disable-warnings
         # --log-cli-level=ERROR shows error in pytest if we log to logger.ERROR
         # if ! run_pytest --disable-warnings --log-cli-level=ERROR; then continue; fi
         if ! run_pytest --disable-warnings; then continue; fi
 
-        if [ "${do_mypy_tests}" == "True" ]; then
+        if [ "${DO_MYPY_TESTS}" == "True" ]; then
             if ! mypy_strict; then continue; fi
             if ! mypy_strict_with_imports; then continue; fi
         fi
