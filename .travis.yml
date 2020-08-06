@@ -195,8 +195,6 @@ after_success:
     - lib_travis after_success
     - lib_travis deploy
     - ls -l ./dist
-    - ls -l ./.docs
-    - ls -l ./.docs/parts
 
 notifications:
   email:
