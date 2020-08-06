@@ -4,3 +4,4 @@
 include *.rst
 # include .docs in sdist
 graft .docs
+graft .docs/parts
