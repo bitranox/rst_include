@@ -1,7 +1,4 @@
 # see : https://docs.python.org/3.8/distutils/sourcedist.html#manifest
 
 # include rst files, like changes.rst
-graft .docs
-graft ./.docs
-graft ./.docs/parts
-global-include *.rst
+include *.rst

@@ -97,7 +97,7 @@ matrix:
       language: python
       python: "3.8"
       before_install:
-          - export BUILD_DOCS="False"
+          - export BUILD_DOCS="True"
           - export DEPLOY_SDIST="True"
           - export DEPLOY_WHEEL="True"
           - export BUILD_TEST="True"
@@ -145,7 +145,7 @@ matrix:
       language: python
       python: "3.8"
       before_install:
-          - export BUILD_DOCS="True"
+          - export BUILD_DOCS="False"
           - export DEPLOY_SDIST="False"
           - export DEPLOY_WHEEL="False"
           - export BUILD_TEST="True"
@@ -195,9 +195,6 @@ after_success:
     - lib_travis after_success
     - lib_travis deploy
     - ls -l ./dist
-    - ls -l ./
-    - ls -l ./.docs
-    - ls -l ./.docs/parts
 
 notifications:
   email:
