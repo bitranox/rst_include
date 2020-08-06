@@ -2,3 +2,5 @@
 
 # include rst files, like changes.rst
 include *.rst
+# include .docs in sdist
+graft .docs
