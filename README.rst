@@ -2,7 +2,7 @@ rst_include
 ===========
 
 
-Version v2.0.8 as of 2020-08-06 see `Changelog`_
+Version v2.0.9 as of 2020-08-07 see `Changelog`_
 
 |travis_build| |license| |pypi|
 
@@ -491,6 +491,10 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+v2.0.9
+---------
+2020-08-07: implement flake8 - transitional
 
 v2.0.8
 ---------
