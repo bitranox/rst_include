@@ -5,6 +5,18 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+v2.1.0
+--------
+2020-08-08: service release
+    - fix documentation
+    - fix travis
+    - deprecate pycodestyle
+    - implement flake8
+
+v2.0.9
+---------
+2020-08-07: implement flake8 - transitional
+
 v2.0.8
 ---------
 2020-08-01: fix pypi deploy

@@ -2,7 +2,7 @@ rst_include
 ===========
 
 
-Version v2.0.8 as of 2020-08-01 see `Changelog`_
+Version v2.1.0 as of 2020-08-08 see `Changelog`_
 
 |travis_build| |license| |pypi|
 
@@ -69,7 +69,7 @@ Python version required: 3.6.0 or newer
 
 tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.8-dev, pypy3 - architectures: amd64, ppc64le, s390x, arm64
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, codestyle checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, flake8 style checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds and monitoring
 
 ----
 
@@ -375,31 +375,19 @@ Installation and Upgrade
 
     python -m pip --upgrade pip
     python -m pip --upgrade setuptools
-    python -m pip --upgrade wheel
 
 - to install the latest release from PyPi via pip (recommended):
 
 .. code-block:: bash
 
-    # install latest release from PyPi
     python -m pip install --upgrade rst_include
 
-    # test latest release from PyPi without installing (can be skipped)
-    python -m pip install rst_include --install-option test
-
-- to install the latest development version from github via pip:
+- to install the latest version from github via pip:
 
 
 .. code-block:: bash
 
-    # normal install
     python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
-
-    # to test without installing (can be skipped)
-    python -m pip install git+https://github.com/bitranox/rst_include.git --install-option test
-
-    # to install and upgrade all dependencies regardless of version number
-    python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git --upgrade-strategy eager
 
 
 - include it into Your requirements.txt:
@@ -417,7 +405,6 @@ Installation and Upgrade
     python -m pip install --upgrade -r /<path>/requirements.txt
 
 
-
 - to install the latest development version from source code:
 
 .. code-block:: bash
@@ -425,11 +412,6 @@ Installation and Upgrade
     # cd ~
     $ git clone https://github.com/bitranox/rst_include.git
     $ cd rst_include
-
-    # to test without installing (can be skipped)
-    python setup.py test
-
-    # normal install
     python setup.py install
 
 - via makefile:
@@ -491,6 +473,18 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+v2.1.0
+--------
+2020-08-08: service release
+    - fix documentation
+    - fix travis
+    - deprecate pycodestyle
+    - implement flake8
+
+v2.0.9
+---------
+2020-08-07: implement flake8 - transitional
 
 v2.0.8
 ---------

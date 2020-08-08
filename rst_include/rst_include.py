@@ -10,10 +10,8 @@ import lib_log_utils
 
 # PROJECT
 try:
-    from . import __init__conf__
     from .libs import lib_main
 except (ImportError, ModuleNotFoundError):              # pragma: no cover
-    import __init__conf__           # type: ignore      # pragma: no cover
     from libs import lib_main       # type: ignore      # pragma: no cover
 
 

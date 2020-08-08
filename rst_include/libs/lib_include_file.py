@@ -59,7 +59,7 @@ def read_include_file(block: Block) -> List[str]:
             raise FileNotFoundError()
 
         if block.include_filename_absolut in includes_stack:
-            raise RuntimeError('Recursion detected')    # TODO better Error Description
+            raise RuntimeError('Recursion detected')
 
         includes_stack[block.include_filename_absolut] = IncludeTrace(block.source, block.l_source_lines[0].line_number)
 
