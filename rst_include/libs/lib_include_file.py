@@ -73,10 +73,8 @@ def read_include_file(block: Block) -> List[str]:
         return include_file_lines
 
     except FileNotFoundError:
-        s_error = 'Error in File "{source_file}", Line {line_number}: File not found : '\
-                  '"{include_file}"'.format(source_file=block.source,
-                                            line_number=block.l_source_lines[0].line_number,
-                                            include_file=block.include_filename_absolut)
+        s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: File not found : '\
+                  '"{block.include_filename_absolut}"'
         lib_log_utils.log_traceback.log_exception_traceback(s_error)
         raise IOError(s_error)
 
@@ -223,11 +221,8 @@ def slice_include_file_markers(block: Block) -> None:
 
 def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block) -> None:
     if block.include_file_start_after not in content:
-        s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : start-after "{start_after}" not found'.format(
-            source_file=block.source,
-            line_number=block.l_source_lines[0].line_number,
-            include_filename=block.include_filename,
-            start_after=block.include_file_start_after)
+        s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: '\
+                  f'include File "{block.include_filename}" : start-after "{block.include_file_start_after}" not found'
         s_error = s_error + get_additional_error_string(block)
         lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
@@ -235,11 +230,8 @@ def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block)
 
 def log_and_raise_if_end_before_not_found_in_string(content: str, block: Block) -> None:
     if block.include_file_end_before not in content:
-        s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" : end-before "{end_before}" not found'.format(
-            source_file=block.source,
-            line_number=block.l_source_lines[0].line_number,
-            include_filename=block.include_filename,
-            end_before=block.include_file_end_before)
+        s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: ' \
+                  f'include File "{block.include_filename}" : end-before "{block.include_file_end_before}" not found'
         s_error = s_error + get_additional_error_string(block)
         s_error = s_error + get_additional_error_string_start_after(block)
         lib_log_utils.log_error(s_error)
@@ -249,17 +241,16 @@ def log_and_raise_if_end_before_not_found_in_string(content: str, block: Block) 
 def get_additional_error_string(block: Block) -> str:
     s_error = ''
     if block.include_file_start_line and block.include_file_end_line:
-        s_error = s_error + ' between start_line: {start_line} and end_line: {end_line}'.format(
-            start_line=block.include_file_start_line, end_line=block.include_file_end_line)
+        s_error = s_error + f' between start_line: {block.include_file_start_line} and end_line: {block.include_file_end_line}'
     elif block.include_file_start_line:
-        s_error = s_error + ' after start-line: {start_line}'.format(start_line=block.include_file_start_line)
+        s_error = s_error + f' after start-line: {block.include_file_start_line}'
     elif block.include_file_end_line:
-        s_error = s_error + ' before end-line: {end_line}'.format(end_line=block.include_file_end_line)
+        s_error = s_error + f' before end-line: {block.include_file_end_line}'
     return s_error
 
 
 def get_additional_error_string_start_after(block: Block) -> str:
     s_error = ''
     if block.include_file_start_after:
-        s_error = s_error + ' after start-after: {start_after}'.format(start_after=block.include_file_start_after)
+        s_error = s_error + f' after start-after: {block.include_file_start_after}'
     return s_error

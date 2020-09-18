@@ -121,8 +121,7 @@ def get_include_filename(block: Block) -> Tuple[pathlib.Path, pathlib.Path]:
     include_line = block.l_source_lines[0].content
     include_filename = include_line.split('.. include::')[1].strip()
     if not include_filename:
-        s_error = 'Error in File "{source_file}", Line {line_number}: no include filename'.format(
-            source_file=block.source, line_number=block.l_source_lines[0].line_number)
+        s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: no include filename'
         lib_log_utils.log_error(s_error)
         raise FileNotFoundError(s_error)
 
@@ -137,10 +136,7 @@ def get_include_filename(block: Block) -> Tuple[pathlib.Path, pathlib.Path]:
             path_include_file_absolut = (pathlib.Path.cwd() / path_include_file).resolve()
 
     if not path_include_file_absolut.is_file():
-        s_error = 'Error in File "{source_file}", Line {line_number}: include File "{include_filename}" does not exist'.format(
-            source_file=block.source,
-            line_number=block.l_source_lines[0].line_number,
-            include_filename=path_include_file)
+        s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: include File "{path_include_file}" does not exist'
         lib_log_utils.log_error(s_error)
         raise FileNotFoundError(s_error)
     block.include_filename = path_include_file

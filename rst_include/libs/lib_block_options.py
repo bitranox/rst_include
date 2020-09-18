@@ -147,10 +147,7 @@ def get_option_key_from_source_line(source_line: SourceLine) -> str:
 
 def log_and_raise_value_error_if_option_not_in_block(option: str, block: Block) -> None:
     if not is_option_in_block(option, block):
-        s_error = 'Error in File: "{file}", option "{option}" not found in block starting with Line: {line}'.format(
-            file=block.source,
-            option=option,
-            line=block.l_source_lines[0].line_number)
+        s_error = f'Error in File: "{block.source}", option "{option}" not found in block starting with Line: {block.l_source_lines[0].line_number}'
         lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
 
@@ -158,10 +155,7 @@ def log_and_raise_value_error_if_option_not_in_block(option: str, block: Block) 
 def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, block: Block) -> None:
     if not value:
         line_number = get_source_line_number_for_option(option, block)
-        s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has no value'.format(
-            source_file=block.source,
-            line_number=line_number,
-            option=option)
+        s_error = f'Error in File "{block.source}", Line {line_number}: option "{option}" has no value'
         lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
 
@@ -169,9 +163,6 @@ def log_and_raise_if_value_of_option_in_block_is_empty(value: str, option: str, 
 def log_and_raise_if_value_of_option_in_block_must_be_int_castable_but_is_not(value: str, option: str, block: Block, value_must_be_int: bool) -> None:
     if value_must_be_int and not value.isdigit():
         line_number = get_source_line_number_for_option(option, block)
-        s_error = 'Error in File "{source_file}", Line {line_number}: option "{option}" has to be integer'.format(
-            source_file=block.source,
-            line_number=line_number,
-            option=option)
+        s_error = f'Error in File "{block.source}", Line {line_number}: option "{option}" has to be integer'
         lib_log_utils.log_error(s_error)
         raise TypeError(s_error)
