@@ -5,6 +5,12 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+v2.1.1
+--------
+2020-10-09: service release
+    - update travis build matrix for linux 3.9-dev
+    - update travis build matrix (paths) for windows 3.9 / 3.10
+
 v2.1.0
 --------
 2020-08-08: service release

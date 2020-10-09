@@ -2,7 +2,7 @@ rst_include
 ===========
 
 
-Version v2.1.0 as of 2020-08-08 see `Changelog`_
+Version v2.1.1 as of 2020-10-09 see `Changelog`_
 
 
 .. include:: ./badges.rst

@@ -102,7 +102,7 @@ def log_and_raise_if_source_file_not_ok(source: Union[str, pathlib.Path, IO[str]
 
     if isinstance(source, pathlib.Path):
         if not source.is_file():
-            error_message = 'RST File "{source}" does not exist'.format(source=source)
+            error_message = f'RST File "{source}" does not exist'
             lib_log_utils.log_error(error_message)
             raise FileNotFoundError(error_message)
 
@@ -138,7 +138,7 @@ def log_and_raise_if_source_file_equals_target_file(source: Union[str, pathlib.P
     """
 
     if isinstance(source, pathlib.Path) and source == target:
-        error_message = 'RST File "{source}": source and target must not be the same'.format(source=source)
+        error_message = f'RST File "{source}": source and target must not be the same'
         lib_log_utils.log_error(error_message)
         raise FileExistsError(error_message)
 
@@ -157,7 +157,7 @@ def log_warning_if_target_file_exist(path_target: Union[str, pathlib.Path, IO[st
     """
     if isinstance(path_target, pathlib.Path):
         if path_target.is_file():
-            lib_log_utils.log_warning('RST File "{target}" exists and will be overwritten'.format(target=path_target))
+            lib_log_utils.log_warning(f'RST File "{path_target}" exists and will be overwritten')
 
 
 def read_input(source: Union[str, pathlib.Path, IO[str]], encoding: str = 'utf-8-sig') -> str:

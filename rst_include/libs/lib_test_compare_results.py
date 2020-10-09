@@ -67,22 +67,15 @@ def read_files_into_lines(expected_file: pathlib.Path,
 
 
 def log_file_lengths_not_equal(expected_file: pathlib.Path, result_file: pathlib.Path, len_expected_lines: int, len_result_lines: int) -> None:
-    lib_log_utils.log_error('Different Size, Expected File {expected_file}: {len_expected_lines} '
-                            'Lines, Result File {result_file}: {len_result_lines} Lines'.format(expected_file=expected_file,
-                                                                                                len_expected_lines=len_expected_lines,
-                                                                                                result_file=result_file,
-                                                                                                len_result_lines=len_result_lines))
+    lib_log_utils.log_error(f'Different Size, Expected File {expected_file}: {len_expected_lines} '
+                            f'Lines, Result File {result_file}: {len_result_lines} Lines')
 
 
 def log_difference_expected_line(expected_file: pathlib.Path, line_number: int, expected_line: str) -> None:
-    lib_log_utils.log_error('Difference, Expected File {expected_file}, Line {line_number}: "{expected_line}"'.format(
-        expected_file=expected_file,
-        line_number=line_number,
-        expected_line=expected_line.replace('\n', '<ret>')))
+    expected_line = expected_line.replace('\n', '<ret>')
+    lib_log_utils.log_error(f'Difference, Expected File {expected_file}, Line {line_number}: "{expected_line}"')
 
 
 def log_difference_result_line(result_file: pathlib.Path, line_number: int, result_line: str) -> None:
-    lib_log_utils.log_error('Difference, Result   File {result_file}, Line {line_number}: "{result_line}"'.format(
-        result_file=result_file,
-        line_number=line_number,
-        result_line=result_line.replace('\n', '<ret>')))
+    result_line = result_line.replace('\n', '<ret>')
+    lib_log_utils.log_error(f'Difference, Result   File {result_file}, Line {line_number}: "{result_line}"')
