@@ -33,7 +33,7 @@ def info() -> None:
 @click.group(help=__init__conf__.title, context_settings=CLICK_CONTEXT_SETTINGS)
 @click.version_option(version=__init__conf__.version,
                       prog_name=__init__conf__.shell_command,
-                      message='{} version %(version)s'.format(__init__conf__.shell_command))
+                      message=f'{__init__conf__.shell_command} version {__init__conf__.version}')
 @click.option('--traceback/--no-traceback', is_flag=True, type=bool, default=None, help='return traceback information on cli')
 def cli_main(traceback: Optional[bool] = None) -> None:
     if traceback is not None:
