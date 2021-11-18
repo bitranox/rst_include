@@ -1,4 +1,5 @@
 __all__ = ["rst_inc", "rst_str_replace"]
+from .libs import lib_main
 from .libs.lib_main import rst_inc
 from .libs.lib_main import rst_str_replace
 
