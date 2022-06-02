@@ -1,20 +1,24 @@
-name = 'rst_include'
-title = 'commandline tool to resolve RST File includes'
-version = 'v2.1.1'
-url = 'https://github.com/bitranox/rst_include'
-author = 'Robert Nowotny'
-author_email = 'bitranox@gmail.com'
-shell_command = 'rst_include'
+# CONF
+
+name = "rst_include"
+title = "commandline tool to resolve RST File includes"
+version = "v2.1.2.2"
+url = "https://github.com/bitranox/rst_include"
+author = "Robert Nowotny"
+author_email = "bitranox@gmail.com"
+shell_command = "rst_include"
 
 
 def print_info() -> None:
-    print("""\
+    print(
+        """\
 
 Info for rst_include:
 
     commandline tool to resolve RST File includes
 
-    Version : v2.1.1
+    Version : v2.1.2.2
     Url     : https://github.com/bitranox/rst_include
     Author  : Robert Nowotny
-    Email   : bitranox@gmail.com""")
+    Email   : bitranox@gmail.com"""
+    )

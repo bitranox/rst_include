@@ -4,12 +4,12 @@ try:
     from . import include2
     from . import include3
     from .subdir import include_subdir
-except ImportError:                                                         # pragma: no cover
+except ImportError:  # pragma: no cover
     # for local doctest in pycharm
-    import include1 as include1                           # type: ignore # pragma: no cover
-    import include2 as include2                           # type: ignore # pragma: no cover
-    import include3 as include3                           # type: ignore # pragma: no cover
-    import subdir.include_subdir as include_subdir        # type: ignore # pragma: no cover
+    import include1 as include1  # type: ignore # pragma: no cover
+    import include2 as include2  # type: ignore # pragma: no cover
+    import include3 as include3  # type: ignore # pragma: no cover
+    import subdir.include_subdir as include_subdir  # type: ignore # pragma: no cover
 
 
 def test() -> None:
