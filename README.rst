@@ -2,7 +2,7 @@ rst_include
 ===========
 
 
-Version v2.1.2.2 as of 2022-06-02 see `Changelog`_
+Version v2.1.2.2 as of 2022-06-03 see `Changelog`_
 
 |build_badge| |license| |pypi| |pypi-downloads| |black|
 
@@ -453,10 +453,10 @@ following modules will be automatically installed :
 
     ## Project Requirements
     click
-    cli_exit_tools @ git+https://github.com/bitranox/cli_exit_tools.git
-    lib_list @ git+https://github.com/bitranox/lib_list.git
-    lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
-    pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
+    cli_exit_tools
+    lib_list
+    lib_log_utils
+    pathlib3x
 
 Acknowledgements
 ----------------
