@@ -5,6 +5,10 @@ Changelog
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
 
+v2.1.2.2
+--------
+2022-06-02: setup github actions v3, python3.10 test matrix
+
 v2.1.1
 --------
 2020-10-09: service release

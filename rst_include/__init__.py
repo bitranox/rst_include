@@ -1,8 +1,10 @@
 __all__ = ["rst_inc", "rst_str_replace"]
+from .libs import lib_main
 from .libs.lib_main import rst_inc
 from .libs.lib_main import rst_str_replace
 
 from . import __init__conf__
+
 __title__ = __init__conf__.title
 __version__ = __init__conf__.version
 __name__ = __init__conf__.name

@@ -1,4 +1,4 @@
-.. code-block:: bash
+.. code-block::
 
    Usage: rst_include [OPTIONS] COMMAND [ARGS]...
 

@@ -198,4 +198,4 @@ def get_path_test_dir() -> pathlib.Path:
     >>> assert str(get_path_test_dir()).endswith('tests')
     """
     test_dir = pathlib.Path(__file__).absolute().parent.parent.parent / 'tests'
-    return test_dir
+    return pathlib.Path(test_dir)

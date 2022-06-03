@@ -12,10 +12,12 @@ def my_include2_1() -> None:
 
 # start-marker
 
+
 def my_include2_2() -> None:
     pass
 
     pass
+
 
 # end-marker
 

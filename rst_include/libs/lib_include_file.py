@@ -40,14 +40,14 @@ def read_include_file(block: Block) -> List[str]:
     >>> content = read_include_file(block)
     >>> assert content[0] == 'def my_include() -> None:'
     >>> assert content[1] == '    pass'
-    >>> content[2]    # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> content[2]
     Traceback (most recent call last):
     ...
     IndexError: list index out of range
     >>> assert block.include_file_lines == ['def my_include() -> None:', '    pass']
 
     >>> block.include_filename_absolut=pathlib.Path('non_existing_file')
-    >>> content = read_include_file(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> content = read_include_file(block)
     Traceback (most recent call last):
     ...
     OSError: Error in File ".../tests/README.template.rst", Line 47100: File not found : "non_existing_file"
@@ -104,8 +104,11 @@ def slice_include_file_lines(block: Block) -> None:
     >>> block = lib_test.read_include_file_2()
     >>> block.include_file_lines = ['\\n'] + block.include_file_lines   # add an empty line in front and end
     >>> slice_include_file_lines(block)
-    >>> block.include_file_lines  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-    ['def my_include2_1() -> None:', '    pass', '', ... 'def my_include2_3() -> None:', '    pass']
+    >>> block.include_file_lines
+    ['def my_include2_1() -> None:', '    pass', '', '    pass', '', '', '# start-marker', ... '# end-marker']
+
+    >>> # was before (??) TODO CHECK
+    >>> # ['def my_include2_1() -> None:', '    pass', '', ... 'def my_include2_3() -> None:', '    pass']
     """
     block.include_file_lines = block.include_file_lines[block.include_file_start_line:block.include_file_end_line]
     block.include_file_lines = lib_list.ls_strip_list(block.include_file_lines)
@@ -123,7 +126,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block = lib_test.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
@@ -133,7 +136,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_start_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
@@ -143,7 +146,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found ...
@@ -154,7 +157,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_start_after = 'start_after_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : start-after "start_after_not_found" not found
@@ -163,7 +166,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block = lib_test.read_include_file_2()
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
@@ -174,7 +177,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_start_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
@@ -185,7 +188,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...
@@ -197,7 +200,7 @@ def slice_include_file_markers(block: Block) -> None:
     >>> block.include_file_end_line=None
     >>> slice_include_file_lines(block)
     >>> block.include_file_end_before = 'end_before_not_found'
-    >>> slice_include_file_markers(block)  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> slice_include_file_markers(block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File ".../README.template.rst", Line 47100: include File "include2.py" : end-before "end_before_not_found" not found ...

@@ -2,21 +2,23 @@ rst_include
 ===========
 
 
-Version v2.1.1 as of 2020-10-09 see `Changelog`_
+Version v2.1.2.2 as of 2022-06-03 see `Changelog`_
 
-|travis_build| |license| |pypi|
+|build_badge| |license| |pypi| |pypi-downloads| |black|
 
 |codecov| |better_code| |cc_maintain| |cc_issues| |cc_coverage| |snyk|
 
 
-.. |travis_build| image:: https://img.shields.io/travis/bitranox/rst_include/master.svg
-   :target: https://travis-ci.org/bitranox/rst_include
+
+.. |build_badge| image:: https://github.com/bitranox/rst_include/actions/workflows/python-package.yml/badge.svg
+   :target: https://github.com/bitranox/rst_include/actions/workflows/python-package.yml
+
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
 
 .. |jupyter| image:: https://mybinder.org/badge_logo.svg
- :target: https://mybinder.org/v2/gh/bitranox/rst_include/master?filepath=rst_include.ipynb
+   :target: https://mybinder.org/v2/gh/bitranox/rst_include/master?filepath=rst_include.ipynb
 
 .. for the pypi status link note the dashes, not the underscore !
 .. |pypi| image:: https://img.shields.io/pypi/status/rst-include?label=PyPI%20Package
@@ -46,6 +48,10 @@ Version v2.1.1 as of 2020-10-09 see `Changelog`_
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 
+.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/rst-include
+   :target: https://pypi.org/project/rst-include/
+   :alt: PyPI - Downloads
+
 since You can not include files into RST files on github or PyPi, You can resolve such imports with this software.
 
 That means You can locally write Your RST documents (for instance with pycharm) and use there
@@ -70,9 +76,9 @@ automated tests, Travis Matrix, Documentation, Badges, etc. are managed with `Pi
 
 Python version required: 3.6.0 or newer
 
-tested on linux "bionic" with python 3.6, 3.7, 3.8, 3.9-dev, pypy3 - architectures: amd64, ppc64le, s390x, arm64
+tested on recent linux with python 3.6, 3.7, 3.8, 3.9, 3.10, pypy-3.8 - architectures: amd64
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, flake8 style checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://travis-ci.org/bitranox/rst_include>`_, automatic daily builds and monitoring
+`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, flake8 style checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://github.com/bitranox/rst_include/actions/workflows/python-package.yml>`_, automatic daily builds and monitoring
 
 ----
 
@@ -352,7 +358,7 @@ The following options are recognized:
 Usage from Commandline
 ------------------------
 
-.. code-block:: bash
+.. code-block::
 
    Usage: rst_include [OPTIONS] COMMAND [ARGS]...
 
@@ -374,28 +380,28 @@ Installation and Upgrade
 - Before You start, its highly recommended to update pip and setup tools:
 
 
-.. code-block:: bash
+.. code-block::
 
     python -m pip --upgrade pip
     python -m pip --upgrade setuptools
 
 - to install the latest release from PyPi via pip (recommended):
 
-.. code-block:: bash
+.. code-block::
 
     python -m pip install --upgrade rst_include
 
 - to install the latest version from github via pip:
 
 
-.. code-block:: bash
+.. code-block::
 
     python -m pip install --upgrade git+https://github.com/bitranox/rst_include.git
 
 
 - include it into Your requirements.txt:
 
-.. code-block:: bash
+.. code-block::
 
     # Insert following line in Your requirements.txt:
     # for the latest Release on pypi:
@@ -410,7 +416,7 @@ Installation and Upgrade
 
 - to install the latest development version from source code:
 
-.. code-block:: bash
+.. code-block::
 
     # cd ~
     $ git clone https://github.com/bitranox/rst_include.git
@@ -447,10 +453,10 @@ following modules will be automatically installed :
 
     ## Project Requirements
     click
-    cli_exit_tools @ git+https://github.com/bitranox/cli_exit_tools.git
-    lib_list @ git+https://github.com/bitranox/lib_list.git
-    lib_log_utils @ git+https://github.com/bitranox/lib_log_utils.git
-    pathlib3x @ git+https://github.com/bitranox/pathlib3x.git
+    cli_exit_tools
+    lib_list
+    lib_log_utils
+    pathlib3x
 
 Acknowledgements
 ----------------
@@ -476,6 +482,10 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+v2.1.2.2
+--------
+2022-06-02: setup github actions v3, python3.10 test matrix
 
 v2.1.1
 --------
