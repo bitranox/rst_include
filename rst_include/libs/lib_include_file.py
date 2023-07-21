@@ -74,7 +74,7 @@ def read_include_file(block: Block) -> List[str]:
 
     except FileNotFoundError:
         s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: File not found : '\
-                  '"{block.include_filename_absolut}"'
+                  '"{block.include_filename_absolut}"'  # noqa: E126    # for python 3.12beta
         lib_log_utils.log_traceback.log_exception_traceback(s_error)
         raise IOError(s_error)
 
@@ -225,7 +225,7 @@ def slice_include_file_markers(block: Block) -> None:
 def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block) -> None:
     if block.include_file_start_after not in content:
         s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: '\
-                  f'include File "{block.include_filename}" : start-after "{block.include_file_start_after}" not found'
+                  f'include File "{block.include_filename}" : start-after "{block.include_file_start_after}" not found'   # noqa: E126    # for python 3.12beta
         s_error = s_error + get_additional_error_string(block)
         lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
@@ -234,7 +234,7 @@ def log_and_raise_if_start_after_not_found_in_string(content: str, block: Block)
 def log_and_raise_if_end_before_not_found_in_string(content: str, block: Block) -> None:
     if block.include_file_end_before not in content:
         s_error = f'Error in File "{block.source}", Line {block.l_source_lines[0].line_number}: ' \
-                  f'include File "{block.include_filename}" : end-before "{block.include_file_end_before}" not found'
+                  f'include File "{block.include_filename}" : end-before "{block.include_file_end_before}" not found'  # noqa: E126    # for python 3.12beta
         s_error = s_error + get_additional_error_string(block)
         s_error = s_error + get_additional_error_string_start_after(block)
         lib_log_utils.log_error(s_error)

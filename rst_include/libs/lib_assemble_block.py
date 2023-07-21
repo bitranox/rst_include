@@ -156,7 +156,7 @@ def get_block_header(block: Block) -> str:
     content = ''
     if block.include_file_code:
         content_lines = list()
-        content_lines.append(f'.. code-block:: {block.include_file_code}')
+        content_lines.append(f'.. code-block:: {block.include_file_code}')  # noqa: E231    # for python 3.12beta
         content_lines = content_lines + [pass_through_option.content for pass_through_option in block.pass_through_options]
         content = '\n'.join(content_lines)
     return content
