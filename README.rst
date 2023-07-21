@@ -64,8 +64,8 @@ This has many advantages like :
 - dont repeat Yourself, create standard blocks to include into Your documentation
 - include tested code snippets from Your code files into Your documentation, to avoid untested or outdated documentation
 - include other RST Files
-- very simple usage, throwing exit codes to detect errors on documentation at travis build-time
-- commandline or programmatic interface, You can even use it in the travis.yml
+- very simple usage, throwing exit codes to detect errors on documentation at CICD build-time
+- commandline or programmatic interface, You can even use it in github actions or other CICD environment
 - commandline interface supporting shellscript, cmd, pipes, config-files
 
 ----
