@@ -59,9 +59,9 @@ def get_option_value_from_block(option: str, block: Block) -> str:
     >>> my_block = lib_test.get_test_block_ok()
     >>> get_option_value_from_block('code', my_block)
     'python'
-    >>> get_option_value_from_block('encoding', block)
+    >>> get_option_value_from_block('encoding', my_block)
     'utf-8'
-    >>> get_option_value_from_block('no-option', block)
+    >>> get_option_value_from_block('no-option', my_block)
     Traceback (most recent call last):
     ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
@@ -86,7 +86,7 @@ def is_option_in_block(option: str, block: Block) -> bool:
     >>> my_block = lib_test.get_test_block_ok()
     >>> is_option_in_block('code', my_block)
     True
-    >>> is_option_in_block('no-option', block)
+    >>> is_option_in_block('no-option', my_block)
     False
 
     """
@@ -103,9 +103,9 @@ def get_source_line_number_for_option(option: str, block: Block) -> int:
     >>> my_block = lib_test.get_test_block_ok()
     >>> get_source_line_number_for_option('code', my_block)
     47101
-    >>> get_source_line_number_for_option('encoding', block)
+    >>> get_source_line_number_for_option('encoding', my_block)
     47102
-    >>> get_source_line_number_for_option('no-option', block)
+    >>> get_source_line_number_for_option('no-option', my_block)
     Traceback (most recent call last):
       ...
     ValueError: Error in File: ".../README.template.rst", option "no-option" not found in block starting with Line: 47100
@@ -124,7 +124,7 @@ def is_option_in_source_line(source_line: SourceLine, option: str) -> bool:
     >>> my_source_line = lib_classes.SourceLine(line_number=4711, content='   :code:')
     >>> is_option_in_source_line(my_source_line, 'code')
     True
-    >>> is_option_in_source_line(source_line, 'encoding')
+    >>> is_option_in_source_line(my_source_line, 'encoding')
     False
 
     """
