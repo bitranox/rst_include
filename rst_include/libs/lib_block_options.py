@@ -148,7 +148,7 @@ def get_option_key_from_source_line(source_line: SourceLine) -> str:
 def log_and_raise_value_error_if_option_not_in_block(option: str, block: Block) -> None:
     if not is_option_in_block(option, block):
         s_error = f'Error in File: "{block.source}", option "{option}' \
-                  f'" not found in block starting with Line: {block.l_source_lines[0].line_number}'    # noqa: E713    # for python 3.12beta
+                  f'" not found in block starting with Line: {block.l_source_lines[0].line_number}'    # noqa: E126    # for python 3.12beta
         lib_log_utils.log_error(s_error)
         raise ValueError(s_error)
 
