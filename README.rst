@@ -2,17 +2,19 @@ rst_include
 ===========
 
 
-Version v2.1.2.2 as of 2022-06-03 see `Changelog`_
+Version v2.1.3 as of 2023-07-21 see `Changelog`_
 
-|build_badge| |license| |pypi| |pypi-downloads| |black|
-
-|codecov| |better_code| |cc_maintain| |cc_issues| |cc_coverage| |snyk|
+|build_badge| |codeql| |license| |pypi|
+|pypi-downloads| |black| |codecov| |cc_maintain| |cc_issues| |cc_coverage| |snyk|
 
 
 
 .. |build_badge| image:: https://github.com/bitranox/rst_include/actions/workflows/python-package.yml/badge.svg
    :target: https://github.com/bitranox/rst_include/actions/workflows/python-package.yml
 
+
+.. |codeql| image:: https://github.com/bitranox/rst_include/actions/workflows/codeql-analysis.yml/badge.svg?event=push
+   :target: https://github.com//bitranox/rst_include/actions/workflows/codeql-analysis.yml
 
 .. |license| image:: https://img.shields.io/github/license/webcomics/pywine.svg
    :target: http://en.wikipedia.org/wiki/MIT_License
@@ -27,9 +29,6 @@ Version v2.1.2.2 as of 2022-06-03 see `Changelog`_
 .. |codecov| image:: https://img.shields.io/codecov/c/github/bitranox/rst_include
    :target: https://codecov.io/gh/bitranox/rst_include
 
-.. |better_code| image:: https://bettercodehub.com/edge/badge/bitranox/rst_include?branch=master
-   :target: https://bettercodehub.com/results/bitranox/rst_include
-
 .. |cc_maintain| image:: https://img.shields.io/codeclimate/maintainability-percentage/bitranox/rst_include?label=CC%20maintainability
    :target: https://codeclimate.com/github/bitranox/rst_include/maintainability
    :alt: Maintainability
@@ -42,7 +41,7 @@ Version v2.1.2.2 as of 2022-06-03 see `Changelog`_
    :target: https://codeclimate.com/github/bitranox/rst_include/test_coverage
    :alt: Code Coverage
 
-.. |snyk| image:: https://img.shields.io/snyk/vulnerabilities/github/bitranox/rst_include
+.. |snyk| image:: https://snyk.io/test/github/bitranox/rst_include/badge.svg
    :target: https://snyk.io/test/github/bitranox/rst_include
 
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
@@ -71,14 +70,14 @@ This has many advantages like :
 
 ----
 
-automated tests, Travis Matrix, Documentation, Badges, etc. are managed with `PizzaCutter <https://github
+automated tests, Github Actions, Documentation, Badges, etc. are managed with `PizzaCutter <https://github
 .com/bitranox/PizzaCutter>`_ (cookiecutter on steroids)
 
-Python version required: 3.6.0 or newer
+Python version required: 3.8.0 or newer
 
-tested on recent linux with python 3.6, 3.7, 3.8, 3.9, 3.10, pypy-3.8 - architectures: amd64
+tested on recent linux with python 3.8, 3.9, 3.10, 3.11, 3.12-dev, pypy-3.9, pypy-3.10 - architectures: amd64
 
-`100% code coverage <https://codecov.io/gh/bitranox/rst_include>`_, flake8 style checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://github.com/bitranox/rst_include/actions/workflows/python-package.yml>`_, automatic daily builds and monitoring
+`100% code coverage <https://codeclimate.com/github/bitranox/rst_include/test_coverage>`_, flake8 style checking ,mypy static type checking ,tested under `Linux, macOS, Windows <https://github.com/bitranox/rst_include/actions/workflows/python-package.yml>`_, automatic daily builds and monitoring
 
 ----
 
@@ -391,6 +390,13 @@ Installation and Upgrade
 
     python -m pip install --upgrade rst_include
 
+
+- to install the latest release from PyPi via pip, including test dependencies:
+
+.. code-block::
+
+    python -m pip install --upgrade rst_include[test]
+
 - to install the latest version from github via pip:
 
 
@@ -414,14 +420,14 @@ Installation and Upgrade
     python -m pip install --upgrade -r /<path>/requirements.txt
 
 
-- to install the latest development version from source code:
+- to install the latest development version, including test dependencies from source code:
 
 .. code-block::
 
     # cd ~
     $ git clone https://github.com/bitranox/rst_include.git
     $ cd rst_include
-    python setup.py install
+    python -m pip install -e .[test]
 
 - via makefile:
   makefiles are a very convenient way to install. Here we can do much more,
@@ -482,6 +488,26 @@ Changelog
 - new MAJOR version for incompatible API changes,
 - new MINOR version for added functionality in a backwards compatible manner
 - new PATCH version for backwards compatible bug fixes
+
+v2.1.3
+--------
+2023-07-21:
+    - require minimum python 3.8
+    - remove python 3.7 tests
+    - introduce PEP517 packaging standard
+    - introduce pyproject.toml build-system
+    - remove mypy.ini
+    - remove pytest.ini
+    - remove setup.cfg
+    - remove setup.py
+    - remove .bettercodehub.yml
+    - remove .travis.yml
+    - update black config
+    - clean ./tests/test_cli.py
+    - add codeql badge
+    - move 3rd_party_stubs outside the src directory to ``./.3rd_party_stubs``
+    - add pypy 3.10 tests
+    - add python 3.12-dev tests
 
 v2.1.2.2
 --------
