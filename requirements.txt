@@ -4,3 +4,4 @@ cli_exit_tools
 lib_list
 lib_log_utils
 pathlib3x
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
