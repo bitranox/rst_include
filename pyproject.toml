@@ -28,7 +28,7 @@ classifiers = [
 dependencies = [
     "cli_exit_tools",
     "click",
-    "lib_list",
+    "btx_lib_list",
     "lib_log_utils",
     "pathlib3x",
 ]

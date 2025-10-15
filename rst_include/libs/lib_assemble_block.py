@@ -2,7 +2,7 @@
 from typing import List, IO, Union
 
 # OWN
-import lib_list
+import btx_lib_list
 import pathlib3x as pathlib
 
 
@@ -105,7 +105,7 @@ def assemble_additional_content(block: Block) -> str:
 
     """
     l_content = [source_line.content.rstrip() for source_line in block.additional_content]
-    l_content = lib_list.ls_strip_list(l_content)
+    l_content = btx_lib_list.ls_strip_list(l_content)
     content = '\n'.join(l_content)
     # save memory
     del block.additional_content

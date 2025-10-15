@@ -460,7 +460,7 @@ following modules will be automatically installed :
     ## Project Requirements
     click
     cli_exit_tools
-    lib_list
+    btx_lib_list
     lib_log_utils
     pathlib3x
 

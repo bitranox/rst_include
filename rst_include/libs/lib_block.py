@@ -2,7 +2,7 @@
 from typing import List
 
 # OWN
-import lib_list
+import btx_lib_list
 import pathlib3x as pathlib
 
 try:
@@ -65,6 +65,6 @@ def get_block_source_lines_joined(l_source_lines: List[SourceLine]) -> str:
     lines = list()
     for source_line in l_source_lines:
         lines.append(source_line.content)
-    lines = lib_list.ls_strip_list(lines)
+    lines = btx_lib_list.ls_strip_list(lines)
     content = '\n'.join(lines)
     return content

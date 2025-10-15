@@ -4,7 +4,7 @@ from typing import List, Union, IO
 
 
 # OWN
-import lib_list
+import btx_lib_list
 import lib_log_utils
 import pathlib3x as pathlib
 
@@ -80,7 +80,7 @@ def read_include_file(block: Block) -> List[str]:
 
 
 def delete_empty_lines_from_list(source_lines: List[str]) -> List[str]:
-    source_lines_without_empty_lines = [str(element) for element in lib_list.ls_strip_list(source_lines)]
+    source_lines_without_empty_lines = [str(element) for element in btx_lib_list.ls_strip_list(source_lines)]
     return source_lines_without_empty_lines
 
 
@@ -111,7 +111,7 @@ def slice_include_file_lines(block: Block) -> None:
     >>> # ['def my_include2_1() -> None:', '    pass', '', ... 'def my_include2_3() -> None:', '    pass']
     """
     block.include_file_lines = block.include_file_lines[block.include_file_start_line:block.include_file_end_line]
-    block.include_file_lines = lib_list.ls_strip_list(block.include_file_lines)
+    block.include_file_lines = btx_lib_list.ls_strip_list(block.include_file_lines)
 
 
 def slice_include_file_markers(block: Block) -> None:

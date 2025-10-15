@@ -1,5 +1,5 @@
 # OWN
-import lib_list
+import btx_lib_list
 
 
 def strip_multiline_string(str_multiline: str) -> str:
@@ -22,7 +22,7 @@ def strip_multiline_string(str_multiline: str) -> str:
     """
     l_lines = str_multiline.split('\n')
     l_lines = [line.rstrip() for line in l_lines]
-    l_lines = lib_list.ls_strip_list(l_lines)
+    l_lines = btx_lib_list.ls_strip_list(l_lines)
     str_result = '\n'.join(l_lines)
     return str_result
 
